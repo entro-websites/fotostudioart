@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foto Studio Art Digital - Fotografisanje i obrada fotografija u Beogradu</title>
+<meta name="description" content="Foto Studio Art Digital - profesionalno fotografisanje, snimanje venčanja, izrada i digitalna obrada fotografija u Beogradu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#033537;
+    --accent-dark:#021f20;
+    --accent-light:#0d5c5f;
+    --accent-soft:#e9f0f0;
+    --accent-glow:rgba(3,53,55,0.14);
+    --text:#0a1f1f;
+    --text-muted:rgba(10,31,31,0.72);
+    --text-faint:rgba(10,31,31,0.5);
+    --bg:#fdfdfb;
+    --radius-btn:8px;
+    --radius-card:20px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Open Sans', sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Dosis', sans-serif;
+    color:var(--text);
+    line-height:1.15;
+    font-weight:700;
+  }
+
+  p{color:var(--text-muted);}
+
+  a{text-decoration:none;color:inherit;}
+
+  img{max-width:100%;display:block;}
+
+  ul{list-style:none;}
+
+  .wrap{
+    max-width:1280px;
+    margin:0 auto;
+    padding-left:24px;
+    padding-right:24px;
+  }
+
+  @media (max-width:768px){
+    .wrap{padding-left:20px;padding-right:20px;}
+  }
+
+  section{
+    padding-top:96px;
+    padding-bottom:96px;
+  }
+
+  @media (max-width:768px){
+    section{padding-top:64px;padding-bottom:64px;}
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:15px 30px;
+    border-radius:var(--radius-btn);
+    font-family:'Open Sans', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    border:2px solid transparent;
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+    white-space:nowrap;
+  }
+
+  .btn-primary{
+    background:var(--accent);
+    color:#fff;
+  }
+  .btn-primary:hover{
+    background:var(--accent-dark);
+    box-shadow:0 12px 28px -8px var(--accent-glow);
+    transform:translateY(-2px);
+  }
+
+  .btn-outline{
+    background:transparent;
+    border:2px solid var(--accent);
+    color:var(--accent);
+  }
+  .btn-outline:hover{
+    background:var(--accent-soft);
+  }
+
+  .btn-light{
+    background:#fff;
+    color:var(--accent);
+  }
+  .btn-light:hover{
+    background:var(--accent-soft);
+    transform:translateY(-2px);
+  }
+
+  /* ---------- HEADER ---------- */
+  .site-header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#fff;
+    border-bottom:1px solid rgba(3,53,55,0.08);
+    transition:background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+  }
+  .site-header.scrolled{
+    background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(10px);
+    box-shadow:0 8px 24px -12px rgba(3,53,55,0.15);
+  }
+
+  .navbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:14px;
+    padding-bottom:14px;
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .brand img{
+    height:44px;
+    width:44px;
+    object-fit:contain;
+  }
+  .brand-text{
+    font-family:'Dosis', sans-serif;
+    font-weight:700;
+    font-size:18px;
+    color:var(--accent);
+    line-height:1.1;
+  }
+  .brand-text span{
+    display:block;
+    font-family:'Open Sans', sans-serif;
+    font-weight:400;
+    font-size:11px;
+    color:var(--text-faint);
+    letter-spacing:1px;
+  }
+
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:36px;
+  }
+  .nav-links a{
+    font-size:15px;
+    font-weight:600;
+    color:var(--text);
+    transition:color 0.2s ease;
+  }
+  .nav-links a:hover{color:var(--accent);}
+
+  .nav-desktop{
+    display:flex;
+    align-items:center;
+    gap:36px;
+  }
+
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    width:32px;
+    height:32px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    z-index:1200;
+  }
+  .hamburger span{
+    display:block;
+    height:2px;
+    width:100%;
+    background:var(--accent);
+    border-radius:2px;
+    transition:transform 0.25s ease, opacity 0.25s ease;
+  }
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  .mobile-menu{
+    position:fixed;
+    inset:0;
+    background:#fff;
+    z-index:1100;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:32px;
+    transform:translateY(-100%);
+    transition:transform 0.35s ease;
+  }
+  .mobile-menu.open{transform:translateY(0);}
+  .mobile-menu a{
+    font-family:'Dosis', sans-serif;
+    font-size:28px;
+    font-weight:600;
+    color:var(--accent);
+  }
+
+  @media (max-width:991px){
+    .nav-desktop{display:none;}
+    .hamburger{display:flex;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding-top:80px;
+    padding-bottom:80px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-200px;
+    right:-200px;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle, var(--accent-glow) 0%, rgba(3,53,55,0) 70%);
+    z-index:0;
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:64px;
+    align-items:center;
+  }
+  .hero-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--accent);
+    background:var(--accent-soft);
+    padding:8px 16px;
+    border-radius:999px;
+    margin-bottom:24px;
+  }
+  .hero h1{
+    font-size:clamp(38px, 5.5vw, 64px);
+    font-weight:800;
+    margin-bottom:22px;
+    letter-spacing:0.3px;
+  }
+  .hero-sub{
+    font-size:18px;
+    max-width:480px;
+    margin-bottom:36px;
+    color:var(--text-muted);
+  }
+  .hero-visual{
+    position:relative;
+  }
+  .placeholder-box{
+    width:100%;
+    aspect-ratio:4/5;
+    background:linear-gradient(160deg, var(--accent-soft), #f2f5f5);
+    border:1px dashed rgba(3,53,55,0.3);
+    border-radius:var(--radius-card);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--text-faint);
+    font-family:'Dosis', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:24px;
+  }
+  .hero-visual .placeholder-box{
+    box-shadow:0 30px 60px -30px rgba(3,53,55,0.25);
+  }
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-visual{order:-1;max-width:340px;margin:0 auto 16px;}
+  }
+
+  /* ---------- BOL / INTRO ---------- */
+  .pain{
+    background:var(--accent-soft);
+  }
+  .pain-inner{
+    max-width:700px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .pain h2{
+    font-size:clamp(24px,3vw,32px);
+    margin-bottom:18px;
+  }
+  .pain p{
+    font-size:17px;
+    color:var(--text-muted);
+  }
+
+  /* ---------- SECTION HEADINGS ---------- */
+  .section-head{
+    max-width:640px;
+    margin-bottom:56px;
+  }
+  .section-head.center{
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+  }
+  .eyebrow{
+    display:inline-block;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:14px;
+  }
+  .section-head h2{
+    font-size:clamp(28px,3.6vw,40px);
+    margin-bottom:16px;
+  }
+  .section-head p{
+    font-size:17px;
+    max-width:60ch;
+  }
+  .section-head.center p{margin-left:auto;margin-right:auto;}
+
+  /* ---------- USLUGE ---------- */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+  }
+  .service-card{
+    background:#fff;
+    border:1px solid rgba(3,53,55,0.1);
+    border-radius:var(--radius-card);
+    padding:36px 28px;
+    transition:box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .service-card:hover{
+    box-shadow:0 24px 48px -24px rgba(3,53,55,0.22);
+    transform:translateY(-4px);
+  }
+  .icon-circle{
+    width:54px;
+    height:54px;
+    border-radius:50%;
+    background:var(--accent-soft);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:22px;
+  }
+  .icon-circle svg{
+    width:26px;
+    height:26px;
+    stroke:var(--accent);
+    fill:none;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .service-card h3{
+    font-size:21px;
+    margin-bottom:12px;
+  }
+  .service-card p{
+    font-size:15px;
+    margin-bottom:18px;
+  }
+  .service-link{
+    font-size:14px;
+    font-weight:700;
+    color:var(--accent);
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .service-link svg{
+    width:14px;
+    height:14px;
+    stroke:var(--accent);
+    fill:none;
+    stroke-width:2;
+  }
+
+  @media (max-width:900px){
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:600px){
+    .services-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- O BRENDU ---------- */
+  .about{
+    background:var(--accent-soft);
+  }
+  .about-grid{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:64px;
+    align-items:center;
+  }
+  .about-grid .placeholder-box{
+    aspect-ratio:1/1;
+    border-color:rgba(3,53,55,0.25);
+    background:linear-gradient(160deg,#fff,#e3ecec);
+  }
+  .about-text h2{
+    font-size:clamp(26px,3.4vw,36px);
+    margin-bottom:20px;
+  }
+  .about-text p{
+    font-size:16px;
+    margin-bottom:18px;
+    max-width:60ch;
+  }
+  .about-points{
+    margin-top:28px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .about-point{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .about-point svg{
+    width:22px;
+    height:22px;
+    flex-shrink:0;
+    stroke:var(--accent);
+    fill:none;
+    stroke-width:2;
+    margin-top:2px;
+  }
+  .about-point span{
+    font-size:15px;
+    color:var(--text);
+    font-weight:600;
+  }
+
+  @media (max-width:900px){
+    .about-grid{grid-template-columns:1fr;}
+    .about-grid .placeholder-box{max-width:340px;margin:0 auto;}
+  }
+
+  /* ---------- CTA CLOSING ---------- */
+  .cta-close{
+    background:var(--accent);
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-close::before{
+    content:"";
+    position:absolute;
+    bottom:-180px;
+    left:-120px;
+    width:500px;
+    height:500px;
+    background:radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%);
+    pointer-events:none;
+  }
+  .cta-close-inner{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    max-width:640px;
+    margin:0 auto;
+  }
+  .cta-close h2{
+    color:#fff;
+    font-size:clamp(28px,4vw,42px);
+    margin-bottom:18px;
+  }
+  .cta-close p{
+    color:rgba(255,255,255,0.8);
+    font-size:17px;
+    margin-bottom:36px;
+  }
+
+  /* ---------- KONTAKT ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:64px;
+  }
+  .contact-info{
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+  }
+  .contact-item{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+  }
+  .contact-item .icon-circle{
+    margin-bottom:0;
+    flex-shrink:0;
+  }
+  .contact-item h4{
+    font-size:16px;
+    margin-bottom:4px;
+  }
+  .contact-item p{
+    font-size:15px;
+  }
+  .contact-form{
+    background:#fff;
+    border:1px solid rgba(3,53,55,0.1);
+    border-radius:var(--radius-card);
+    padding:36px;
+  }
+  .form-row{
+    margin-bottom:20px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .form-row label{
+    font-size:14px;
+    font-weight:600;
+    color:var(--text);
+  }
+  .form-row input,
+  .form-row textarea{
+    border:1px solid rgba(3,53,55,0.2);
+    border-radius:var(--radius-btn);
+    padding:12px 14px;
+    font-family:'Open Sans', sans-serif;
+    font-size:15px;
+    color:var(--text);
+    background:var(--bg);
+  }
+  .form-row textarea{
+    min-height:110px;
+    resize:vertical;
+  }
+  .form-row input:focus,
+  .form-row textarea:focus{
+    outline:none;
+    border-color:var(--accent);
+  }
+
+  @media (max-width:900px){
+    .contact-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    border-top:1px solid rgba(3,53,55,0.1);
+    padding-top:48px;
+    padding-bottom:48px;
+  }
+  .footer-inner{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    gap:24px;
+  }
+  .footer-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .footer-brand img{
+    height:36px;
+    width:36px;
+    object-fit:contain;
+  }
+  .footer-brand span{
+    font-family:'Dosis', sans-serif;
+    font-weight:700;
+    color:var(--accent);
+    font-size:16px;
+  }
+  .footer-links{
+    display:flex;
+    gap:28px;
+    flex-wrap:wrap;
+  }
+  .footer-links a{
+    font-size:14px;
+    font-weight:600;
+    color:var(--text-muted);
+  }
+  .footer-links a:hover{color:var(--accent);}
+  .footer-copy{
+    font-size:13px;
+    color:var(--text-faint);
+    width:100%;
+    text-align:center;
+    margin-top:32px;
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{
+    transform:translateY(14px);
+    transition:transform 0.7s ease;
+  }
+  .reveal.in-view{
+    transform:translateY(0);
+  }
+</style>
+</head>
+<body>
+
+  <header class="site-header" id="siteHeader">
+    <div class="wrap navbar">
+      <a href="#top" class="brand">
+        <img src="assets/logo.png" alt="Logo Foto Studio Art Digital">
+        <span class="brand-text">Art Digital<span>FOTO STUDIO BEOGRAD</span></span>
+      </a>
+
+      <nav class="nav-desktop">
+        <ul class="nav-links">
+          <li><a href="#usluge">Usluge</a></li>
+          <li><a href="#o-nama">O nama</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+        <a href="#kontakt" class="btn btn-primary">Zakaži termin</a>
+      </nav>
+
+      <button class="hamburger" id="hamburgerBtn" aria-label="Otvori meni" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#usluge" class="mobile-link">Usluge</a>
+    <a href="#o-nama" class="mobile-link">O nama</a>
+    <a href="#kontakt" class="mobile-link">Kontakt</a>
+    <a href="#kontakt" class="btn btn-primary mobile-link">Zakaži termin</a>
+  </div>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="hero-eyebrow">Foto studio u Beogradu</span>
+          <h1>Fotografije koje ostaju kad trenutak prođe</h1>
+          <p class="hero-sub">Fotografišemo lične dokumente, poslovne portrete i venčanja, a onda fotografije obrađujemo i štampamo u istom studiju. Sve na jednoj adresi.</p>
+          <a href="#kontakt" class="btn btn-primary">Zakaži fotografisanje</a>
+        </div>
+        <div class="hero-visual">
+          <div class="placeholder-box">FOTOGRAFIJA IZ STUDIJA</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOL UVOD -->
+    <section class="pain">
+      <div class="wrap pain-inner reveal">
+        <h2>Treba ti fotografija za sutra, a nemaš vremena da trčiš po Beogradu</h2>
+        <p>Fotografija za ličnu kartu do podneva, portret za sajt firme, neko ko treba da snimi venčanje bez greške. Trčanje od studija do štamparije oduzima vreme koje nemaš. Sve to radimo na jednoj adresi, u istom studiju.</p>
+      </div>
+    </section>
+
+    <!-- USLUGE -->
+    <section id="usluge">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Usluge</span>
+          <h2>Od fotografije za dokumenta do snimanja venčanja</h2>
+          <p>Pet stvari koje radimo svaki dan, sa istom pažnjom bez obzira da li ti treba fotografija za pet minuta ili snimanje celog venčanja.</p>
+        </div>
+
+        <div class="services-grid">
+
+          <div class="service-card reveal">
+            <div class="icon-circle">
+              <svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            </div>
+            <h3>Lične fotografije i dokumenta</h3>
+            <p>Fotografije za ličnu kartu, pasoš, vozačku i biografiju. Uslikamo te u studiju i fotografija je gotova isti dan.</p>
+            <a href="#kontakt" class="service-link">Zakaži termin <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+
+          <div class="service-card reveal">
+            <div class="icon-circle">
+              <svg viewBox="0 0 24 24"><path d="M4 7h16v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7z"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M4 12h16"/></svg>
+            </div>
+            <h3>Poslovne fotografije</h3>
+            <p>Portreti za sajt, LinkedIn i kataloge firme. Dogovaramo termin u studiju ili dolazimo na tvoju lokaciju.</p>
+            <a href="#kontakt" class="service-link">Zakaži termin <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+
+          <div class="service-card reveal">
+            <div class="icon-circle">
+              <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.5-9C1 8.5 2.5 5 6 5c2 0 3.5 1.2 4 2 0.5-0.8 2-2 4-2 3.5 0 5 3.5 3.5 7-2.5 4.4-9.5 9-9.5 9z"/></svg>
+            </div>
+            <h3>Snimanje venčanja</h3>
+            <p>Snimamo veridbu, venčanje i sve trenutke oko njih. Dobijaš obrađene fotografije koje pamtiš godinama.</p>
+            <a href="#kontakt" class="service-link">Zakaži termin <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+
+          <div class="service-card reveal">
+            <div class="icon-circle">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 15l4.5-4.5 3 3L15 9l6 6"/><circle cx="8" cy="8.5" r="1.3"/></svg>
+            </div>
+            <h3>Izrada i digitalna obrada</h3>
+            <p>Štampamo fotografije u svim formatima i radimo digitalnu obradu: retuš, restauraciju starih slika, pripremu za štampu.</p>
+            <a href="#kontakt" class="service-link">Zakaži termin <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+
+          <div class="service-card reveal">
+            <div class="icon-circle">
+              <svg viewBox="0 0 24 24"><path d="M4 9l1-5h14l1 5"/><path d="M4 9h16v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9z"/><path d="M9 13h6v4H9z"/></svg>
+            </div>
+            <h3>Foto radnja - usluge</h3>
+            <p>Fotokopiranje, skeniranje, izrada foto proizvoda i sve što ti zatreba od foto opreme i materijala.</p>
+            <a href="#kontakt" class="service-link">Poseti radnju <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- O BRENDU -->
+    <section class="about" id="o-nama">
+      <div class="wrap about-grid">
+        <div class="reveal">
+          <div class="placeholder-box">PROSTOR STUDIJA</div>
+        </div>
+        <div class="about-text reveal">
+          <span class="eyebrow">O nama</span>
+          <h2>Foto studio kome možeš da veruješ</h2>
+          <p>Foto Studio Art Digital radi u Beogradu i bavi se fotografisanjem i obradom fotografija. Fotografišemo lične dokumente, poslovne portrete i venčanja, a onda fotografije i štampamo i obrađujemo u istom prostoru.</p>
+          <p>Sve rešavaš na jednoj adresi, bez trčanja između studija i štamparije.</p>
+          <div class="about-points">
+            <div class="about-point">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Profesionalna oprema i dugogodišnje iskustvo</span>
+            </div>
+            <div class="about-point">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Brza izrada fotografija za dokumenta, isti dan</span>
+            </div>
+            <div class="about-point">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Digitalna obrada i štampa na jednom mestu</span>
+            </div>
+            <div class="about-point">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+              <span>Snimanje venčanja od veridbe do svadbenog dana</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA CLOSING -->
+    <section class="cta-close">
+      <div class="wrap cta-close-inner reveal">
+        <h2>Zakaži svoj termin u studiju</h2>
+        <p>Bilo da ti treba fotografija za sutra ili snimanje venčanja za sledeće leto, javi nam se i dogovorićemo termin koji ti odgovara.</p>
+        <a href="#kontakt" class="btn btn-light">Zakaži termin za fotografisanje</a>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section id="kontakt">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">Kontakt</span>
+          <h2>Pošalji upit i dogovorimo termin</h2>
+          <p>Napiši nam šta ti treba, ostavi kontakt i javljamo se da dogovorimo tačno vreme fotografisanja.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info reveal">
+            <div class="contact-item">
+              <div class="icon-circle">
+                <svg viewBox="0 0 24 24"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              </div>
+              <div>
+                <h4>Lokacija</h4>
+                <p>Studio se nalazi u Beogradu.</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="icon-circle">
+                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18"/><path d="M8 2v4M16 2v4"/></svg>
+              </div>
+              <div>
+                <h4>Zakazivanje unapred</h4>
+                <p>Termine za venčanja i poslovno fotografisanje dogovaramo unapred, dokumenta radimo bez čekanja.</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="icon-circle">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
+              </div>
+              <div>
+                <h4>Odgovaramo brzo</h4>
+                <p>Pošalji poruku i javljamo se sa slobodnim terminima za tvoju vrstu fotografisanja.</p>
+              </div>
+            </div>
+          </div>
+
+          <form class="contact-form reveal" action="#" onsubmit="return false;">
+            <div class="form-row">
+              <label for="ime">Ime i prezime</label>
+              <input type="text" id="ime" name="ime" placeholder="Tvoje ime">
+            </div>
+            <div class="form-row">
+              <label for="kontakt-podatak">Telefon ili email</label>
+              <input type="text" id="kontakt-podatak" name="kontakt-podatak" placeholder="Broj telefona ili email adresa">
+            </div>
+            <div class="form-row">
+              <label for="poruka">Šta ti treba</label>
+              <textarea id="poruka" name="poruka" placeholder="Npr. fotografija za pasoš, snimanje venčanja u julu..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;">Pošalji upit i zakaži termin</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="Logo Foto Studio Art Digital">
+        <span>Art Digital Foto Studio</span>
+      </div>
+      <div class="footer-links">
+        <a href="#usluge">Usluge</a>
+        <a href="#o-nama">O nama</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
+      <p class="footer-copy">© 2024 Foto Studio Art Digital, Beograd. Sva prava zadržana.</p>
+    </div>
+  </footer>
+
+<script>
+  // Header scroll effect
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', function(){
+    if(window.scrollY > 12){
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // Mobile menu toggle
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburgerBtn.addEventListener('click', function(){
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburgerBtn.classList.toggle('open');
+    hamburgerBtn.setAttribute('aria-expanded', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.mobile-link').forEach(function(link){
+    link.addEventListener('click', function(){
+      mobileMenu.classList.remove('open');
+      hamburgerBtn.classList.remove('open');
+      hamburgerBtn.setAttribute('aria-expanded', false);
+      document.body.style.overflow = '';
+    });
+  });
+
+  // Scroll reveal
+  if('IntersectionObserver' in window){
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(function(el){ observer.observe(el); });
+  }
+</script>
+
+</body>
+</html>
