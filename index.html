@@ -3,592 +3,1214 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foto Studio Art Digital - Fotografisanje i obrada fotografija u Beogradu</title>
-<meta name="description" content="Foto Studio Art Digital - profesionalno fotografisanje, snimanje venčanja, izrada i digitalna obrada fotografija u Beogradu.">
+<title>Foto Studio Art Digital - Fotografisanje, obrada i štampa u Beogradu</title>
+<meta name="description" content="Foto Studio Art Digital - fotografije za dokumenta, poslovni portreti, snimanje venčanja, digitalna obrada i štampa fotografija u Beogradu. Sve na jednoj adresi.">
+<link rel="icon" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
+    /* telo aparata */
+    --body:#0a0d0d;
+    --body-2:#0f1414;
+    --panel:#131a1a;
+    --line:rgba(233,242,242,0.12);
+    --line-strong:rgba(233,242,242,0.28);
+
+    /* jedna boja: brend teal #033537 i njena porodica */
     --accent:#033537;
     --accent-dark:#021f20;
-    --accent-light:#0d5c5f;
-    --accent-soft:#e9f0f0;
-    --accent-glow:rgba(3,53,55,0.14);
-    --text:#0a1f1f;
-    --text-muted:rgba(10,31,31,0.72);
-    --text-faint:rgba(10,31,31,0.5);
-    --bg:#fdfdfb;
-    --radius-btn:8px;
-    --radius-card:20px;
+    --accent-mid:#0b6b6f;
+    --signal:#3fd8dc;
+    --signal-soft:rgba(63,216,220,0.14);
+    --signal-glow:rgba(63,216,220,0.32);
+    --lcd:#061d1e;
+
+    /* tekst */
+    --text:#e9f2f2;
+    --text-muted:rgba(233,242,242,0.68);
+    --text-faint:rgba(233,242,242,0.44);
+
+    /* papir (sekcija izrade) */
+    --paper:#f2f1ec;
+    --ink:#0a1414;
+    --ink-muted:rgba(10,20,20,0.68);
+
+    --display:'Archivo', sans-serif;
+    --mono:'JetBrains Mono', monospace;
   }
 
   *{margin:0;padding:0;box-sizing:border-box;}
 
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;scroll-padding-top:80px;}
 
   body{
-    background:var(--bg);
+    background:var(--body);
     color:var(--text);
-    font-family:'Open Sans', sans-serif;
-    font-weight:400;
+    font-family:var(--display);
+    font-stretch:100%;
+    font-size:16px;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
 
-  h1,h2,h3,h4{
-    font-family:'Dosis', sans-serif;
-    color:var(--text);
-    line-height:1.15;
-    font-weight:700;
+  h1,h2,h3{
+    font-family:var(--display);
+    font-stretch:125%;
+    font-weight:800;
+    line-height:1;
+    text-transform:uppercase;
+    letter-spacing:-0.01em;
   }
 
   p{color:var(--text-muted);}
-
-  a{text-decoration:none;color:inherit;}
-
-  img{max-width:100%;display:block;}
-
-  ul{list-style:none;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  ul,ol{list-style:none;}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;}
 
   .wrap{
     max-width:1280px;
-    margin:0 auto;
-    padding-left:24px;
-    padding-right:24px;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left:32px;
+    padding-right:32px;
   }
-
   @media (max-width:768px){
     .wrap{padding-left:20px;padding-right:20px;}
   }
 
-  section{
-    padding-top:96px;
-    padding-bottom:96px;
+  .section{
+    padding-top:128px;
+    padding-bottom:128px;
+    position:relative;
   }
-
   @media (max-width:768px){
-    section{padding-top:64px;padding-bottom:64px;}
+    .section{padding-top:80px;padding-bottom:80px;}
   }
 
+  .mono{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+  }
+
+  /* ---------- DUGME (jedan stil, oštri uglovi) ---------- */
   .btn{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    gap:8px;
-    padding:15px 30px;
-    border-radius:var(--radius-btn);
-    font-family:'Open Sans', sans-serif;
-    font-weight:600;
-    font-size:15px;
-    border:2px solid transparent;
-    cursor:pointer;
-    transition:transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+    gap:12px;
+    padding-top:16px;
+    padding-bottom:16px;
+    padding-left:24px;
+    padding-right:24px;
+    background:var(--signal);
+    color:var(--accent-dark);
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    border:1px solid var(--signal);
+    border-radius:0;
+    transition:background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
     white-space:nowrap;
   }
-
-  .btn-primary{
-    background:var(--accent);
-    color:#fff;
-  }
-  .btn-primary:hover{
-    background:var(--accent-dark);
-    box-shadow:0 12px 28px -8px var(--accent-glow);
-    transform:translateY(-2px);
-  }
-
-  .btn-outline{
+  .btn:hover{
     background:transparent;
-    border:2px solid var(--accent);
-    color:var(--accent);
+    color:var(--signal);
+    box-shadow:0 0 0 4px var(--signal-soft);
   }
-  .btn-outline:hover{
-    background:var(--accent-soft);
-  }
+  .btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
 
-  .btn-light{
+  /* modifikator: okidač (krug) */
+  .btn.has-shutter{padding-left:8px;}
+  .shutter{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:2px solid currentColor;
+    display:grid;
+    place-items:center;
+    flex-shrink:0;
+  }
+  .shutter::after{
+    content:"";
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:currentColor;
+    transition:transform 0.15s ease;
+  }
+  .btn.has-shutter:hover .shutter::after{transform:scale(0.72);}
+  .btn.has-shutter:active .shutter::after{transform:scale(0.52);}
+
+  /* ---------- FLEŠ ---------- */
+  .flash{
+    position:fixed;
+    inset:0;
     background:#fff;
-    color:var(--accent);
+    z-index:3000;
+    pointer-events:none;
+    opacity:0;
   }
-  .btn-light:hover{
-    background:var(--accent-soft);
-    transform:translateY(-2px);
-  }
+  .flash.go{animation:flash 0.45s ease-out;}
+  @keyframes flash{0%{opacity:0.92;}100%{opacity:0;}}
 
-  /* ---------- HEADER ---------- */
+  /* ---------- OTVARANJE BLENDE (intro, dodaje ga JS) ---------- */
+  .iris{
+    position:fixed;
+    inset:0;
+    z-index:4000;
+    pointer-events:none;
+    overflow:hidden;
+    display:grid;
+    place-items:center;
+  }
+  .iris-hole{
+    width:0;
+    height:0;
+    border-radius:50%;
+    box-shadow:0 0 0 200vmax var(--body);
+    animation:iris 1s cubic-bezier(0.7,0,0.2,1) 0.35s forwards;
+  }
+  .iris-label{
+    position:absolute;
+    color:var(--signal);
+    animation:irisLabel 0.6s ease 0.2s forwards;
+  }
+  @keyframes iris{to{width:300vmax;height:300vmax;}}
+  @keyframes irisLabel{to{opacity:0;}}
+
+  /* ---------- HEADER (gornji LCD) ---------- */
   .site-header{
-    position:sticky;
+    position:fixed;
     top:0;
+    left:0;
+    right:0;
     z-index:1000;
-    background:#fff;
-    border-bottom:1px solid rgba(3,53,55,0.08);
-    transition:background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+    border-bottom:1px solid transparent;
+    transition:background 0.3s ease, border-color 0.3s ease;
   }
   .site-header.scrolled{
-    background:rgba(255,255,255,0.85);
-    backdrop-filter:blur(10px);
-    box-shadow:0 8px 24px -12px rgba(3,53,55,0.15);
+    background:rgba(10,13,13,0.84);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom-color:var(--line);
   }
-
   .navbar{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding-top:14px;
-    padding-bottom:14px;
+    gap:24px;
+    height:80px;
   }
-
   .brand{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:12px;
   }
-  .brand img{
-    height:44px;
-    width:44px;
-    object-fit:contain;
+  .brand-plate{
+    width:48px;
+    height:48px;
+    background:#fff;
+    display:grid;
+    place-items:center;
+    flex-shrink:0;
   }
-  .brand-text{
-    font-family:'Dosis', sans-serif;
-    font-weight:700;
-    font-size:18px;
-    color:var(--accent);
-    line-height:1.1;
+  .brand-plate img{width:44px;height:44px;object-fit:contain;}
+  .brand-name{
+    font-stretch:125%;
+    font-weight:800;
+    font-size:16px;
+    line-height:1;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
   }
-  .brand-text span{
+  .brand-name small{
     display:block;
-    font-family:'Open Sans', sans-serif;
+    margin-top:4px;
+    font-family:var(--mono);
+    font-stretch:100%;
     font-weight:400;
-    font-size:11px;
+    font-size:12px;
+    letter-spacing:0.12em;
     color:var(--text-faint);
-    letter-spacing:1px;
   }
 
-  .nav-links{
+  .readout{
     display:flex;
     align-items:center;
-    gap:36px;
+    gap:20px;
+    color:var(--text-faint);
   }
-  .nav-links a{
-    font-size:15px;
-    font-weight:600;
-    color:var(--text);
-    transition:color 0.2s ease;
+  .meter{
+    position:relative;
+    width:192px;
+    height:24px;
   }
-  .nav-links a:hover{color:var(--accent);}
+  .meter-scale{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:8px;
+    background:
+      repeating-linear-gradient(90deg, var(--line-strong) 0 1px, transparent 1px 16px) left bottom/100% 4px no-repeat,
+      repeating-linear-gradient(90deg, var(--text-faint) 0 1px, transparent 1px 32px) left bottom/100% 8px no-repeat;
+  }
+  .meter-labels{
+    position:absolute;
+    left:-4px;
+    right:-4px;
+    top:0;
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--mono);
+    font-size:8px;
+    line-height:1;
+  }
+  .meter-needle{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:2px;
+    height:12px;
+    background:var(--signal);
+    box-shadow:0 0 8px var(--signal-glow);
+    transform:translateX(calc(var(--p, 0) * 190px));
+  }
+  .frame-count b{color:var(--signal);font-weight:700;}
 
   .nav-desktop{
     display:flex;
     align-items:center;
-    gap:36px;
+    gap:32px;
   }
+  .nav-links{display:flex;gap:28px;}
+  .nav-links a{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    transition:color 0.2s ease;
+  }
+  .nav-links a:hover{color:var(--signal);}
 
   .hamburger{
     display:none;
-    flex-direction:column;
-    justify-content:center;
-    gap:5px;
-    width:32px;
-    height:32px;
-    background:none;
-    border:none;
-    cursor:pointer;
+    width:48px;
+    height:48px;
+    border:1px solid var(--line-strong);
+    position:relative;
     z-index:1200;
   }
   .hamburger span{
-    display:block;
+    position:absolute;
+    left:12px;
+    right:12px;
     height:2px;
-    width:100%;
-    background:var(--accent);
-    border-radius:2px;
+    background:var(--text);
     transition:transform 0.25s ease, opacity 0.25s ease;
   }
-  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger span:nth-child(1){top:16px;}
+  .hamburger span:nth-child(2){top:24px;}
+  .hamburger span:nth-child(3){top:32px;}
+  .hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg);}
   .hamburger.open span:nth-child(2){opacity:0;}
-  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .hamburger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
 
   .mobile-menu{
     position:fixed;
     inset:0;
-    background:#fff;
     z-index:1100;
+    background:var(--body);
     display:flex;
     flex-direction:column;
-    align-items:center;
     justify-content:center;
-    gap:32px;
+    gap:24px;
+    padding-left:20px;
+    padding-right:20px;
     transform:translateY(-100%);
-    transition:transform 0.35s ease;
+    transition:transform 0.4s cubic-bezier(0.7,0,0.2,1);
   }
   .mobile-menu.open{transform:translateY(0);}
-  .mobile-menu a{
-    font-family:'Dosis', sans-serif;
-    font-size:28px;
-    font-weight:600;
-    color:var(--accent);
+  .mobile-menu .m-link{
+    font-stretch:125%;
+    font-weight:800;
+    font-size:40px;
+    line-height:1;
+    text-transform:uppercase;
+    display:flex;
+    align-items:baseline;
+    gap:16px;
   }
+  .mobile-menu .m-link span{
+    font-family:var(--mono);
+    font-stretch:100%;
+    font-weight:400;
+    font-size:12px;
+    color:var(--signal);
+  }
+  .mobile-menu .btn{align-self:flex-start;margin-top:16px;}
 
+  @media (max-width:1199px){
+    .readout{display:none;}
+  }
   @media (max-width:991px){
     .nav-desktop{display:none;}
-    .hamburger{display:flex;}
+    .hamburger{display:block;}
   }
 
-  /* ---------- HERO ---------- */
-  .hero{
-    padding-top:80px;
-    padding-bottom:80px;
+  /* ---------- FOTO / PLACEHOLDER ---------- */
+  .ph{
     position:relative;
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0 12px, transparent 12px 24px),
+      #1b2222;
+    display:grid;
+    place-items:center;
     overflow:hidden;
   }
-  .hero::before{
+  .ph-label{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    text-align:center;
+    padding-left:16px;
+    padding-right:16px;
+  }
+  .ph img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .ph.has-photo .ph-label{display:none;}
+
+  /* uglovi tražila, koriste se na više mesta */
+  .corners{position:absolute;inset:0;pointer-events:none;}
+  .corners::before,
+  .corners::after{
     content:"";
     position:absolute;
-    top:-200px;
-    right:-200px;
-    width:600px;
-    height:600px;
-    background:radial-gradient(circle, var(--accent-glow) 0%, rgba(3,53,55,0) 70%);
-    z-index:0;
-    pointer-events:none;
+    width:32px;
+    height:32px;
+    border-color:var(--text);
+    border-style:solid;
+    transition:border-color 0.25s ease;
   }
-  .hero-grid{
+  .corners::before{top:0;left:0;border-width:2px 0 0 2px;}
+  .corners::after{bottom:0;right:0;border-width:0 2px 2px 0;}
+  .corners i::before,
+  .corners i::after{
+    content:"";
+    position:absolute;
+    width:32px;
+    height:32px;
+    border-color:var(--text);
+    border-style:solid;
+    transition:border-color 0.25s ease;
+  }
+  .corners i::before{top:0;right:0;border-width:2px 2px 0 0;}
+  .corners i::after{bottom:0;left:0;border-width:0 0 2px 2px;}
+
+  /* ---------- HERO: TRAŽILO ---------- */
+  .hero{
     position:relative;
-    z-index:1;
-    display:grid;
-    grid-template-columns:1.1fr 0.9fr;
-    gap:64px;
-    align-items:center;
+    min-height:100vh;
+    min-height:100svh;
+    padding-top:112px;
+    padding-bottom:32px;
+    display:flex;
+    overflow:hidden;
   }
-  .hero-eyebrow{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-size:13px;
-    font-weight:600;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:var(--accent);
-    background:var(--accent-soft);
-    padding:8px 16px;
-    border-radius:999px;
-    margin-bottom:24px;
+  .hero-bg{
+    position:absolute;
+    inset:0;
+    place-items:start end;
   }
-  .hero h1{
-    font-size:clamp(38px, 5.5vw, 64px);
-    font-weight:800;
-    margin-bottom:22px;
-    letter-spacing:0.3px;
+  .hero-bg .ph-label{padding-top:176px;padding-right:48px;}
+  .hero-bg::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(180deg, rgba(10,13,13,0.72) 0%, rgba(10,13,13,0.2) 40%, rgba(10,13,13,0.92) 100%),
+      radial-gradient(ellipse at 20% 80%, rgba(3,53,55,0.6), transparent 60%);
   }
-  .hero-sub{
-    font-size:18px;
-    max-width:480px;
-    margin-bottom:36px;
-    color:var(--text-muted);
-  }
-  .hero-visual{
+  .hero > .wrap{
     position:relative;
-  }
-  .placeholder-box{
+    z-index:2;
     width:100%;
-    aspect-ratio:4/5;
-    background:linear-gradient(160deg, var(--accent-soft), #f2f5f5);
-    border:1px dashed rgba(3,53,55,0.3);
-    border-radius:var(--radius-card);
+    display:flex;
+  }
+  .viewfinder{
+    position:relative;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:32px;
+    padding-top:24px;
+    padding-bottom:24px;
+    padding-left:24px;
+    padding-right:24px;
+    cursor:crosshair;
+  }
+  .viewfinder.locked .corners::before,
+  .viewfinder.locked .corners::after,
+  .viewfinder.locked .corners i::before,
+  .viewfinder.locked .corners i::after{border-color:var(--signal);}
+
+  .thirds{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+      linear-gradient(90deg, transparent calc(33.333% - 0.5px), rgba(233,242,242,0.08) calc(33.333% - 0.5px) calc(33.333% + 0.5px), transparent calc(33.333% + 0.5px) calc(66.666% - 0.5px), rgba(233,242,242,0.08) calc(66.666% - 0.5px) calc(66.666% + 0.5px), transparent calc(66.666% + 0.5px)),
+      linear-gradient(180deg, transparent calc(33.333% - 0.5px), rgba(233,242,242,0.08) calc(33.333% - 0.5px) calc(33.333% + 0.5px), transparent calc(33.333% + 0.5px) calc(66.666% - 0.5px), rgba(233,242,242,0.08) calc(66.666% - 0.5px) calc(66.666% + 0.5px), transparent calc(66.666% + 0.5px));
+  }
+
+  .vf-top,
+  .vf-bottom-bar{
+    position:relative;
+    z-index:2;
     display:flex;
     align-items:center;
-    justify-content:center;
-    text-align:center;
-    color:var(--text-faint);
-    font-family:'Dosis', sans-serif;
-    font-weight:600;
-    font-size:15px;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    padding:24px;
-  }
-  .hero-visual .placeholder-box{
-    box-shadow:0 30px 60px -30px rgba(3,53,55,0.25);
-  }
-
-  @media (max-width:900px){
-    .hero-grid{grid-template-columns:1fr;}
-    .hero-visual{order:-1;max-width:340px;margin:0 auto 16px;}
-  }
-
-  /* ---------- BOL / INTRO ---------- */
-  .pain{
-    background:var(--accent-soft);
-  }
-  .pain-inner{
-    max-width:700px;
-    margin:0 auto;
-    text-align:center;
-  }
-  .pain h2{
-    font-size:clamp(24px,3vw,32px);
-    margin-bottom:18px;
-  }
-  .pain p{
-    font-size:17px;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
     color:var(--text-muted);
   }
-
-  /* ---------- SECTION HEADINGS ---------- */
-  .section-head{
-    max-width:640px;
-    margin-bottom:56px;
+  .vf-set{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .vf-mode{
+    border:1px solid var(--text-muted);
+    color:var(--text);
+    padding-left:8px;
+    padding-right:8px;
+    padding-top:4px;
+    padding-bottom:4px;
   }
-  .section-head.center{
+  .battery{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+  }
+  .battery svg{width:28px;height:16px;stroke:var(--text-muted);fill:none;stroke-width:1.5;}
+  .battery svg .lvl{fill:var(--signal);stroke:none;}
+
+  .af-field{
+    position:relative;
+    flex:1;
+    min-height:120px;
+    width:64%;
     margin-left:auto;
     margin-right:auto;
-    text-align:center;
-  }
-  .eyebrow{
-    display:inline-block;
-    font-size:13px;
-    font-weight:700;
-    letter-spacing:1.5px;
-    text-transform:uppercase;
-    color:var(--accent);
-    margin-bottom:14px;
-  }
-  .section-head h2{
-    font-size:clamp(28px,3.6vw,40px);
-    margin-bottom:16px;
-  }
-  .section-head p{
-    font-size:17px;
-    max-width:60ch;
-  }
-  .section-head.center p{margin-left:auto;margin-right:auto;}
-
-  /* ---------- USLUGE ---------- */
-  .services-grid{
     display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:28px;
+    grid-template-columns:repeat(7, 1fr);
+    grid-template-rows:repeat(3, 1fr);
+    place-items:center;
+    pointer-events:none;
+    z-index:1;
   }
-  .service-card{
-    background:#fff;
-    border:1px solid rgba(3,53,55,0.1);
-    border-radius:var(--radius-card);
-    padding:36px 28px;
-    transition:box-shadow 0.3s ease, transform 0.3s ease;
+  .af{
+    width:24px;
+    height:16px;
+    border:1px solid rgba(233,242,242,0.18);
+    transition:border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
   }
-  .service-card:hover{
-    box-shadow:0 24px 48px -24px rgba(3,53,55,0.22);
-    transform:translateY(-4px);
+  .af.on{
+    border-color:var(--signal);
+    border-width:2px;
+    box-shadow:0 0 12px var(--signal-glow);
+    transform:scale(1.2);
   }
-  .icon-circle{
-    width:54px;
-    height:54px;
-    border-radius:50%;
-    background:var(--accent-soft);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:22px;
+
+  .hero-copy{
+    position:relative;
+    z-index:2;
   }
-  .icon-circle svg{
-    width:26px;
-    height:26px;
-    stroke:var(--accent);
-    fill:none;
-    stroke-width:1.8;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-  }
-  .service-card h3{
-    font-size:21px;
-    margin-bottom:12px;
-  }
-  .service-card p{
-    font-size:15px;
-    margin-bottom:18px;
-  }
-  .service-link{
-    font-size:14px;
-    font-weight:700;
-    color:var(--accent);
+  .hero-kicker{
     display:inline-flex;
     align-items:center;
-    gap:6px;
+    gap:12px;
+    color:var(--signal);
+    margin-bottom:24px;
   }
-  .service-link svg{
-    width:14px;
-    height:14px;
-    stroke:var(--accent);
-    fill:none;
-    stroke-width:2;
+  .hero-kicker::before{
+    content:"";
+    width:8px;
+    height:8px;
+    background:var(--signal);
+    box-shadow:0 0 12px var(--signal-glow);
+  }
+  .hero h1{
+    font-size:clamp(40px, 7.2vw, 104px);
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:transparent;
+    -webkit-text-stroke:2px var(--text);
+  }
+  .hero-side{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:48px;
+    margin-top:40px;
+    padding-top:24px;
+    border-top:1px solid var(--line-strong);
+  }
+  .hero-side p{font-size:16px;max-width:52ch;}
+
+  @media (max-width:991px){
+    .hero-side{flex-direction:column;align-items:flex-start;gap:24px;}
+    .af-field{width:88%;}
+  }
+  @media (max-width:768px){
+    .hero{padding-top:96px;}
+    .hero-bg{place-items:end center;}
+    .hero-bg .ph-label{padding-top:0;padding-right:16px;padding-bottom:8px;}
+    .viewfinder{padding-left:16px;padding-right:16px;}
+    .vf-hide-sm{display:none;}
+    .hero h1{font-size:32px;font-stretch:112%;}
+    .hero h1 em{-webkit-text-stroke:1px var(--text);}
+    .af{width:16px;height:12px;}
   }
 
-  @media (max-width:900px){
-    .services-grid{grid-template-columns:repeat(2,1fr);}
-  }
-  @media (max-width:600px){
-    .services-grid{grid-template-columns:1fr;}
-  }
-
-  /* ---------- O BRENDU ---------- */
-  .about{
-    background:var(--accent-soft);
-  }
-  .about-grid{
+  /* ---------- SEKCIJSKI NASLOV ---------- */
+  .sec-head{
     display:grid;
-    grid-template-columns:0.85fr 1.15fr;
+    grid-template-columns:200px minmax(0, 1fr);
+    gap:32px;
+    margin-bottom:64px;
+    border-top:1px solid var(--line);
+    padding-top:24px;
+  }
+  .sec-tag{color:var(--signal);}
+  .sec-tag b{display:block;color:var(--text-faint);font-weight:400;margin-top:4px;}
+  .sec-head h2{
+    font-size:clamp(32px, 4.8vw, 64px);
+    max-width:16ch;
+  }
+  .sec-head p{
+    margin-top:24px;
+    max-width:60ch;
+    font-size:16px;
+  }
+  @media (max-width:768px){
+    .sec-head{grid-template-columns:1fr;gap:16px;margin-bottom:48px;}
+  }
+
+  /* ---------- FOKUS (bol uvod) ---------- */
+  .focus-grid{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);
     gap:64px;
     align-items:center;
   }
-  .about-grid .placeholder-box{
-    aspect-ratio:1/1;
-    border-color:rgba(3,53,55,0.25);
-    background:linear-gradient(160deg,#fff,#e3ecec);
+  .focus-grid h2{
+    font-size:clamp(28px, 3.6vw, 48px);
+    margin-bottom:24px;
   }
-  .about-text h2{
-    font-size:clamp(26px,3.4vw,36px);
-    margin-bottom:20px;
+  .focus-grid p{max-width:60ch;margin-bottom:16px;}
+  .focus-grid p strong{color:var(--text);font-weight:600;}
+
+  .focus-box{
+    border:1px solid var(--line);
+    background:var(--body-2);
+    padding-top:24px;
+    padding-bottom:24px;
+    padding-left:24px;
+    padding-right:24px;
   }
-  .about-text p{
-    font-size:16px;
-    margin-bottom:18px;
-    max-width:60ch;
-  }
-  .about-points{
-    margin-top:28px;
+  .focus-top{
     display:flex;
-    flex-direction:column;
-    gap:16px;
+    justify-content:space-between;
+    color:var(--text-faint);
+    margin-bottom:24px;
   }
-  .about-point{
+  .focus-top .ok{color:var(--signal);opacity:0;transition:opacity 0.2s ease;}
+  .focus-box.sharp .focus-top .ok{opacity:1;}
+  .focus-stage{
+    position:relative;
+    aspect-ratio:16/9;
+    display:grid;
+    place-items:center;
+    background:radial-gradient(ellipse at center, rgba(3,53,55,0.5), transparent 70%);
+    margin-bottom:24px;
+  }
+  .focus-word{
+    font-stretch:125%;
+    font-weight:900;
+    font-size:clamp(28px, 4vw, 56px);
+    line-height:1;
+    text-transform:uppercase;
+    text-align:center;
+    filter:blur(var(--blur, 0px));
+    transition:filter 0.08s linear;
+  }
+  .focus-word span{display:block;color:var(--signal);}
+  .focus-stage .corners{inset:12px;}
+  .focus-stage .corners::before,
+  .focus-stage .corners::after,
+  .focus-stage .corners i::before,
+  .focus-stage .corners i::after{width:16px;height:16px;}
+  .focus-box.sharp .focus-stage .corners::before,
+  .focus-box.sharp .focus-stage .corners::after,
+  .focus-box.sharp .focus-stage .corners i::before,
+  .focus-box.sharp .focus-stage .corners i::after{border-color:var(--signal);}
+
+  .ring{display:flex;align-items:center;gap:16px;}
+  .ring label{color:var(--text-muted);flex-shrink:0;}
+  .ring input[type=range]{
+    -webkit-appearance:none;
+    appearance:none;
+    flex:1;
+    height:32px;
+    background:
+      repeating-linear-gradient(90deg, var(--line-strong) 0 2px, transparent 2px 8px) center/100% 16px no-repeat,
+      var(--panel);
+    cursor:ew-resize;
+    min-width:0;
+  }
+  .ring input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:4px;
+    height:32px;
+    background:var(--signal);
+    box-shadow:0 0 12px var(--signal-glow);
+  }
+  .ring input[type=range]::-moz-range-thumb{
+    width:4px;
+    height:32px;
+    border:none;
+    border-radius:0;
+    background:var(--signal);
+  }
+  .ring input[type=range]:focus-visible{outline:2px solid var(--signal);outline-offset:4px;}
+  .ring-scale{
     display:flex;
-    align-items:flex-start;
-    gap:12px;
+    justify-content:space-between;
+    color:var(--text-faint);
+    margin-top:8px;
+    margin-left:52px;
+    font-size:12px;
   }
-  .about-point svg{
-    width:22px;
-    height:22px;
-    flex-shrink:0;
-    stroke:var(--accent);
-    fill:none;
-    stroke-width:2;
-    margin-top:2px;
-  }
-  .about-point span{
-    font-size:15px;
+  .af-btn{
+    border:1px solid var(--line-strong);
+    padding-left:12px;
+    padding-right:12px;
+    height:32px;
     color:var(--text);
-    font-weight:600;
+    flex-shrink:0;
   }
+  .af-btn:hover{border-color:var(--signal);color:var(--signal);}
 
   @media (max-width:900px){
-    .about-grid{grid-template-columns:1fr;}
-    .about-grid .placeholder-box{max-width:340px;margin:0 auto;}
+    .focus-grid{grid-template-columns:1fr;gap:48px;}
   }
 
-  /* ---------- CTA CLOSING ---------- */
-  .cta-close{
-    background:var(--accent);
-    position:relative;
-    overflow:hidden;
+  /* ---------- USLUGE: TOČKIĆ ZA REŽIME ---------- */
+  .dial-layout{
+    display:grid;
+    grid-template-columns:440px minmax(0, 1fr);
+    gap:64px;
+    align-items:center;
   }
-  .cta-close::before{
+  .dial-wrap{
+    --size:400px;
+    position:relative;
+    width:var(--size);
+    height:var(--size);
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .dial-index{
+    position:absolute;
+    top:-20px;
+    left:50%;
+    width:0;
+    height:0;
+    transform:translateX(-50%);
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    border-top:12px solid var(--signal);
+    z-index:3;
+    filter:drop-shadow(0 0 6px var(--signal-glow));
+  }
+  .dial{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 50% 50%, #161d1d 0 36%, transparent 36.2%),
+      radial-gradient(circle at 50% 50%, transparent 0 61%, #0d1212 61.2% 100%),
+      repeating-conic-gradient(from 0deg, #1f2828 0 1.5deg, #0c1010 1.5deg 3deg);
+    box-shadow:
+      inset 0 0 0 1px var(--line-strong),
+      inset 0 2px 0 rgba(255,255,255,0.08),
+      0 40px 80px -24px rgba(0,0,0,0.8);
+    transform:rotate(var(--rot, 0deg));
+    transition:transform 0.7s cubic-bezier(0.5,0,0.1,1);
+  }
+  .dial-center{
+    position:absolute;
+    inset:36%;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    z-index:2;
+    pointer-events:none;
+    color:var(--text-faint);
+    border:1px solid var(--line);
+  }
+  .dial-center b{
+    display:block;
+    font-family:var(--display);
+    font-stretch:125%;
+    font-weight:800;
+    font-size:24px;
+    letter-spacing:0;
+    color:var(--text);
+    margin-top:4px;
+  }
+  .dial-mode{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:72px;
+    height:48px;
+    margin-left:-36px;
+    margin-top:-24px;
+    transform:rotate(var(--a)) translateY(calc(var(--size) * -0.39));
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:0.04em;
+    color:var(--text-faint);
+    transition:color 0.3s ease;
+  }
+  .dial-mode:hover{color:var(--text);}
+  .dial-mode[aria-selected="true"]{color:var(--signal);text-shadow:0 0 12px var(--signal-glow);}
+  .dial-mode:focus-visible{outline:2px solid var(--signal);outline-offset:-4px;}
+  .dial-hint{
+    text-align:center;
+    color:var(--text-faint);
+    margin-top:32px;
+  }
+
+  .lcd{
+    background:var(--lcd);
+    border:1px solid rgba(63,216,220,0.24);
+    box-shadow:inset 0 0 48px rgba(0,0,0,0.6);
+    padding-top:32px;
+    padding-bottom:32px;
+    padding-left:32px;
+    padding-right:32px;
+    position:relative;
+  }
+  .lcd::after{
     content:"";
     position:absolute;
-    bottom:-180px;
-    left:-120px;
-    width:500px;
-    height:500px;
-    background:radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%);
+    inset:0;
     pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 4px);
   }
-  .cta-close-inner{
-    position:relative;
-    z-index:1;
-    text-align:center;
-    max-width:640px;
-    margin:0 auto;
-  }
-  .cta-close h2{
-    color:#fff;
-    font-size:clamp(28px,4vw,42px);
-    margin-bottom:18px;
-  }
-  .cta-close p{
-    color:rgba(255,255,255,0.8);
-    font-size:17px;
-    margin-bottom:36px;
-  }
-
-  /* ---------- KONTAKT ---------- */
-  .contact-grid{
-    display:grid;
-    grid-template-columns:0.9fr 1.1fr;
-    gap:64px;
-  }
-  .contact-info{
+  .lcd-bar{
     display:flex;
-    flex-direction:column;
-    gap:28px;
-  }
-  .contact-item{
-    display:flex;
+    justify-content:space-between;
     gap:16px;
-    align-items:flex-start;
+    color:rgba(63,216,220,0.64);
+    border-bottom:1px solid rgba(63,216,220,0.2);
+    padding-bottom:16px;
+    margin-bottom:32px;
   }
-  .contact-item .icon-circle{
-    margin-bottom:0;
+  .panel{position:relative;z-index:1;}
+  .panel[hidden]{display:none;}
+  .panel.enter{animation:panelIn 0.4s ease;}
+  @keyframes panelIn{from{transform:translateY(8px);}to{transform:translateY(0);}}
+  .panel-code{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:64px;
+    line-height:1;
+    color:var(--signal);
+    text-shadow:0 0 24px var(--signal-glow);
+    margin-bottom:16px;
+  }
+  .panel h3{
+    font-size:clamp(24px, 2.8vw, 36px);
+    margin-bottom:16px;
+  }
+  .panel p{max-width:56ch;margin-bottom:24px;}
+  .specs{
+    border-top:1px solid rgba(63,216,220,0.2);
+    margin-bottom:32px;
+  }
+  .specs li{
+    display:flex;
+    justify-content:space-between;
+    gap:24px;
+    padding-top:12px;
+    padding-bottom:12px;
+    border-bottom:1px solid rgba(63,216,220,0.2);
+    font-size:16px;
+  }
+  .specs li span:first-child{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:rgba(63,216,220,0.72);
+    padding-top:4px;
     flex-shrink:0;
   }
-  .contact-item h4{
-    font-size:16px;
-    margin-bottom:4px;
+  .specs li span:last-child{text-align:right;color:var(--text);}
+
+  @media (max-width:1100px){
+    .dial-layout{grid-template-columns:1fr;gap:48px;}
   }
-  .contact-item p{
-    font-size:15px;
+  @media (max-width:520px){
+    .dial-wrap{--size:320px;}
+    .dial-mode{font-size:12px;width:56px;margin-left:-28px;}
+    .dial-center b{font-size:20px;}
+    .lcd{padding-left:20px;padding-right:20px;padding-top:24px;padding-bottom:24px;}
+    .panel-code{font-size:48px;}
+    .specs li{flex-direction:column;gap:4px;}
+    .specs li span:last-child{text-align:left;}
   }
-  .contact-form{
-    background:#fff;
-    border:1px solid rgba(3,53,55,0.1);
-    border-radius:var(--radius-card);
-    padding:36px;
-  }
-  .form-row{
-    margin-bottom:20px;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-  }
-  .form-row label{
-    font-size:14px;
-    font-weight:600;
-    color:var(--text);
-  }
-  .form-row input,
-  .form-row textarea{
-    border:1px solid rgba(3,53,55,0.2);
-    border-radius:var(--radius-btn);
-    padding:12px 14px;
-    font-family:'Open Sans', sans-serif;
-    font-size:15px;
-    color:var(--text);
-    background:var(--bg);
-  }
-  .form-row textarea{
-    min-height:110px;
-    resize:vertical;
-  }
-  .form-row input:focus,
-  .form-row textarea:focus{
-    outline:none;
-    border-color:var(--accent);
+  @media (max-width:360px){
+    .dial-wrap{--size:280px;}
   }
 
+  /* ---------- GALERIJA: PREGLED SNIMAKA ---------- */
+  .playback{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) 280px;
+    gap:24px;
+  }
+  .pb-screen{
+    position:relative;
+    aspect-ratio:3/2;
+    background:#000;
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .pb-frame{position:absolute;inset:0;}
+  .pb-frame[hidden]{display:none;}
+  .pb-hud{
+    position:absolute;
+    left:0;
+    right:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:16px;
+    padding-bottom:16px;
+    color:var(--text);
+    z-index:2;
+    pointer-events:none;
+  }
+  .pb-hud.top{top:0;background:linear-gradient(180deg, rgba(0,0,0,0.64), transparent);}
+  .pb-hud.bot{bottom:0;background:linear-gradient(0deg, rgba(0,0,0,0.64), transparent);}
+  .pb-hud .play{display:inline-flex;align-items:center;gap:8px;}
+  .pb-hud .play svg{width:12px;height:12px;fill:var(--signal);}
+  .pb-hud .cat{color:var(--signal);}
+
+  .pb-side{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .pb-list{
+    display:flex;
+    flex-direction:column;
+    border-top:1px solid var(--line);
+  }
+  .pb-thumb{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    text-align:left;
+    padding-top:16px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--line);
+    color:var(--text-faint);
+    transition:color 0.2s ease, padding-left 0.2s ease;
+  }
+  .pb-thumb:hover{color:var(--text);}
+  .pb-thumb[aria-selected="true"]{color:var(--text);padding-left:12px;box-shadow:inset 2px 0 0 var(--signal);}
+  .pb-thumb .n{color:var(--signal);}
+  .pb-nav{display:flex;gap:8px;margin-top:auto;}
+  .pb-nav button{
+    flex:1;
+    height:48px;
+    border:1px solid var(--line-strong);
+    display:grid;
+    place-items:center;
+    transition:border-color 0.2s ease;
+  }
+  .pb-nav button:hover{border-color:var(--signal);}
+  .pb-nav svg{width:20px;height:20px;stroke:var(--text);fill:none;stroke-width:2;}
+
   @media (max-width:900px){
-    .contact-grid{grid-template-columns:1fr;}
+    .playback{grid-template-columns:minmax(0, 1fr);}
+    .pb-list{flex-direction:row;overflow-x:auto;border-top:none;gap:8px;}
+    .pb-thumb{flex-shrink:0;border:1px solid var(--line);padding-left:12px;padding-right:12px;padding-top:12px;padding-bottom:12px;}
+    .pb-thumb[aria-selected="true"]{padding-left:12px;box-shadow:inset 0 -2px 0 var(--signal);}
+  }
+  @media (max-width:520px){
+    .pb-hud .hide-xs{display:none;}
+  }
+
+  /* ---------- PROCES: OD OKIDANJA DO OTISKA (papir) ---------- */
+  .paper{background:var(--paper);color:var(--ink);}
+  .paper p{color:var(--ink-muted);}
+  .paper .sec-head{border-top-color:rgba(10,20,20,0.16);}
+  .paper .sec-tag{color:var(--accent-mid);}
+  .paper .sec-tag b{color:rgba(10,20,20,0.44);}
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border-top:2px solid var(--ink);
+    position:relative;
+  }
+  .steps::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    height:12px;
+    background:repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 16px);
+    opacity:0.4;
+  }
+  .step{
+    padding-top:48px;
+    padding-right:32px;
+    position:relative;
+  }
+  .step + .step{border-left:1px solid rgba(10,20,20,0.16);padding-left:32px;}
+  .step-no{
+    font-stretch:125%;
+    font-weight:900;
+    font-size:80px;
+    line-height:1;
+    color:var(--accent);
+    margin-bottom:24px;
+  }
+  .step-meta{color:var(--accent-mid);margin-bottom:12px;}
+  .step h3{font-size:20px;margin-bottom:12px;line-height:1.2;}
+  .step p{font-size:16px;}
+
+  @media (max-width:900px){
+    .steps{grid-template-columns:repeat(2, 1fr);}
+    .step:nth-child(3){border-left:none;padding-left:0;}
+    .step:nth-child(n+3){border-top:1px solid rgba(10,20,20,0.16);margin-top:48px;}
+  }
+  @media (max-width:560px){
+    .steps{grid-template-columns:1fr;}
+    .step,.step + .step{border-left:none;padding-left:0;padding-right:0;}
+    .step:nth-child(n+2){border-top:1px solid rgba(10,20,20,0.16);margin-top:40px;}
+    .step-no{font-size:56px;}
+  }
+
+  /* ---------- O NAMA: EXIF ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:minmax(0, 5fr) minmax(0, 7fr);
+    gap:64px;
+    align-items:start;
+  }
+  .about-photo{
+    position:relative;
+    aspect-ratio:4/5;
+  }
+  .about-photo .corners{inset:-12px;}
+  .about-photo .caption{
+    position:absolute;
+    left:16px;
+    bottom:16px;
+    z-index:2;
+    color:var(--text);
+    background:rgba(0,0,0,0.56);
+    padding-left:8px;
+    padding-right:8px;
+    padding-top:4px;
+    padding-bottom:4px;
+  }
+  .about-text h2{
+    font-size:clamp(28px, 3.6vw, 48px);
+    margin-bottom:32px;
+  }
+  .about-text > p{max-width:60ch;margin-bottom:16px;}
+  .exif{
+    margin-top:48px;
+    border:1px solid var(--line);
+  }
+  .exif-head{
+    display:flex;
+    justify-content:space-between;
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:12px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--line);
+    background:var(--body-2);
+    color:var(--text-faint);
+  }
+  .exif-head b{color:var(--signal);font-weight:500;}
+  .exif dl{display:grid;grid-template-columns:200px minmax(0, 1fr);}
+  .exif dt,
+  .exif dd{
+    padding-top:16px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--line);
+  }
+  .exif dt{padding-left:20px;color:var(--text-faint);}
+  .exif dd{padding-right:20px;color:var(--text);}
+  .exif dt:nth-last-of-type(1),
+  .exif dd:nth-last-of-type(1){border-bottom:none;}
+
+  @media (max-width:900px){
+    .about-grid{grid-template-columns:1fr;gap:56px;}
+    .about-photo{max-width:420px;}
+  }
+  @media (max-width:520px){
+    .exif dl{grid-template-columns:1fr;}
+    .exif dt{padding-bottom:0;border-bottom:none;padding-right:20px;}
+    .exif dd{padding-left:20px;padding-top:4px;}
+  }
+
+  /* ---------- KONTAKT: MENI ZAKAZIVANJA ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:minmax(0, 5fr) minmax(0, 7fr);
+    gap:64px;
+  }
+  .contact-intro h2{
+    font-size:clamp(32px, 4.4vw, 64px);
+    margin-bottom:24px;
+  }
+  .contact-intro > p{max-width:48ch;margin-bottom:48px;}
+  .c-rows{border-top:1px solid var(--line);}
+  .c-row{
+    display:grid;
+    grid-template-columns:40px minmax(0, 1fr);
+    gap:16px;
+    padding-top:20px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--line);
+  }
+  .c-row svg{width:24px;height:24px;stroke:var(--signal);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-top:4px;}
+  .c-row h3{font-size:16px;letter-spacing:0.02em;margin-bottom:8px;line-height:1.2;}
+  .c-row p{font-size:16px;}
+
+  .menu{
+    border:1px solid var(--line-strong);
+    background:var(--body-2);
+  }
+  .menu-tabs{
+    display:flex;
+    border-bottom:1px solid var(--line-strong);
+  }
+  .menu-tabs span{
+    flex:1;
+    text-align:center;
+    padding-top:12px;
+    padding-bottom:12px;
+    color:var(--text-faint);
+    border-right:1px solid var(--line);
+  }
+  .menu-tabs span:last-child{border-right:none;}
+  .menu-tabs span.on{background:var(--signal);color:var(--accent-dark);font-weight:700;}
+  .menu-body{
+    padding-top:32px;
+    padding-bottom:32px;
+    padding-left:32px;
+    padding-right:32px;
+  }
+  .field{margin-bottom:24px;}
+  .field > label,
+  .field legend{
+    display:block;
+    color:var(--text-muted);
+    margin-bottom:12px;
+  }
+  fieldset.field{border:none;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip input{position:absolute;opacity:0;pointer-events:none;}
+  .chip span{
+    display:inline-block;
+    border:1px solid var(--line-strong);
+    padding-left:16px;
+    padding-right:16px;
+    padding-top:8px;
+    padding-bottom:8px;
+    font-size:16px;
+    cursor:pointer;
+    transition:background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .chip span:hover{border-color:var(--signal);}
+  .chip input:checked + span{background:var(--signal);border-color:var(--signal);color:var(--accent-dark);font-weight:600;}
+  .chip input:focus-visible + span{outline:2px solid var(--signal);outline-offset:2px;}
+
+  .field input[type=text],
+  .field textarea{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--line-strong);
+    color:var(--text);
+    font-family:var(--display);
+    font-size:20px;
+    padding-top:8px;
+    padding-bottom:12px;
+    border-radius:0;
+    transition:border-color 0.2s ease;
+  }
+  .field textarea{min-height:96px;resize:vertical;font-size:16px;line-height:1.6;}
+  .field input::placeholder,
+  .field textarea::placeholder{color:var(--text-faint);}
+  .field input:focus,
+  .field textarea:focus{outline:none;border-bottom-color:var(--signal);}
+  .form-foot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:32px;
+  }
+  .form-foot .mono{color:var(--text-faint);}
+
+  @media (max-width:991px){
+    .contact-grid{grid-template-columns:1fr;gap:56px;}
+  }
+  @media (max-width:520px){
+    .menu-body{padding-left:20px;padding-right:20px;padding-top:24px;padding-bottom:24px;}
+    .menu-tabs span.hide-xs{display:none;}
+    .form-foot .btn{width:100%;}
   }
 
   /* ---------- FOOTER ---------- */
   .site-footer{
-    border-top:1px solid rgba(3,53,55,0.1);
+    border-top:1px solid var(--line);
     padding-top:48px;
     padding-bottom:48px;
   }
@@ -599,265 +1221,437 @@
     align-items:center;
     gap:24px;
   }
-  .footer-brand{
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  .footer-brand img{
-    height:36px;
-    width:36px;
-    object-fit:contain;
-  }
-  .footer-brand span{
-    font-family:'Dosis', sans-serif;
-    font-weight:700;
-    color:var(--accent);
-    font-size:16px;
-  }
-  .footer-links{
-    display:flex;
-    gap:28px;
-    flex-wrap:wrap;
-  }
-  .footer-links a{
-    font-size:14px;
-    font-weight:600;
-    color:var(--text-muted);
-  }
-  .footer-links a:hover{color:var(--accent);}
+  .footer-links{display:flex;gap:28px;flex-wrap:wrap;}
+  .footer-links a{color:var(--text-muted);}
+  .footer-links a:hover{color:var(--signal);}
   .footer-copy{
-    font-size:13px;
-    color:var(--text-faint);
     width:100%;
-    text-align:center;
-    margin-top:32px;
+    color:var(--text-faint);
+    border-top:1px solid var(--line);
+    padding-top:24px;
+    margin-top:8px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
   }
 
-  /* ---------- REVEAL ---------- */
-  .reveal{
-    transform:translateY(14px);
-    transition:transform 0.7s ease;
-  }
-  .reveal.in-view{
-    transform:translateY(0);
+  /* ---------- REVEAL (sadržaj je uvek vidljiv) ---------- */
+  .reveal{transition:transform 0.8s cubic-bezier(0.2,0.7,0.2,1);}
+  .js .reveal:not(.in-view){transform:translateY(12px);}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{transition:none !important;animation:none !important;}
   }
 </style>
 </head>
 <body>
 
+  <div class="flash" id="flash" aria-hidden="true"></div>
+
   <header class="site-header" id="siteHeader">
     <div class="wrap navbar">
-      <a href="#top" class="brand">
-        <img src="assets/logo.png" alt="Logo Foto Studio Art Digital">
-        <span class="brand-text">Art Digital<span>FOTO STUDIO BEOGRAD</span></span>
+      <a href="#top" class="brand" aria-label="Foto Studio Art Digital, početak stranice">
+        <span class="brand-plate"><img src="assets/logo.png" alt="Logo Foto Studio Art Digital, fotoaparat sa siluetom Beograda u objektivu"></span>
+        <span class="brand-name">Art Digital<small>Foto studio · Beograd</small></span>
       </a>
 
-      <nav class="nav-desktop">
+      <div class="readout mono" aria-hidden="true">
+        <div class="meter">
+          <div class="meter-labels"><span>-3</span><span>-2</span><span>-1</span><span>0</span><span>+1</span><span>+2</span><span>+3</span></div>
+          <div class="meter-scale"></div>
+          <div class="meter-needle" id="needle"></div>
+        </div>
+        <span class="frame-count">FR <b id="frameNo">01</b>/06</span>
+      </div>
+
+      <nav class="nav-desktop" aria-label="Glavni meni">
         <ul class="nav-links">
           <li><a href="#usluge">Usluge</a></li>
+          <li><a href="#radovi">Radovi</a></li>
           <li><a href="#o-nama">O nama</a></li>
           <li><a href="#kontakt">Kontakt</a></li>
         </ul>
-        <a href="#kontakt" class="btn btn-primary">Zakaži termin</a>
+        <a href="#kontakt" class="btn">Zakaži termin</a>
       </nav>
 
-      <button class="hamburger" id="hamburgerBtn" aria-label="Otvori meni" aria-expanded="false">
+      <button class="hamburger" id="hamburgerBtn" aria-label="Otvori meni" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#usluge" class="mobile-link">Usluge</a>
-    <a href="#o-nama" class="mobile-link">O nama</a>
-    <a href="#kontakt" class="mobile-link">Kontakt</a>
-    <a href="#kontakt" class="btn btn-primary mobile-link">Zakaži termin</a>
+    <a href="#usluge" class="m-link"><span>01</span>Usluge</a>
+    <a href="#radovi" class="m-link"><span>02</span>Radovi</a>
+    <a href="#o-nama" class="m-link"><span>03</span>O nama</a>
+    <a href="#kontakt" class="m-link"><span>04</span>Kontakt</a>
+    <a href="#kontakt" class="btn m-link-btn">Zakaži termin</a>
   </div>
 
   <main id="top">
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <span class="hero-eyebrow">Foto studio u Beogradu</span>
-          <h1>Fotografije koje ostaju kad trenutak prođe</h1>
-          <p class="hero-sub">Fotografišemo lične dokumente, poslovne portrete i venčanja, a onda fotografije obrađujemo i štampamo u istom studiju. Sve na jednoj adresi.</p>
-          <a href="#kontakt" class="btn btn-primary">Zakaži fotografisanje</a>
-        </div>
-        <div class="hero-visual">
-          <div class="placeholder-box">FOTOGRAFIJA IZ STUDIJA</div>
-        </div>
+    <!-- HERO: TRAŽILO -->
+    <section class="hero" data-frame="1">
+      <div class="hero-bg ph">
+        <span class="ph-label">Fotografija iz studija</span>
+        <img src="assets/hero.jpg" alt="Fotograf Foto Studija Art Digital snima portret u studiju u Beogradu">
       </div>
-    </section>
 
-    <!-- BOL UVOD -->
-    <section class="pain">
-      <div class="wrap pain-inner reveal">
-        <h2>Treba ti fotografija za sutra, a nemaš vremena da trčiš po Beogradu</h2>
-        <p>Fotografija za ličnu kartu do podneva, portret za sajt firme, neko ko treba da snimi venčanje bez greške. Trčanje od studija do štamparije oduzima vreme koje nemaš. Sve to radimo na jednoj adresi, u istom studiju.</p>
-      </div>
-    </section>
-
-    <!-- USLUGE -->
-    <section id="usluge">
       <div class="wrap">
-        <div class="section-head reveal">
-          <span class="eyebrow">Usluge</span>
-          <h2>Od fotografije za dokumenta do snimanja venčanja</h2>
-          <p>Pet stvari koje radimo svaki dan, sa istom pažnjom bez obzira da li ti treba fotografija za pet minuta ili snimanje celog venčanja.</p>
-        </div>
+        <div class="viewfinder" id="viewfinder">
+          <div class="corners"><i></i></div>
+          <div class="thirds"></div>
 
-        <div class="services-grid">
-
-          <div class="service-card reveal">
-            <div class="icon-circle">
-              <svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
+          <div class="vf-top mono" aria-hidden="true">
+            <div class="vf-set">
+              <span class="vf-mode">M</span>
+              <span>1/125</span>
+              <span>F2.8</span>
+              <span>ISO 100</span>
+              <span class="vf-hide-sm">AWB</span>
             </div>
-            <h3>Lične fotografije i dokumenta</h3>
-            <p>Fotografije za ličnu kartu, pasoš, vozačku i biografiju. Uslikamo te u studiju i fotografija je gotova isti dan.</p>
-            <a href="#kontakt" class="service-link">Zakaži termin <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <div class="vf-set">
+              <span class="vf-hide-sm">RAW+JPG</span>
+              <span class="battery"><svg viewBox="0 0 28 16"><rect x="1" y="2" width="22" height="12"/><rect x="23" y="5" width="3" height="6"/><rect class="lvl" x="3" y="4" width="18" height="8"/></svg></span>
+              <span>[0247]</span>
+            </div>
           </div>
 
-          <div class="service-card reveal">
-            <div class="icon-circle">
-              <svg viewBox="0 0 24 24"><path d="M4 7h16v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7z"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M4 12h16"/></svg>
-            </div>
-            <h3>Poslovne fotografije</h3>
-            <p>Portreti za sajt, LinkedIn i kataloge firme. Dogovaramo termin u studiju ili dolazimo na tvoju lokaciju.</p>
-            <a href="#kontakt" class="service-link">Zakaži termin <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          </div>
+          <div class="af-field" id="afField" aria-hidden="true"></div>
 
-          <div class="service-card reveal">
-            <div class="icon-circle">
-              <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.5-9C1 8.5 2.5 5 6 5c2 0 3.5 1.2 4 2 0.5-0.8 2-2 4-2 3.5 0 5 3.5 3.5 7-2.5 4.4-9.5 9-9.5 9z"/></svg>
+          <div class="hero-copy">
+            <div>
+              <span class="hero-kicker mono">Foto studio · Beograd</span>
+              <h1>Snimamo. Obrađujemo. <em>Štampamo.</em></h1>
             </div>
-            <h3>Snimanje venčanja</h3>
-            <p>Snimamo veridbu, venčanje i sve trenutke oko njih. Dobijaš obrađene fotografije koje pamtiš godinama.</p>
-            <a href="#kontakt" class="service-link">Zakaži termin <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          </div>
-
-          <div class="service-card reveal">
-            <div class="icon-circle">
-              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M3 15l4.5-4.5 3 3L15 9l6 6"/><circle cx="8" cy="8.5" r="1.3"/></svg>
+            <div class="hero-side">
+              <p>Fotografija za pasoš dok čekaš. Poslovni portret za sajt firme. Venčanje od veridbe do prvog plesa. Posle snimanja fotografije obrađujemo i štampamo u istom studiju.</p>
+              <a href="#kontakt" class="btn has-shutter" id="heroShutter"><span class="shutter" aria-hidden="true"></span>Zakaži fotografisanje</a>
             </div>
-            <h3>Izrada i digitalna obrada</h3>
-            <p>Štampamo fotografije u svim formatima i radimo digitalnu obradu: retuš, restauraciju starih slika, pripremu za štampu.</p>
-            <a href="#kontakt" class="service-link">Zakaži termin <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
           </div>
-
-          <div class="service-card reveal">
-            <div class="icon-circle">
-              <svg viewBox="0 0 24 24"><path d="M4 9l1-5h14l1 5"/><path d="M4 9h16v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9z"/><path d="M9 13h6v4H9z"/></svg>
-            </div>
-            <h3>Foto radnja - usluge</h3>
-            <p>Fotokopiranje, skeniranje, izrada foto proizvoda i sve što ti zatreba od foto opreme i materijala.</p>
-            <a href="#kontakt" class="service-link">Poseti radnju <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          </div>
-
         </div>
       </div>
     </section>
 
-    <!-- O BRENDU -->
-    <section class="about" id="o-nama">
-      <div class="wrap about-grid">
+    <!-- FOKUS: BOL UVOD -->
+    <section class="section" data-frame="2">
+      <div class="wrap focus-grid">
         <div class="reveal">
-          <div class="placeholder-box">PROSTOR STUDIJA</div>
+          <span class="mono sec-tag">Van fokusa</span>
+          <h2 style="margin-top:24px;">Treba ti fotografija za sutra, a nemaš vremena da trčiš po gradu</h2>
+          <p>Fotografija za ličnu kartu do podneva. Portret za sajt firme do petka. Neko ko će snimiti venčanje bez greške.</p>
+          <p>Trčanje od studija do štamparije pa do nekoga ko radi retuš pojede ti dan. <strong>Kod nas je to jedna adresa.</strong></p>
         </div>
-        <div class="about-text reveal">
-          <span class="eyebrow">O nama</span>
-          <h2>Foto studio kome možeš da veruješ</h2>
-          <p>Foto Studio Art Digital radi u Beogradu i bavi se fotografisanjem i obradom fotografija. Fotografišemo lične dokumente, poslovne portrete i venčanja, a onda fotografije i štampamo i obrađujemo u istom prostoru.</p>
-          <p>Sve rešavaš na jednoj adresi, bez trčanja između studija i štamparije.</p>
-          <div class="about-points">
-            <div class="about-point">
-              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-              <span>Profesionalna oprema i dugogodišnje iskustvo</span>
-            </div>
-            <div class="about-point">
-              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-              <span>Brza izrada fotografija za dokumenta, isti dan</span>
-            </div>
-            <div class="about-point">
-              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-              <span>Digitalna obrada i štampa na jednom mestu</span>
-            </div>
-            <div class="about-point">
-              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
-              <span>Snimanje venčanja od veridbe do svadbenog dana</span>
-            </div>
+
+        <div class="focus-box reveal" id="focusBox">
+          <div class="focus-top mono">
+            <span>MF · 50 mm</span>
+            <span class="ok">● Fokus</span>
           </div>
+          <div class="focus-stage">
+            <div class="corners"><i></i></div>
+            <div class="focus-word" id="focusWord">Studio, obrada, štampa<span>Jedna adresa</span></div>
+          </div>
+          <div class="ring">
+            <label for="focusRing" class="mono">Fokus</label>
+            <input type="range" id="focusRing" min="0" max="100" value="72" aria-describedby="ringHelp">
+            <button type="button" class="af-btn mono" id="afBtn">AF</button>
+          </div>
+          <div class="ring-scale mono" aria-hidden="true"><span>0.5</span><span>1</span><span>2</span><span>3</span><span>5</span><span>∞ m</span></div>
+          <span id="ringHelp" hidden>Pomeri prsten za fokus ili pritisni AF da se natpis izoštri.</span>
         </div>
       </div>
     </section>
 
-    <!-- CTA CLOSING -->
-    <section class="cta-close">
-      <div class="wrap cta-close-inner reveal">
-        <h2>Zakaži svoj termin u studiju</h2>
-        <p>Bilo da ti treba fotografija za sutra ili snimanje venčanja za sledeće leto, javi nam se i dogovorićemo termin koji ti odgovara.</p>
-        <a href="#kontakt" class="btn btn-light">Zakaži termin za fotografisanje</a>
-      </div>
-    </section>
-
-    <!-- KONTAKT -->
-    <section id="kontakt">
+    <!-- USLUGE: TOČKIĆ ZA REŽIME -->
+    <section class="section" id="usluge" data-frame="3" style="background:var(--body-2);">
       <div class="wrap">
-        <div class="section-head reveal">
-          <span class="eyebrow">Kontakt</span>
-          <h2>Pošalji upit i dogovorimo termin</h2>
-          <p>Napiši nam šta ti treba, ostavi kontakt i javljamo se da dogovorimo tačno vreme fotografisanja.</p>
+        <div class="sec-head reveal">
+          <div class="mono sec-tag">01 / Usluge<b>Okreni točkić</b></div>
+          <div>
+            <h2>Šest režima. Jedan studio.</h2>
+            <p>Izaberi režim na točkiću i vidi šta tačno radimo. Od fotografije za dokumenta koja je gotova isti dan do snimanja celog venčanja.</p>
+          </div>
         </div>
 
-        <div class="contact-grid">
-          <div class="contact-info reveal">
-            <div class="contact-item">
-              <div class="icon-circle">
-                <svg viewBox="0 0 24 24"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <div class="dial-layout">
+          <div class="reveal">
+            <div class="dial-wrap">
+              <div class="dial-index" aria-hidden="true"></div>
+              <div class="dial" id="dial" role="tablist" aria-label="Režimi, vrste usluga">
+                <button class="dial-mode" role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true" style="--a:0deg">ID</button>
+                <button class="dial-mode" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false" tabindex="-1" style="--a:60deg">P</button>
+                <button class="dial-mode" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1" style="--a:120deg">W</button>
+                <button class="dial-mode" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1" style="--a:180deg">RET</button>
+                <button class="dial-mode" role="tab" id="tab-4" aria-controls="panel-4" aria-selected="false" tabindex="-1" style="--a:240deg">PRT</button>
+                <button class="dial-mode" role="tab" id="tab-5" aria-controls="panel-5" aria-selected="false" tabindex="-1" style="--a:300deg">SHOP</button>
               </div>
-              <div>
-                <h4>Lokacija</h4>
-                <p>Studio se nalazi u Beogradu.</p>
-              </div>
+              <div class="dial-center mono" aria-hidden="true"><div>Režim<b id="dialName">ID</b></div></div>
             </div>
-            <div class="contact-item">
-              <div class="icon-circle">
-                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 8h18"/><path d="M8 2v4M16 2v4"/></svg>
-              </div>
-              <div>
-                <h4>Zakazivanje unapred</h4>
-                <p>Termine za venčanja i poslovno fotografisanje dogovaramo unapred, dokumenta radimo bez čekanja.</p>
-              </div>
+            <p class="dial-hint mono">Klikni režim ili koristi strelice</p>
+          </div>
+
+          <div class="lcd reveal">
+            <div class="lcd-bar mono" aria-hidden="true"><span>Meni · Usluge</span><span id="lcdCount">1/6</span></div>
+
+            <div class="panel" id="panel-0" role="tabpanel" aria-labelledby="tab-0">
+              <div class="panel-code" aria-hidden="true">ID</div>
+              <h3>Fotografije za dokumenta</h3>
+              <p>Lična karta, pasoš, vozačka, biografija. Uslikamo te u studiju i fotografija je gotova isti dan.</p>
+              <ul class="specs">
+                <li><span>Za</span><span>Lična karta, pasoš, vozačka, CV</span></li>
+                <li><span>Izrada</span><span>Isti dan</span></li>
+                <li><span>Termin</span><span>Bez zakazivanja, dođi u studio</span></li>
+              </ul>
+              <a href="#kontakt" class="btn" data-type="dokumenta">Dođi po fotografiju danas</a>
             </div>
-            <div class="contact-item">
-              <div class="icon-circle">
-                <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
-              </div>
-              <div>
-                <h4>Odgovaramo brzo</h4>
-                <p>Pošalji poruku i javljamo se sa slobodnim terminima za tvoju vrstu fotografisanja.</p>
-              </div>
+
+            <div class="panel" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+              <div class="panel-code" aria-hidden="true">P</div>
+              <h3>Poslovni portreti</h3>
+              <p>Portreti za sajt, LinkedIn i kataloge firme. Snimamo u studiju ili dolazimo na tvoju lokaciju.</p>
+              <ul class="specs">
+                <li><span>Za</span><span>Sajt, LinkedIn, katalog, tim</span></li>
+                <li><span>Gde</span><span>U studiju ili na tvojoj lokaciji</span></li>
+                <li><span>Termin</span><span>Dogovaramo unapred</span></li>
+              </ul>
+              <a href="#kontakt" class="btn" data-type="poslovno">Zakaži poslovni portret</a>
+            </div>
+
+            <div class="panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
+              <div class="panel-code" aria-hidden="true">W</div>
+              <h3>Snimanje venčanja</h3>
+              <p>Snimamo veridbu, venčanje i sve trenutke oko njih. Dobijaš obrađene fotografije koje ćeš gledati godinama.</p>
+              <ul class="specs">
+                <li><span>Snimamo</span><span>Veridbu, venčanje, slavlje</span></li>
+                <li><span>Dobijaš</span><span>Obrađene fotografije, po želji i odštampane</span></li>
+                <li><span>Termin</span><span>Dogovaramo unapred</span></li>
+              </ul>
+              <a href="#kontakt" class="btn" data-type="vencanje">Proveri slobodan datum</a>
+            </div>
+
+            <div class="panel" id="panel-3" role="tabpanel" aria-labelledby="tab-3">
+              <div class="panel-code" aria-hidden="true">RET</div>
+              <h3>Digitalna obrada</h3>
+              <p>Retuš portreta, restauracija starih i oštećenih fotografija, priprema fajlova za štampu.</p>
+              <ul class="specs">
+                <li><span>Retuš</span><span>Portreti, dokumenta, poslovne fotografije</span></li>
+                <li><span>Restauracija</span><span>Stare, izbledele i oštećene fotografije</span></li>
+                <li><span>Priprema</span><span>Fajlovi spremni za štampu</span></li>
+              </ul>
+              <a href="#kontakt" class="btn" data-type="obrada">Pošalji fotografiju na obradu</a>
+            </div>
+
+            <div class="panel" id="panel-4" role="tabpanel" aria-labelledby="tab-4">
+              <div class="panel-code" aria-hidden="true">PRT</div>
+              <h3>Izrada fotografija</h3>
+              <p>Donesi telefon, USB ili pošalji fajlove. Štampamo fotografije u svim formatima, od malih za album do velikih za zid.</p>
+              <ul class="specs">
+                <li><span>Formati</span><span>Svi formati, od albuma do zida</span></li>
+                <li><span>Donosiš</span><span>Telefon, USB ili fajlove</span></li>
+                <li><span>Uz to</span><span>Obrada pre štampe ako treba</span></li>
+              </ul>
+              <a href="#kontakt" class="btn" data-type="obrada">Naruči izradu fotografija</a>
+            </div>
+
+            <div class="panel" id="panel-5" role="tabpanel" aria-labelledby="tab-5">
+              <div class="panel-code" aria-hidden="true">SHOP</div>
+              <h3>Foto radnja</h3>
+              <p>Fotokopiranje, skeniranje, foto proizvodi i sve što ti zatreba od foto opreme i materijala.</p>
+              <ul class="specs">
+                <li><span>Kopiranje</span><span>Fotokopije i skeniranje</span></li>
+                <li><span>Proizvodi</span><span>Foto proizvodi po tvojoj fotografiji</span></li>
+                <li><span>Oprema</span><span>Foto oprema i materijal</span></li>
+              </ul>
+              <a href="#kontakt" class="btn" data-type="drugo">Svrati u radnju</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RADOVI: PREGLED SNIMAKA -->
+    <section class="section" id="radovi" data-frame="4">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="mono sec-tag">02 / Radovi<b>Režim pregleda</b></div>
+          <div>
+            <h2>Sa naše memorijske kartice</h2>
+            <p>Listaj kao na ekranu aparata. Strelice levo i desno rade i na tastaturi.</p>
+          </div>
+        </div>
+
+        <div class="playback reveal" id="playback">
+          <div class="pb-screen">
+            <div class="pb-hud top mono" aria-hidden="true">
+              <span class="play"><svg viewBox="0 0 12 12"><path d="M2 1l9 5-9 5z"/></svg>Pregled</span>
+              <span id="pbCount">001/006</span>
+            </div>
+
+            <div class="pb-frame ph" id="pb-0"><span class="ph-label">Fotografija: venčanje</span><img src="assets/galerija-1.jpg" alt="Mladenci na venčanju, fotografija Foto Studija Art Digital"></div>
+            <div class="pb-frame ph" id="pb-1"><span class="ph-label">Fotografija: poslovni portret</span><img src="assets/galerija-2.jpg" alt="Poslovni portret snimljen u studiju Art Digital"></div>
+            <div class="pb-frame ph" id="pb-2"><span class="ph-label">Fotografija: lični portret</span><img src="assets/galerija-3.jpg" alt="Lični portret snimljen u studiju Art Digital"></div>
+            <div class="pb-frame ph" id="pb-3"><span class="ph-label">Fotografija: veridba</span><img src="assets/galerija-4.jpg" alt="Par na fotografisanju za veridbu"></div>
+            <div class="pb-frame ph" id="pb-4"><span class="ph-label">Fotografija: restauracija, pre i posle</span><img src="assets/galerija-5.jpg" alt="Stara fotografija pre i posle restauracije"></div>
+            <div class="pb-frame ph" id="pb-5"><span class="ph-label">Fotografija: studio</span><img src="assets/galerija-6.jpg" alt="Studio Art Digital sa rasvetom i pozadinom za fotografisanje"></div>
+
+            <div class="pb-hud bot mono" aria-hidden="true">
+              <span class="cat" id="pbCat">Venčanje</span>
+              <span class="hide-xs">3:2 · Art Digital</span>
             </div>
           </div>
 
-          <form class="contact-form reveal" action="#" onsubmit="return false;">
-            <div class="form-row">
-              <label for="ime">Ime i prezime</label>
-              <input type="text" id="ime" name="ime" placeholder="Tvoje ime">
+          <div class="pb-side">
+            <div class="pb-list mono" role="tablist" aria-label="Izbor fotografije">
+              <button class="pb-thumb" role="tab" aria-selected="true" aria-controls="pb-0" data-cat="Venčanje"><span>Venčanje</span><span class="n">01</span></button>
+              <button class="pb-thumb" role="tab" aria-selected="false" aria-controls="pb-1" tabindex="-1" data-cat="Poslovni portret"><span>Poslovni portret</span><span class="n">02</span></button>
+              <button class="pb-thumb" role="tab" aria-selected="false" aria-controls="pb-2" tabindex="-1" data-cat="Lični portret"><span>Lični portret</span><span class="n">03</span></button>
+              <button class="pb-thumb" role="tab" aria-selected="false" aria-controls="pb-3" tabindex="-1" data-cat="Veridba"><span>Veridba</span><span class="n">04</span></button>
+              <button class="pb-thumb" role="tab" aria-selected="false" aria-controls="pb-4" tabindex="-1" data-cat="Restauracija"><span>Restauracija</span><span class="n">05</span></button>
+              <button class="pb-thumb" role="tab" aria-selected="false" aria-controls="pb-5" tabindex="-1" data-cat="Studio"><span>Studio</span><span class="n">06</span></button>
             </div>
-            <div class="form-row">
-              <label for="kontakt-podatak">Telefon ili email</label>
-              <input type="text" id="kontakt-podatak" name="kontakt-podatak" placeholder="Broj telefona ili email adresa">
+            <div class="pb-nav">
+              <button type="button" id="pbPrev" aria-label="Prethodna fotografija"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+              <button type="button" id="pbNext" aria-label="Sledeća fotografija"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
             </div>
-            <div class="form-row">
-              <label for="poruka">Šta ti treba</label>
-              <textarea id="poruka" name="poruka" placeholder="Npr. fotografija za pasoš, snimanje venčanja u julu..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;">Pošalji upit i zakaži termin</button>
-          </form>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- PROCES: OD OKIDANJA DO OTISKA -->
+    <section class="section paper" data-frame="5">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="mono sec-tag">03 / Postupak<b>Od okidanja do otiska</b></div>
+          <div>
+            <h2>Četiri koraka. Jedna adresa.</h2>
+            <p>Ne nosiš fajlove nigde dalje. Sve od prvog kadra do gotove fotografije u ruci radimo mi.</p>
+          </div>
+        </div>
+
+        <ol class="steps">
+          <li class="step reveal">
+            <div class="step-no">01</div>
+            <div class="mono step-meta">Upit</div>
+            <h3>Javiš se</h3>
+            <p>Napišeš šta ti treba. Za dokumenta samo dođeš, za ostalo dogovaramo termin.</p>
+          </li>
+          <li class="step reveal">
+            <div class="step-no">02</div>
+            <div class="mono step-meta">Snimanje</div>
+            <h3>Snimamo</h3>
+            <p>U studiju ili na tvojoj lokaciji. Vodimo te kroz poziranje, ne moraš da znaš šta radiš.</p>
+          </li>
+          <li class="step reveal">
+            <div class="step-no">03</div>
+            <div class="mono step-meta">Obrada</div>
+            <h3>Biramo i obrađujemo</h3>
+            <p>Izdvajamo najbolje kadrove i radimo retuš, boju i pripremu za štampu.</p>
+          </li>
+          <li class="step reveal">
+            <div class="step-no">04</div>
+            <div class="mono step-meta">Otisak</div>
+            <h3>Nosiš gotove fotografije</h3>
+            <p>Štampamo u formatu koji izabereš, u istom studiju. Preuzmeš ih na istoj adresi.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- O NAMA: EXIF -->
+    <section class="section" id="o-nama" data-frame="6">
+      <div class="wrap about-grid">
+        <div class="about-photo reveal">
+          <div class="ph" style="position:absolute;inset:0;">
+            <span class="ph-label">Prostor studija</span>
+            <img src="assets/studio.jpg" alt="Unutrašnjost Foto Studija Art Digital u Beogradu">
+          </div>
+          <div class="corners"><i></i></div>
+          <span class="caption mono" aria-hidden="true">IMG_0001 · Studio</span>
+        </div>
+
+        <div class="about-text reveal">
+          <span class="mono sec-tag">04 / O nama</span>
+          <h2 style="margin-top:24px;">Studio, obrada i foto radnja. U istom prostoru.</h2>
+          <p>Foto Studio Art Digital radi u Beogradu. Fotografišemo dokumenta, poslovne portrete i venčanja, a onda te iste fotografije obrađujemo i štampamo, bez slanja bilo gde dalje.</p>
+          <p>Zato znamo kako će fotografija izgledati odštampana još dok je snimamo.</p>
+
+          <div class="exif">
+            <div class="exif-head mono"><span>Info · Studio</span><b>Art Digital</b></div>
+            <dl>
+              <dt class="mono">Lokacija</dt><dd>Beograd</dd>
+              <dt class="mono">Snimamo</dt><dd>Dokumenta, poslovni portreti, venčanja</dd>
+              <dt class="mono">Obrađujemo</dt><dd>Retuš, restauracija, priprema za štampu</dd>
+              <dt class="mono">Štampamo</dt><dd>Fotografije u svim formatima</dd>
+              <dt class="mono">Dokumenta</dt><dd>Gotova isti dan</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAKT: MENI ZAKAZIVANJA -->
+    <section class="section" id="kontakt" data-frame="6" style="background:var(--body-2);">
+      <div class="wrap contact-grid">
+        <div class="contact-intro reveal">
+          <span class="mono sec-tag">05 / Kontakt</span>
+          <h2 style="margin-top:24px;">Zakaži svoj kadar</h2>
+          <p>Izaberi šta ti treba i ostavi broj ili email. Javljamo se sa slobodnim terminima.</p>
+
+          <div class="c-rows">
+            <div class="c-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              <div><h3>Lokacija</h3><p>Studio je u Beogradu.</p></div>
+            </div>
+            <div class="c-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
+              <div><h3>Dokumenta</h3><p>Bez zakazivanja. Dođeš, uslikamo te, fotografija je gotova isti dan.</p></div>
+            </div>
+            <div class="c-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
+              <div><h3>Venčanja i poslovno</h3><p>Termin dogovaramo unapred, pa javi datum što ranije.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <form class="menu reveal" id="bookForm" action="#" novalidate>
+          <div class="menu-tabs mono" aria-hidden="true">
+            <span class="on">Zakazivanje</span>
+            <span class="hide-xs">Usluga</span>
+            <span class="hide-xs">Kontakt</span>
+          </div>
+          <div class="menu-body">
+            <fieldset class="field">
+              <legend class="mono">01 · Šta snimamo</legend>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="vrsta" value="dokumenta" checked><span>Dokumenta</span></label>
+                <label class="chip"><input type="radio" name="vrsta" value="poslovno"><span>Poslovni portret</span></label>
+                <label class="chip"><input type="radio" name="vrsta" value="vencanje"><span>Venčanje</span></label>
+                <label class="chip"><input type="radio" name="vrsta" value="obrada"><span>Obrada i štampa</span></label>
+                <label class="chip"><input type="radio" name="vrsta" value="drugo"><span>Nešto drugo</span></label>
+              </div>
+            </fieldset>
+            <div class="field">
+              <label for="ime" class="mono">02 · Ime i prezime</label>
+              <input type="text" id="ime" name="ime" placeholder="Tvoje ime" autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="kontakt-podatak" class="mono">03 · Telefon ili email</label>
+              <input type="text" id="kontakt-podatak" name="kontakt-podatak" placeholder="Gde da ti javimo termin">
+            </div>
+            <div class="field">
+              <label for="poruka" class="mono">04 · Detalji</label>
+              <textarea id="poruka" name="poruka" placeholder="Npr. fotografija za pasoš, venčanje 14. juna, 20 fotografija 13x18..."></textarea>
+            </div>
+            <div class="form-foot">
+              <span class="mono">Javljamo se sa terminom</span>
+              <button type="submit" class="btn has-shutter"><span class="shutter" aria-hidden="true"></span>Pošalji upit za termin</button>
+            </div>
+          </div>
+        </form>
       </div>
     </section>
 
@@ -865,62 +1659,225 @@
 
   <footer class="site-footer">
     <div class="wrap footer-inner">
-      <div class="footer-brand">
-        <img src="assets/logo.png" alt="Logo Foto Studio Art Digital">
-        <span>Art Digital Foto Studio</span>
-      </div>
-      <div class="footer-links">
+      <a href="#top" class="brand">
+        <span class="brand-plate"><img src="assets/logo.png" alt="Logo Foto Studio Art Digital"></span>
+        <span class="brand-name">Art Digital<small>Foto studio · Beograd</small></span>
+      </a>
+      <nav class="footer-links mono" aria-label="Meni u futeru">
         <a href="#usluge">Usluge</a>
+        <a href="#radovi">Radovi</a>
         <a href="#o-nama">O nama</a>
         <a href="#kontakt">Kontakt</a>
+      </nav>
+      <div class="footer-copy mono">
+        <span>© 2026 Foto Studio Art Digital, Beograd</span>
+        <span>Snimljeno, obrađeno i štampano na jednoj adresi</span>
       </div>
-      <p class="footer-copy">© 2024 Foto Studio Art Digital, Beograd. Sva prava zadržana.</p>
     </div>
   </footer>
 
 <script>
-  // Header scroll effect
-  const header = document.getElementById('siteHeader');
-  window.addEventListener('scroll', function(){
-    if(window.scrollY > 12){
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
+  document.documentElement.classList.add('js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Otvaranje blende pri prvom ulasku (dodaje se samo iz JS-a, uvek se uklanja)
+  (function(){
+    var seen = false;
+    try{ seen = sessionStorage.getItem('iris') === '1'; sessionStorage.setItem('iris','1'); }catch(e){}
+    if(reduce || seen) return;
+    var iris = document.createElement('div');
+    iris.className = 'iris';
+    iris.setAttribute('aria-hidden','true');
+    iris.innerHTML = '<div class="iris-hole"></div><span class="iris-label mono">Art Digital</span>';
+    document.body.appendChild(iris);
+    setTimeout(function(){ iris.remove(); }, 1500);
+  })();
+
+  // Fotografije: ako fajl postoji prikaži ga, ako ne ostaje sivi placeholder sa natpisom
+  document.querySelectorAll('.ph img').forEach(function(img){
+    function ok(){ img.parentNode.classList.add('has-photo'); }
+    function fail(){ img.remove(); }
+    if(img.complete){ img.naturalWidth ? ok() : fail(); }
+    else { img.addEventListener('load', ok); img.addEventListener('error', fail); }
+  });
+
+  // Blic
+  var flash = document.getElementById('flash');
+  function fire(){
+    if(reduce) return;
+    flash.classList.remove('go');
+    void flash.offsetWidth;
+    flash.classList.add('go');
+  }
+  document.getElementById('heroShutter').addEventListener('click', fire);
+
+  // Header: pozadina, merač ekspozicije = napredak skrola, brojač kadrova = sekcija
+  var header = document.getElementById('siteHeader');
+  var needle = document.getElementById('needle');
+  var frameNo = document.getElementById('frameNo');
+  var frames = document.querySelectorAll('[data-frame]');
+  function onScroll(){
+    var y = window.scrollY;
+    header.classList.toggle('scrolled', y > 16);
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    needle.style.setProperty('--p', max > 0 ? Math.min(y / max, 1) : 0);
+    var current = '1';
+    frames.forEach(function(s){ if(s.getBoundingClientRect().top < window.innerHeight * 0.4) current = s.dataset.frame; });
+    frameNo.textContent = ('0' + current).slice(-2);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // Mobilni meni
+  var burger = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('mobileMenu');
+  function setMenu(open){
+    menu.classList.toggle('open', open);
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Zatvori meni' : 'Otvori meni');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  burger.addEventListener('click', function(){ setMenu(!menu.classList.contains('open')); });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+
+  // Tražilo: AF tačke prate kursor, dugme okidača zaključava fokus
+  var field = document.getElementById('afField');
+  var vf = document.getElementById('viewfinder');
+  for(var i = 0; i < 21; i++){ var d = document.createElement('span'); d.className = 'af'; field.appendChild(d); }
+  var afs = field.querySelectorAll('.af');
+  afs[10].classList.add('on');
+  vf.addEventListener('mousemove', function(e){
+    var best = null, bestD = Infinity;
+    afs.forEach(function(a){
+      var r = a.getBoundingClientRect();
+      var dx = r.left + r.width / 2 - e.clientX, dy = r.top + r.height / 2 - e.clientY;
+      var dd = dx * dx + dy * dy;
+      if(dd < bestD){ bestD = dd; best = a; }
+    });
+    afs.forEach(function(a){ a.classList.toggle('on', a === best); });
+  });
+  var shutterBtn = document.getElementById('heroShutter');
+  shutterBtn.addEventListener('mouseenter', function(){ vf.classList.add('locked'); });
+  shutterBtn.addEventListener('mouseleave', function(){ vf.classList.remove('locked'); });
+
+  // Prsten za fokus
+  var ring = document.getElementById('focusRing');
+  var word = document.getElementById('focusWord');
+  var box = document.getElementById('focusBox');
+  var SHARP = 72;
+  function applyFocus(){
+    var blur = Math.abs(ring.value - SHARP) * 0.16;
+    word.style.setProperty('--blur', blur.toFixed(2) + 'px');
+    box.classList.toggle('sharp', blur < 0.5);
+  }
+  function autofocus(from){
+    if(reduce){ ring.value = SHARP; applyFocus(); return; }
+    var start = null, a = from;
+    function step(t){
+      if(!start) start = t;
+      var k = Math.min((t - start) / 900, 1);
+      var e = 1 - Math.pow(1 - k, 3);
+      var overshoot = Math.sin(k * Math.PI) * 6;
+      ring.value = Math.round(a + (SHARP - a) * e + overshoot * (1 - k));
+      applyFocus();
+      if(k < 1) requestAnimationFrame(step); else { ring.value = SHARP; applyFocus(); }
     }
-  });
+    requestAnimationFrame(step);
+  }
+  ring.addEventListener('input', applyFocus);
+  document.getElementById('afBtn').addEventListener('click', function(){ autofocus(+ring.value); });
+  applyFocus();
 
-  // Mobile menu toggle
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-
-  hamburgerBtn.addEventListener('click', function(){
-    const isOpen = mobileMenu.classList.toggle('open');
-    hamburgerBtn.classList.toggle('open');
-    hamburgerBtn.setAttribute('aria-expanded', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  });
-
-  document.querySelectorAll('.mobile-link').forEach(function(link){
-    link.addEventListener('click', function(){
-      mobileMenu.classList.remove('open');
-      hamburgerBtn.classList.remove('open');
-      hamburgerBtn.setAttribute('aria-expanded', false);
-      document.body.style.overflow = '';
+  // Točkić za režime
+  var dial = document.getElementById('dial');
+  var tabs = Array.prototype.slice.call(dial.querySelectorAll('.dial-mode'));
+  var panels = tabs.map(function(t){ return document.getElementById(t.getAttribute('aria-controls')); });
+  var dialName = document.getElementById('dialName');
+  var lcdCount = document.getElementById('lcdCount');
+  var rot = 0, cur = 0;
+  panels.forEach(function(p, i){ if(i) p.hidden = true; });
+  function selectMode(i, focus){
+    var diff = ((i - cur) % 6 + 6) % 6;
+    if(diff > 3) diff -= 6;
+    rot -= diff * 60;
+    dial.style.setProperty('--rot', rot + 'deg');
+    tabs.forEach(function(t, j){
+      var on = j === i;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      panels[j].hidden = !on;
+    });
+    panels[i].classList.remove('enter');
+    void panels[i].offsetWidth;
+    panels[i].classList.add('enter');
+    dialName.textContent = tabs[i].textContent;
+    lcdCount.textContent = (i + 1) + '/6';
+    if(focus) tabs[i].focus();
+    cur = i;
+  }
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ selectMode(i); });
+    t.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){ e.preventDefault(); selectMode((cur + 1) % 6, true); }
+      if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){ e.preventDefault(); selectMode((cur + 5) % 6, true); }
     });
   });
 
-  // Scroll reveal
+  // CTA iz panela unapred bira vrstu u formi
+  document.querySelectorAll('[data-type]').forEach(function(a){
+    a.addEventListener('click', function(){
+      var r = document.querySelector('input[name="vrsta"][value="' + a.dataset.type + '"]');
+      if(r) r.checked = true;
+    });
+  });
+
+  // Pregled snimaka
+  var thumbs = Array.prototype.slice.call(document.querySelectorAll('.pb-thumb'));
+  var pframes = thumbs.map(function(t){ return document.getElementById(t.getAttribute('aria-controls')); });
+  var pbCount = document.getElementById('pbCount');
+  var pbCat = document.getElementById('pbCat');
+  var pcur = 0;
+  pframes.forEach(function(f, i){ if(i) f.hidden = true; });
+  function show(i, focus){
+    i = (i + pframes.length) % pframes.length;
+    thumbs.forEach(function(t, j){
+      var on = j === i;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      pframes[j].hidden = !on;
+    });
+    pbCount.textContent = ('00' + (i + 1)).slice(-3) + '/' + ('00' + pframes.length).slice(-3);
+    pbCat.textContent = thumbs[i].dataset.cat;
+    if(focus) thumbs[i].focus();
+    pcur = i;
+  }
+  thumbs.forEach(function(t, i){
+    t.addEventListener('click', function(){ show(i); });
+    t.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){ e.preventDefault(); show(pcur + 1, true); }
+      if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){ e.preventDefault(); show(pcur - 1, true); }
+    });
+  });
+  document.getElementById('pbPrev').addEventListener('click', function(){ show(pcur - 1); });
+  document.getElementById('pbNext').addEventListener('click', function(){ show(pcur + 1); });
+
+  // Forma još nije povezana sa slanjem: samo blic
+  document.getElementById('bookForm').addEventListener('submit', function(e){ e.preventDefault(); fire(); });
+
+  // Reveal + automatski fokus kad prsten uđe u kadar
   if('IntersectionObserver' in window){
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('in-view');
-          observer.unobserve(entry.target);
-        }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        en.target.classList.add('in-view');
+        if(en.target === box){ ring.value = 12; applyFocus(); autofocus(12); }
+        io.unobserve(en.target);
       });
-    }, { threshold: 0.15 });
-    revealEls.forEach(function(el){ observer.observe(el); });
+    }, {threshold:0.2});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
   }
 </script>
 
