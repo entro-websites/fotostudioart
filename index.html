@@ -1265,16 +1265,58 @@
     display:flex;
     border-bottom:1px solid var(--line-strong);
   }
-  .menu-tabs span{
+  .menu-tabs button{
     flex:1;
     text-align:center;
     padding-top:12px;
     padding-bottom:12px;
+    padding-left:8px;
+    padding-right:8px;
     color:var(--text-faint);
+    background:transparent;
+    border:none;
     border-right:1px solid var(--line);
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:color 0.2s ease, background 0.2s ease;
   }
-  .menu-tabs span:last-child{border-right:none;}
-  .menu-tabs span.on{background:var(--signal);color:var(--accent-dark);font-weight:700;}
+  .menu-tabs button:last-child{border-right:none;}
+  .menu-tabs button:hover{color:var(--text);}
+  .menu-tabs button:focus-visible{outline:2px solid var(--signal);outline-offset:-2px;}
+  .menu-tabs button[aria-selected="true"]{
+    background:var(--signal);
+    color:var(--accent-dark);
+    font-weight:700;
+  }
+
+  /* koraci forme: bez JS-a stoje jedan ispod drugog i forma i dalje radi */
+  .js .menu-step[hidden]{display:none;}
+  .form-foot.step-nav,
+  button.step-nav{display:none;}
+  .js .form-foot.step-nav{display:flex;}
+  .js button.step-nav{display:inline-flex;align-items:center;}
+  .step-back{
+    background:transparent;
+    border:none;
+    padding-left:0;
+    padding-right:0;
+    color:var(--text-faint);
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    cursor:pointer;
+    text-decoration:underline;
+    text-underline-offset:4px;
+    transition:color 0.2s ease;
+  }
+  .step-back:hover{color:var(--signal);}
+  .step-back:focus-visible{outline:2px solid var(--signal);outline-offset:4px;}
+  .form-note{color:var(--text-faint);margin-top:32px;}
+  .form-note + .form-foot{margin-top:16px;}
   .menu-body{
     padding-top:32px;
     padding-bottom:32px;
@@ -1340,8 +1382,10 @@
   }
   @media (max-width:520px){
     .menu-body{padding-left:20px;padding-right:20px;padding-top:24px;padding-bottom:24px;}
-    .menu-tabs span.hide-xs{display:none;}
-    .form-foot .btn{width:100%;}
+    .menu-tabs button{font-size:10px;letter-spacing:0.08em;padding-left:4px;padding-right:4px;}
+    .form-foot{gap:16px;}
+    .form-foot .btn{width:100%;order:2;}
+    .form-foot .step-back{order:3;align-self:center;}
   }
 
   /* ---------- FOOTER ---------- */
@@ -1881,38 +1925,57 @@
         </div>
 
         <form class="menu reveal" id="bookForm" action="#" novalidate>
-          <div class="menu-tabs mono" aria-hidden="true">
-            <span class="on">Zakazivanje</span>
-            <span class="hide-xs">Usluga</span>
-            <span class="hide-xs">Kontakt</span>
+          <div class="menu-tabs" role="tablist" aria-label="Koraci zahteva za termin">
+            <button type="button" role="tab" id="mtab-0" aria-controls="mstep-0" aria-selected="true">Usluga</button>
+            <button type="button" role="tab" id="mtab-1" aria-controls="mstep-1" aria-selected="false" tabindex="-1">Detalji</button>
+            <button type="button" role="tab" id="mtab-2" aria-controls="mstep-2" aria-selected="false" tabindex="-1">Kontakt</button>
           </div>
           <div class="menu-body">
-            <fieldset class="field">
-              <legend class="mono">01 · Šta snimamo</legend>
-              <div class="chips">
-                <label class="chip"><input type="radio" name="vrsta" value="dokumenta" checked><span>Dokumenta</span></label>
-                <label class="chip"><input type="radio" name="vrsta" value="poslovno"><span>Poslovni portret</span></label>
-                <label class="chip"><input type="radio" name="vrsta" value="vencanje"><span>Venčanje</span></label>
-                <label class="chip"><input type="radio" name="vrsta" value="obrada"><span>Obrada i štampa</span></label>
-                <label class="chip"><input type="radio" name="vrsta" value="drugo"><span>Nešto drugo</span></label>
+
+            <div class="menu-step" id="mstep-0" role="tabpanel" aria-labelledby="mtab-0">
+              <fieldset class="field">
+                <legend class="mono">01 · Šta snimamo</legend>
+                <div class="chips">
+                  <label class="chip"><input type="radio" name="vrsta" value="dokumenta" checked><span>Dokumenta</span></label>
+                  <label class="chip"><input type="radio" name="vrsta" value="poslovno"><span>Poslovni portret</span></label>
+                  <label class="chip"><input type="radio" name="vrsta" value="vencanje"><span>Venčanje</span></label>
+                  <label class="chip"><input type="radio" name="vrsta" value="obrada"><span>Obrada i štampa</span></label>
+                  <label class="chip"><input type="radio" name="vrsta" value="drugo"><span>Nešto drugo</span></label>
+                </div>
+              </fieldset>
+              <div class="form-foot step-nav">
+                <span class="mono">Tri koraka, minut posla</span>
+                <button type="button" class="btn" data-go="1">Dalje, detalji</button>
               </div>
-            </fieldset>
-            <div class="field">
-              <label for="ime" class="mono">02 · Ime i prezime</label>
-              <input type="text" id="ime" name="ime" placeholder="Tvoje ime" autocomplete="name">
             </div>
-            <div class="field">
-              <label for="kontakt-podatak" class="mono">03 · Telefon ili email</label>
-              <input type="text" id="kontakt-podatak" name="kontakt-podatak" placeholder="Gde da ti javimo termin">
+
+            <div class="menu-step" id="mstep-1" role="tabpanel" aria-labelledby="mtab-1">
+              <div class="field">
+                <label for="poruka" class="mono">02 · Detalji</label>
+                <textarea id="poruka" name="poruka" placeholder="Npr. fotografija za pasoš, venčanje 14. juna, 20 fotografija 13x18..."></textarea>
+              </div>
+              <div class="form-foot step-nav">
+                <button type="button" class="step-back" data-go="0">Nazad</button>
+                <button type="button" class="btn" data-go="2">Dalje, kontakt</button>
+              </div>
             </div>
-            <div class="field">
-              <label for="poruka" class="mono">04 · Detalji</label>
-              <textarea id="poruka" name="poruka" placeholder="Npr. fotografija za pasoš, venčanje 14. juna, 20 fotografija 13x18..."></textarea>
+
+            <div class="menu-step" id="mstep-2" role="tabpanel" aria-labelledby="mtab-2">
+              <div class="field">
+                <label for="ime" class="mono">03 · Ime i prezime</label>
+                <input type="text" id="ime" name="ime" placeholder="Tvoje ime" autocomplete="name">
+              </div>
+              <div class="field">
+                <label for="kontakt-podatak" class="mono">04 · Telefon ili email</label>
+                <input type="text" id="kontakt-podatak" name="kontakt-podatak" placeholder="Gde da ti javimo termin">
+              </div>
+              <p class="mono form-note">Javljamo se sa terminom</p>
+              <div class="form-foot">
+                <button type="button" class="step-back step-nav" data-go="1">Nazad</button>
+                <button type="submit" class="btn has-shutter"><span class="shutter" aria-hidden="true"></span>Pošalji upit za termin</button>
+              </div>
             </div>
-            <div class="form-foot">
-              <span class="mono">Javljamo se sa terminom</span>
-              <button type="submit" class="btn has-shutter"><span class="shutter" aria-hidden="true"></span>Pošalji upit za termin</button>
-            </div>
+
           </div>
         </form>
       </div>
@@ -2087,11 +2150,42 @@
     });
   });
 
-  // CTA iz panela unapred bira vrstu u formi
+  // Forma u tri koraka: traka iznad forme su pravi tabovi
+  var mtabs = Array.prototype.slice.call(document.querySelectorAll('.menu-tabs [role="tab"]'));
+  var msteps = mtabs.map(function(t){ return document.getElementById(t.getAttribute('aria-controls')); });
+  var mcur = 0;
+
+  function showStep(i, focusTab){
+    mcur = Math.max(0, Math.min(mtabs.length - 1, i));
+    mtabs.forEach(function(t, n){
+      var on = n === mcur;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      msteps[n].hidden = !on;
+    });
+    if(focusTab) mtabs[mcur].focus();
+  }
+
+  mtabs.forEach(function(t, n){
+    t.addEventListener('click', function(){ showStep(n); });
+    t.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight'){ e.preventDefault(); showStep(mcur + 1, true); }
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); showStep(mcur - 1, true); }
+    });
+  });
+
+  document.querySelectorAll('[data-go]').forEach(function(b){
+    b.addEventListener('click', function(){ showStep(parseInt(b.dataset.go, 10)); });
+  });
+
+  if(mtabs.length) showStep(0);
+
+  // CTA iz panela unapred bira vrstu u formi i vraća formu na prvi korak
   document.querySelectorAll('[data-type]').forEach(function(a){
     a.addEventListener('click', function(){
       var r = document.querySelector('input[name="vrsta"][value="' + a.dataset.type + '"]');
       if(r) r.checked = true;
+      if(mtabs.length) showStep(0);
     });
   });
 
