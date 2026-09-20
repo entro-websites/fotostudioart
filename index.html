@@ -894,6 +894,101 @@
     .dial-wrap{--size:280px;}
   }
 
+  /* ---------- KOMPLETAN SPISAK USLUGA (rasklopivo) ---------- */
+  .all-svc{
+    margin-top:64px;
+    border:1px solid var(--line);
+    background:var(--panel);
+  }
+  .all-svc summary{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    padding-top:24px;
+    padding-bottom:24px;
+    padding-left:32px;
+    padding-right:32px;
+    cursor:pointer;
+    list-style:none;
+    transition:background 0.2s ease;
+  }
+  .all-svc summary::-webkit-details-marker{display:none;}
+  .all-svc summary:hover{background:rgba(63,216,220,0.06);}
+  .all-svc summary:focus-visible{outline:2px solid var(--signal);outline-offset:-2px;}
+  .all-svc-label{color:var(--signal);}
+  .all-svc-label b{
+    display:block;
+    margin-top:4px;
+    font-weight:400;
+    color:var(--text-faint);
+  }
+  .all-svc-ico{
+    width:24px;
+    height:24px;
+    flex-shrink:0;
+    stroke:var(--signal);
+    fill:none;
+    stroke-width:2;
+    transition:transform 0.3s ease;
+  }
+  .all-svc[open] .all-svc-ico{transform:rotate(45deg);}
+  .all-svc-body{
+    border-top:1px solid var(--line);
+    padding-top:40px;
+    padding-bottom:40px;
+    padding-left:32px;
+    padding-right:32px;
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:40px;
+  }
+  .all-svc-col--wide{
+    grid-column:1 / -1;
+    border-top:1px solid var(--line);
+    padding-top:32px;
+  }
+  .all-svc-col--wide ul{
+    columns:4;
+    column-gap:40px;
+  }
+  .all-svc-col h3{
+    font-size:16px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    font-family:var(--mono);
+    font-weight:700;
+    color:var(--signal);
+    padding-bottom:12px;
+    margin-bottom:16px;
+    border-bottom:1px solid rgba(63,216,220,0.2);
+  }
+  .all-svc-col li{
+    font-size:16px;
+    color:var(--text-muted);
+    padding-top:8px;
+    padding-bottom:8px;
+    break-inside:avoid;
+  }
+  .all-svc-note{
+    border-top:1px solid var(--line);
+    padding-top:24px;
+    padding-bottom:24px;
+    padding-left:32px;
+    padding-right:32px;
+    color:var(--text-faint);
+  }
+  @media (max-width:900px){
+    .all-svc-body{grid-template-columns:repeat(2, minmax(0, 1fr));gap:32px;}
+    .all-svc-col--wide ul{columns:2;}
+  }
+  @media (max-width:520px){
+    .all-svc-body{grid-template-columns:1fr;gap:32px;padding-left:20px;padding-right:20px;}
+    .all-svc-col--wide ul{columns:1;}
+    .all-svc summary{padding-left:20px;padding-right:20px;}
+    .all-svc-note{padding-left:20px;padding-right:20px;}
+  }
+
   /* ---------- GALERIJA: PREGLED SNIMAKA ---------- */
   .playback{
     display:grid;
@@ -1104,7 +1199,7 @@
     gap:64px;
   }
   .contact-intro h2{
-    font-size:clamp(32px, 4.4vw, 64px);
+    font-size:clamp(32px, 3.6vw, 48px);
     margin-bottom:24px;
   }
   .contact-intro > p{max-width:48ch;margin-bottom:48px;}
@@ -1340,7 +1435,7 @@
       <div class="wrap focus-grid">
         <div class="reveal">
           <span class="mono sec-tag">Van fokusa</span>
-          <h2 style="margin-top:24px;">Treba ti fotografija za sutra, a nemaš vremena da trčiš po gradu</h2>
+          <h2 style="margin-top:24px;">Fotografija za sutra?</h2>
           <p>Fotografija za ličnu kartu do podneva. Portret za sajt firme do petka. Neko ko će snimiti venčanje bez greške.</p>
           <p>Trčanje od studija do štamparije pa do nekoga ko radi retuš pojede ti dan. <strong>Kod nas je to jedna adresa.</strong></p>
         </div>
@@ -1469,6 +1564,87 @@
             </div>
           </div>
         </div>
+
+        <details class="all-svc reveal">
+          <summary>
+            <span class="mono all-svc-label">Ceo spisak usluga i proizvoda<b>Klikni da rasklopiš</b></span>
+            <svg class="all-svc-ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" stroke-linecap="square" />
+            </svg>
+          </summary>
+
+          <div class="all-svc-body">
+            <div class="all-svc-col">
+              <h3>Snimanje u studiju</h3>
+              <ul>
+                <li>Fotografije za dokumenta</li>
+                <li>Portreti</li>
+                <li>Porodične fotografije</li>
+                <li>Fotografisanje dece</li>
+                <li>Fashion i glamour</li>
+                <li>Komercijalne fotografije</li>
+                <li>Fotografisanje proizvoda</li>
+                <li>Snimanje za photo book</li>
+              </ul>
+            </div>
+
+            <div class="all-svc-col">
+              <h3>Snimanje na terenu</h3>
+              <ul>
+                <li>Fotografisanje venčanja</li>
+                <li>Video snimanje venčanja</li>
+                <li>Krštenja</li>
+                <li>Proslave: godišnjice, mature, rođendani</li>
+                <li>Sport i objekti</li>
+                <li>Korporativno fotografisanje</li>
+                <li>Fotografisanje enterijera</li>
+                <li>Fotografisanje modela</li>
+                <li>Snimanje dronom, iz vazduha</li>
+              </ul>
+            </div>
+
+            <div class="all-svc-col">
+              <h3>Obrada i izrada</h3>
+              <ul>
+                <li>Izrada fotografija svih formata</li>
+                <li>Brza izrada za dokumenta</li>
+                <li>Digitalna obrada fotografija</li>
+                <li>Skeniranje i obrada starih fotografija</li>
+                <li>Priprema za photo book i wedding book</li>
+                <li>Narezivanje na CD ili DVD</li>
+                <li>Skeniranje i fotokopiranje dokumenata</li>
+                <li>Prodaja filmova</li>
+              </ul>
+            </div>
+
+            <div class="all-svc-col all-svc-col--wide">
+              <h3>Foto proizvodi</h3>
+              <ul>
+                <li>Photo book</li>
+                <li>Foto puzzle</li>
+                <li>Foto na šolji</li>
+                <li>Foto kugla</li>
+                <li>Foto magneti</li>
+                <li>Foto privezak</li>
+                <li>Podloga za miša</li>
+                <li>Jastuk sa štampom</li>
+                <li>Majica sa štampom</li>
+                <li>Štampa na bedževima</li>
+                <li>Izrada kanvasa</li>
+                <li>Izrada kalendara</li>
+                <li>Foto ceger</li>
+                <li>Foto kecelja</li>
+                <li>Foto na rancu</li>
+                <li>Foto kocka</li>
+                <li>Štampa na daskama</li>
+                <li>Foto na pepeljari</li>
+                <li>Foto na kamenu</li>
+              </ul>
+            </div>
+          </div>
+
+          <p class="mono all-svc-note">Foto proizvode poručuješ i online, gotovi su za 48h</p>
+        </details>
       </div>
     </section>
 
@@ -1478,7 +1654,7 @@
         <div class="sec-head reveal">
           <div class="mono sec-tag">02 / Radovi<b>Režim pregleda</b></div>
           <div>
-            <h2>Sa naše memorijske kartice</h2>
+            <h2 style="max-width:none;">Sa naše memorijske kartice</h2>
             <p>Listaj kao na ekranu aparata. Strelice levo i desno rade i na tastaturi.</p>
           </div>
         </div>
