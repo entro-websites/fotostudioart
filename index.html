@@ -1073,6 +1073,47 @@
     .pb-hud .hide-xs{display:none;}
   }
 
+  /* ---------- JOŠ RADOVA: MREŽA FOTOGRAFIJA ---------- */
+  .more-shots{
+    margin-top:64px;
+    border-top:1px solid var(--line);
+    padding-top:40px;
+  }
+  .more-shots-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:32px;
+  }
+  .more-shots-head span:first-child{color:var(--signal);}
+  .more-shots-head span:last-child{color:var(--text-faint);}
+  .shot-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:24px;
+  }
+  .shot figure{margin:0;}
+  .shot .ph{
+    aspect-ratio:4 / 3;
+    border:1px solid var(--line);
+  }
+  .shot figcaption{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    padding-top:12px;
+    color:var(--text-muted);
+  }
+  .shot figcaption .n{color:var(--text-faint);}
+  @media (max-width:900px){
+    .shot-grid{grid-template-columns:repeat(2, minmax(0, 1fr));}
+  }
+  @media (max-width:520px){
+    .shot-grid{grid-template-columns:1fr;}
+  }
+
   /* ---------- PROCES: OD OKIDANJA DO OTISKA (papir) ---------- */
   .paper{background:var(--paper);color:var(--ink);}
   .paper p{color:var(--ink-muted);}
@@ -1655,7 +1696,7 @@
           <div class="mono sec-tag">02 / Radovi<b>Režim pregleda</b></div>
           <div>
             <h2 style="max-width:none;">Sa naše memorijske kartice</h2>
-            <p>Listaj kao na ekranu aparata. Strelice levo i desno rade i na tastaturi.</p>
+            <p>Šest kadrova iz studija i sa terena. Izaberi kategoriju sa liste ili listaj strelicama pored nje.</p>
           </div>
         </div>
 
@@ -1691,6 +1732,52 @@
             <div class="pb-nav">
               <button type="button" id="pbPrev" aria-label="Prethodna fotografija"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
               <button type="button" id="pbNext" aria-label="Sledeća fotografija"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="more-shots">
+          <div class="mono more-shots-head reveal">
+            <span>Još radova</span>
+            <span>Šest kadrova</span>
+          </div>
+
+          <div class="shot-grid">
+            <div class="shot reveal">
+              <figure>
+                <div class="ph"><span class="ph-label">Fotografija: krštenje</span><img src="assets/rad-1.jpg" alt="Krštenje u crkvi, fotografija Foto Studija Art Digital"></div>
+                <figcaption class="mono"><span>Krštenje</span><span class="n">01</span></figcaption>
+              </figure>
+            </div>
+            <div class="shot reveal">
+              <figure>
+                <div class="ph"><span class="ph-label">Fotografija: deca</span><img src="assets/rad-2.jpg" alt="Dete na fotografisanju u studiju Art Digital"></div>
+                <figcaption class="mono"><span>Deca</span><span class="n">02</span></figcaption>
+              </figure>
+            </div>
+            <div class="shot reveal">
+              <figure>
+                <div class="ph"><span class="ph-label">Fotografija: porodica</span><img src="assets/rad-3.jpg" alt="Porodica na zajedničkom fotografisanju u studiju"></div>
+                <figcaption class="mono"><span>Porodica</span><span class="n">03</span></figcaption>
+              </figure>
+            </div>
+            <div class="shot reveal">
+              <figure>
+                <div class="ph"><span class="ph-label">Fotografija: proizvod</span><img src="assets/rad-4.jpg" alt="Fotografisanje proizvoda na beloj pozadini"></div>
+                <figcaption class="mono"><span>Proizvodi</span><span class="n">04</span></figcaption>
+              </figure>
+            </div>
+            <div class="shot reveal">
+              <figure>
+                <div class="ph"><span class="ph-label">Fotografija: enterijer</span><img src="assets/rad-5.jpg" alt="Snimljen enterijer poslovnog prostora"></div>
+                <figcaption class="mono"><span>Enterijer</span><span class="n">05</span></figcaption>
+              </figure>
+            </div>
+            <div class="shot reveal">
+              <figure>
+                <div class="ph"><span class="ph-label">Fotografija: snimak dronom</span><img src="assets/rad-6.jpg" alt="Snimak iz vazduha načinjen dronom"></div>
+                <figcaption class="mono"><span>Iz vazduha</span><span class="n">06</span></figcaption>
+              </figure>
             </div>
           </div>
         </div>
