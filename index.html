@@ -340,6 +340,7 @@
     transition:transform 0.4s cubic-bezier(0.7,0,0.2,1);
   }
   .mobile-menu.open{transform:translateY(0);}
+  body.menu-open .site-header{z-index:1150;}
   .mobile-menu .m-link{
     font-stretch:125%;
     font-weight:800;
@@ -2063,6 +2064,7 @@
     burger.setAttribute('aria-expanded', open);
     burger.setAttribute('aria-label', open ? 'Zatvori meni' : 'Otvori meni');
     document.body.style.overflow = open ? 'hidden' : '';
+    document.body.classList.toggle('menu-open', open);
   }
   burger.addEventListener('click', function(){ setMenu(!menu.classList.contains('open')); });
   menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
