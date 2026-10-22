@@ -1421,6 +1421,157 @@
   .reveal{transition:transform 0.8s cubic-bezier(0.2,0.7,0.2,1);}
   .js .reveal:not(.in-view){transform:translateY(12px);}
 
+  /* ---------- JEZIK: SR / EN / RU ---------- */
+  .lang{
+    display:flex;
+    border:1px solid var(--line-strong);
+    flex-shrink:0;
+  }
+  .lang button{
+    height:32px;
+    min-width:40px;
+    padding-left:8px;
+    padding-right:8px;
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    color:var(--text-muted);
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .lang button + button{border-left:1px solid var(--line-strong);}
+  .lang button:hover{color:var(--signal);}
+  .lang button[aria-pressed="true"]{background:var(--signal);color:var(--accent-dark);font-weight:700;}
+  .lang button:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .navbar .lang{margin-left:auto;}
+  .mobile-menu .lang{align-self:flex-start;margin-top:16px;}
+  /* zatvoren meni ne sme da viri na niskim ekranima */
+  .mobile-menu{visibility:hidden;transition:transform 0.4s cubic-bezier(0.7,0,0.2,1), visibility 0s linear 0.4s;}
+  .mobile-menu.open{visibility:visible;transition:transform 0.4s cubic-bezier(0.7,0,0.2,1);}
+  .mobile-menu .lang button{height:48px;min-width:56px;}
+  @media (max-width:519px){
+    .navbar .lang{display:none;}
+  }
+
+  /* ---------- POPUP: NEWSLETTER -5% ---------- */
+  .promo{
+    position:fixed;
+    inset:0;
+    z-index:1300;
+    display:grid;
+    place-items:center;
+    padding-left:16px;
+    padding-right:16px;
+  }
+  .promo[hidden]{display:none;}
+  .promo-backdrop{
+    position:absolute;
+    inset:0;
+    background:rgba(5,8,8,0.72);
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+    opacity:0;
+    transition:opacity 0.3s ease;
+  }
+  .promo-card{
+    position:relative;
+    width:100%;
+    max-width:480px;
+    max-height:calc(100vh - 32px);
+    overflow-y:auto;
+    background:var(--panel);
+    border:1px solid var(--line-strong);
+    padding-top:48px;
+    padding-bottom:40px;
+    padding-left:40px;
+    padding-right:40px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(16px) scale(0.96);
+    transition:opacity 0.3s ease, transform 0.4s cubic-bezier(0.2,0.7,0.2,1);
+  }
+  .promo.open .promo-backdrop{opacity:1;}
+  .promo.open .promo-card{opacity:1;transform:none;}
+  .promo-card > .corners{inset:12px;}
+  .promo-card > .corners::before,
+  .promo-card > .corners::after,
+  .promo-card > .corners i::before,
+  .promo-card > .corners i::after{width:16px;height:16px;border-color:var(--signal);}
+  .promo-x{
+    position:absolute;
+    top:16px;
+    right:16px;
+    width:40px;
+    height:40px;
+    display:grid;
+    place-items:center;
+    color:var(--text-muted);
+    z-index:1;
+    transition:color 0.2s ease;
+  }
+  .promo-x:hover{color:var(--signal);}
+  .promo-x svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;}
+  .promo-x:focus-visible{outline:2px solid var(--signal);outline-offset:-4px;}
+  .promo-tag{color:var(--signal);display:block;}
+  .promo-off{
+    display:block;
+    margin-top:16px;
+    font-family:var(--display);
+    font-stretch:125%;
+    font-weight:800;
+    font-size:96px;
+    line-height:1;
+    color:transparent;
+    -webkit-text-stroke:2px var(--signal);
+    filter:blur(var(--b, 0px));
+    transition:filter 0.9s cubic-bezier(0.2,0.7,0.2,1) 0.15s;
+  }
+  .promo:not(.open) .promo-off{--b:8px;}
+  .promo-card h2{
+    margin-top:16px;
+    font-size:28px;
+    text-wrap:balance;
+  }
+  .promo-card p{margin-top:16px;}
+  .promo-card p .s{display:block;text-wrap:balance;}
+  .promo-form{margin-top:32px;text-align:left;}
+  .promo-form label{display:block;color:var(--text-muted);margin-bottom:8px;}
+  .promo-form input{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--line-strong);
+    color:var(--text);
+    font-family:var(--display);
+    font-size:20px;
+    padding-top:8px;
+    padding-bottom:12px;
+    border-radius:0;
+    transition:border-color 0.2s ease;
+  }
+  .promo-form input::placeholder{color:var(--text-faint);}
+  .promo-form input:focus{outline:none;border-bottom-color:var(--signal);}
+  .promo-form input[aria-invalid="true"]{border-bottom-color:#ff8a7a;}
+  .promo-err{display:block;min-height:20px;margin-top:8px;color:#ff8a7a;font-size:12px;}
+  .promo-form .btn{width:100%;margin-top:8px;}
+  .promo-no{
+    margin-top:16px;
+    color:var(--text-faint);
+    padding-top:8px;
+    padding-bottom:8px;
+    transition:color 0.2s ease;
+  }
+  .promo-no:hover{color:var(--text);}
+  .promo-done{display:none;margin-top:32px;}
+  .promo-done b{display:block;color:var(--signal);font-family:var(--display);font-stretch:125%;font-size:20px;text-transform:uppercase;}
+  .promo.sent .promo-form,
+  .promo.sent .promo-no{display:none;}
+  .promo.sent .promo-done{display:block;}
+  @media (max-width:520px){
+    .promo-card{padding-top:48px;padding-bottom:32px;padding-left:24px;padding-right:24px;}
+    .promo-off{font-size:72px;}
+    .promo-card h2{font-size:24px;}
+  }
+
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto;}
     *,*::before,*::after{transition:none !important;animation:none !important;}
@@ -1457,6 +1608,12 @@
         <a href="#kontakt" class="btn">Zakaži termin</a>
       </nav>
 
+      <div class="lang" role="group" aria-label="Jezik">
+        <button type="button" data-lang="sr" aria-pressed="true" lang="sr">SR</button>
+        <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+        <button type="button" data-lang="ru" aria-pressed="false" lang="ru">RU</button>
+      </div>
+
       <button class="hamburger" id="hamburgerBtn" aria-label="Otvori meni" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
       </button>
@@ -1469,6 +1626,11 @@
     <a href="#o-nama" class="m-link"><span>03</span>O nama</a>
     <a href="#kontakt" class="m-link"><span>04</span>Kontakt</a>
     <a href="#kontakt" class="btn m-link-btn">Zakaži termin</a>
+    <div class="lang" role="group" aria-label="Jezik">
+      <button type="button" data-lang="sr" aria-pressed="true" lang="sr">SR</button>
+      <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+      <button type="button" data-lang="ru" aria-pressed="false" lang="ru">RU</button>
+    </div>
   </div>
 
   <main id="top">
@@ -2003,6 +2165,34 @@
     </div>
   </footer>
 
+  <!-- POPUP: NEWSLETTER -5% (kao na starom sajtu) -->
+  <div class="promo" id="promo" hidden>
+    <div class="promo-backdrop" data-close></div>
+    <div class="promo-card" role="dialog" aria-modal="true" aria-labelledby="promoTitle">
+      <div class="corners" aria-hidden="true"><i></i></div>
+      <button type="button" class="promo-x" data-close aria-label="Zatvori">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <span class="promo-tag mono">Newsletter · Popust</span>
+      <span class="promo-off" aria-hidden="true">-5%</span>
+      <h2 id="promoTitle">Saznaj prvi za popuste</h2>
+      <p><span class="s">Prijavi se na newsletter i ostvari 5% popusta.</span> <span class="s">Akcije i popuste šaljemo pre svih.</span></p>
+
+      <form class="promo-form" id="promoForm" action="#" novalidate>
+        <label for="promoEmail" class="mono">Email</label>
+        <input type="email" id="promoEmail" name="email" placeholder="Tvoja email adresa" autocomplete="email" aria-describedby="promoErr">
+        <span class="promo-err" id="promoErr" aria-live="polite"></span>
+        <button type="submit" class="btn">Prijavi se</button>
+      </form>
+      <button type="button" class="promo-no mono" data-close>Ne, hvala</button>
+
+      <div class="promo-done" role="status">
+        <b>Hvala na prijavi!</b>
+        <p>Popust od 5% i akcije stižu ti na email.</p>
+      </div>
+    </div>
+  </div>
+
 <script>
   document.documentElement.classList.add('js');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2062,7 +2252,7 @@
     menu.classList.toggle('open', open);
     burger.classList.toggle('open', open);
     burger.setAttribute('aria-expanded', open);
-    burger.setAttribute('aria-label', open ? 'Zatvori meni' : 'Otvori meni');
+    burger.setAttribute('aria-label', t(open ? 'Zatvori meni' : 'Otvori meni'));
     document.body.style.overflow = open ? 'hidden' : '';
     document.body.classList.toggle('menu-open', open);
   }
@@ -2238,6 +2428,396 @@
   } else {
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
   }
+
+  // Jezici sa starog sajta: srpski, engleski, ruski. Ključ je srpski tekst, vrednost [en, ru].
+  var I18N = {
+    'Foto Studio Art Digital - Fotografisanje, obrada i štampa u Beogradu': ['Foto Studio Art Digital - Photography, editing and printing in Belgrade', 'Foto Studio Art Digital - Фотосъёмка, обработка и печать в Белграде'],
+    'Foto Studio Art Digital, početak stranice': ['Foto Studio Art Digital, back to top', 'Foto Studio Art Digital, в начало страницы'],
+    'Logo Foto Studio Art Digital, fotoaparat sa siluetom Beograda u objektivu': ['Foto Studio Art Digital logo, a camera with the Belgrade skyline in the lens', 'Логотип Foto Studio Art Digital, фотоаппарат с силуэтом Белграда в объективе'],
+    'Logo Foto Studio Art Digital': ['Foto Studio Art Digital logo', 'Логотип Foto Studio Art Digital'],
+    'Foto studio · Beograd': ['Photo studio · Belgrade', 'Фотостудия · Белград'],
+    'Jezik': ['Language', 'Язык'],
+    'Glavni meni': ['Main menu', 'Главное меню'],
+    'Meni u futeru': ['Footer menu', 'Меню в подвале'],
+    'Usluge': ['Services', 'Услуги'],
+    'Radovi': ['Portfolio', 'Работы'],
+    'O nama': ['About', 'О нас'],
+    'Kontakt': ['Contact', 'Контакты'],
+    'Zakaži termin': ['Book a session', 'Записаться'],
+    'Otvori meni': ['Open menu', 'Открыть меню'],
+    'Zatvori meni': ['Close menu', 'Закрыть меню'],
+
+    'Fotografija iz studija': ['Photo from the studio', 'Фото из студии'],
+    'Fotograf Foto Studija Art Digital snima portret u studiju u Beogradu': ['A Foto Studio Art Digital photographer shooting a portrait in the Belgrade studio', 'Фотограф Foto Studio Art Digital снимает портрет в студии в Белграде'],
+    'Snimamo. Obrađujemo.': ['We shoot. We edit.', 'Снимаем. Обрабатываем.'],
+    'Štampamo.': ['We print.', 'Печатаем.'],
+    'Fotografija za pasoš dok čekaš. Poslovni portret za sajt firme. Venčanje od veridbe do prvog plesa. Posle snimanja fotografije obrađujemo i štampamo u istom studiju.': ['Passport photos while you wait. Business portraits for your company website. Weddings from the engagement to the first dance. After the shoot we edit and print your photos in the same studio.', 'Фото на паспорт, пока вы ждёте. Деловой портрет для сайта компании. Свадьба от помолвки до первого танца. После съёмки мы обрабатываем и печатаем фотографии в той же студии.'],
+    'Zakaži fotografisanje': ['Book a photo shoot', 'Записаться на съёмку'],
+
+    'Van fokusa': ['Out of focus', 'Не в фокусе'],
+    'Fotografija za sutra?': ['Need a photo by tomorrow?', 'Нужно фото к завтра?'],
+    'Fotografija za ličnu kartu do podneva. Portret za sajt firme do petka. Neko ko će snimiti venčanje bez greške.': ['An ID card photo by noon. A portrait for the company website by Friday. Someone who will shoot your wedding without a single mistake.', 'Фото на удостоверение личности к полудню. Портрет для сайта компании к пятнице. Тот, кто снимет свадьбу без единой ошибки.'],
+    'Trčanje od studija do štamparije pa do nekoga ko radi retuš pojede ti dan.': ['Running from the studio to the print shop and then to a retoucher eats up your whole day.', 'Беготня из студии в типографию, а потом к ретушёру отнимает целый день.'],
+    'Kod nas je to jedna adresa.': ['With us it is all one address.', 'У нас всё это по одному адресу.'],
+    '● Fokus': ['● Focus', '● Фокус'],
+    'Studio, obrada, štampa': ['Studio, editing, printing', 'Студия, обработка, печать'],
+    'Jedna adresa': ['One address', 'Один адрес'],
+    'Fokus': ['Focus', 'Фокус'],
+    'Pomeri prsten za fokus ili pritisni AF da se natpis izoštri.': ['Turn the focus ring or press AF to sharpen the text.', 'Поверните кольцо фокуса или нажмите AF, чтобы надпись стала резкой.'],
+
+    '01 / Usluge': ['01 / Services', '01 / Услуги'],
+    'Okreni točkić': ['Turn the dial', 'Поверните диск'],
+    'Šest režima. Jedan studio.': ['Six modes. One studio.', 'Шесть режимов. Одна студия.'],
+    'Izaberi režim na točkiću i vidi šta tačno radimo. Od fotografije za dokumenta koja je gotova isti dan do snimanja celog venčanja.': ['Pick a mode on the dial and see exactly what we do. From ID photos ready the same day to covering an entire wedding.', 'Выберите режим на диске и посмотрите, что именно мы делаем. От фото на документы в тот же день до съёмки всей свадьбы.'],
+    'Režimi, vrste usluga': ['Modes, types of services', 'Режимы, виды услуг'],
+    'Režim': ['Mode', 'Режим'],
+    'Klikni režim ili koristi strelice': ['Click a mode or use the arrow keys', 'Нажмите на режим или используйте стрелки'],
+    'Meni · Usluge': ['Menu · Services', 'Меню · Услуги'],
+    'Fotografije za dokumenta': ['ID and document photos', 'Фото на документы'],
+    'Lična karta, pasoš, vozačka, biografija. Uslikamo te u studiju i fotografija je gotova isti dan.': ['ID card, passport, driving licence, CV. We take your photo in the studio and it is ready the same day.', 'Удостоверение личности, паспорт, водительские права, резюме. Мы фотографируем вас в студии, и фото готово в тот же день.'],
+    'Za': ['For', 'Для'],
+    'Lična karta, pasoš, vozačka, CV': ['ID card, passport, driving licence, CV', 'Удостоверение, паспорт, права, резюме'],
+    'Izrada': ['Ready', 'Готовность'],
+    'Isti dan': ['Same day', 'В тот же день'],
+    'Termin': ['Booking', 'Запись'],
+    'Bez zakazivanja, dođi u studio': ['No appointment needed, just drop by', 'Без записи, просто приходите'],
+    'Dođi po fotografiju danas': ['Get your photo today', 'Получите фото сегодня'],
+    'Poslovni portreti': ['Business portraits', 'Деловые портреты'],
+    'Portreti za sajt, LinkedIn i kataloge firme. Snimamo u studiju ili dolazimo na tvoju lokaciju.': ['Portraits for your website, LinkedIn and company catalogues. We shoot in the studio or come to your location.', 'Портреты для сайта, LinkedIn и каталогов компании. Снимаем в студии или приезжаем к вам.'],
+    'Sajt, LinkedIn, katalog, tim': ['Website, LinkedIn, catalogue, team', 'Сайт, LinkedIn, каталог, команда'],
+    'Gde': ['Where', 'Где'],
+    'U studiju ili na tvojoj lokaciji': ['In the studio or at your location', 'В студии или у вас'],
+    'Dogovaramo unapred': ['Arranged in advance', 'Договариваемся заранее'],
+    'Zakaži poslovni portret': ['Book a business portrait', 'Записаться на портрет'],
+    'Snimanje venčanja': ['Wedding photography', 'Свадебная съёмка'],
+    'Snimamo veridbu, venčanje i sve trenutke oko njih. Dobijaš obrađene fotografije koje ćeš gledati godinama.': ['We cover the engagement, the wedding and every moment around them. You get edited photos you will look at for years.', 'Снимаем помолвку, свадьбу и все моменты вокруг них. Вы получаете обработанные фотографии, которые будете пересматривать годами.'],
+    'Snimamo': ['We shoot', 'Снимаем'],
+    'Veridbu, venčanje, slavlje': ['Engagement, wedding, celebration', 'Помолвку, свадьбу, торжество'],
+    'Dobijaš': ['You get', 'Вы получаете'],
+    'Obrađene fotografije, po želji i odštampane': ['Edited photos, printed if you like', 'Обработанные фото, по желанию в печати'],
+    'Proveri slobodan datum': ['Check an available date', 'Проверить свободную дату'],
+    'Digitalna obrada': ['Digital editing', 'Цифровая обработка'],
+    'Retuš portreta, restauracija starih i oštećenih fotografija, priprema fajlova za štampu.': ['Portrait retouching, restoration of old and damaged photos, preparing files for print.', 'Ретушь портретов, реставрация старых и повреждённых фотографий, подготовка файлов к печати.'],
+    'Retuš': ['Retouching', 'Ретушь'],
+    'Portreti, dokumenta, poslovne fotografije': ['Portraits, ID photos, business photos', 'Портреты, документы, деловые фото'],
+    'Restauracija': ['Restoration', 'Реставрация'],
+    'Stare, izbledele i oštećene fotografije': ['Old, faded and damaged photos', 'Старые, выцветшие и повреждённые фото'],
+    'Priprema': ['Prep', 'Подготовка'],
+    'Fajlovi spremni za štampu': ['Print-ready files', 'Файлы, готовые к печати'],
+    'Pošalji fotografiju na obradu': ['Send a photo for editing', 'Отправить фото на обработку'],
+    'Izrada fotografija': ['Photo printing', 'Печать фотографий'],
+    'Donesi telefon, USB ili pošalji fajlove. Štampamo fotografije u svim formatima, od malih za album do velikih za zid.': ['Bring your phone or a USB stick, or send the files. We print photos in every size, from small album prints to large wall prints.', 'Принесите телефон, флешку или пришлите файлы. Печатаем фото любых форматов, от маленьких для альбома до больших для стены.'],
+    'Formati': ['Sizes', 'Форматы'],
+    'Svi formati, od albuma do zida': ['Every size, from album to wall', 'Все форматы, от альбома до стены'],
+    'Donosiš': ['You bring', 'Вы приносите'],
+    'Telefon, USB ili fajlove': ['Phone, USB or files', 'Телефон, флешку или файлы'],
+    'Uz to': ['Also', 'Плюс'],
+    'Obrada pre štampe ako treba': ['Editing before print if needed', 'Обработка перед печатью, если нужно'],
+    'Naruči izradu fotografija': ['Order photo prints', 'Заказать печать фото'],
+    'Foto radnja': ['Photo shop', 'Фотомагазин'],
+    'Fotokopiranje, skeniranje, foto proizvodi i sve što ti zatreba od foto opreme i materijala.': ['Photocopying, scanning, photo gifts and any photo equipment and supplies you may need.', 'Ксерокопирование, сканирование, фотосувениры и всё, что нужно из фототехники и расходников.'],
+    'Kopiranje': ['Copying', 'Копирование'],
+    'Fotokopije i skeniranje': ['Photocopies and scanning', 'Ксерокопии и сканирование'],
+    'Proizvodi': ['Products', 'Продукция'],
+    'Foto proizvodi po tvojoj fotografiji': ['Photo gifts made from your photo', 'Фотосувениры с вашим фото'],
+    'Oprema': ['Equipment', 'Оборудование'],
+    'Foto oprema i materijal': ['Photo equipment and supplies', 'Фототехника и материалы'],
+    'Svrati u radnju': ['Visit the shop', 'Заходите в магазин'],
+
+    'Ceo spisak usluga i proizvoda': ['Full list of services and products', 'Полный список услуг и продукции'],
+    'Klikni da rasklopiš': ['Click to expand', 'Нажмите, чтобы раскрыть'],
+    'Snimanje u studiju': ['In the studio', 'Съёмка в студии'],
+    'Portreti': ['Portraits', 'Портреты'],
+    'Porodične fotografije': ['Family photos', 'Семейные фото'],
+    'Fotografisanje dece': ['Children\'s photography', 'Детская съёмка'],
+    'Fashion i glamour': ['Fashion and glamour', 'Fashion и гламур'],
+    'Komercijalne fotografije': ['Commercial photography', 'Коммерческая съёмка'],
+    'Fotografisanje proizvoda': ['Product photography', 'Предметная съёмка'],
+    'Snimanje za photo book': ['Photo book shoots', 'Съёмка для фотокниги'],
+    'Snimanje na terenu': ['On location', 'Выездная съёмка'],
+    'Fotografisanje venčanja': ['Wedding photography', 'Свадебная фотосъёмка'],
+    'Video snimanje venčanja': ['Wedding videography', 'Свадебная видеосъёмка'],
+    'Krštenja': ['Christenings', 'Крестины'],
+    'Proslave: godišnjice, mature, rođendani': ['Celebrations: anniversaries, proms, birthdays', 'Праздники: юбилеи, выпускные, дни рождения'],
+    'Sport i objekti': ['Sports and venues', 'Спорт и объекты'],
+    'Korporativno fotografisanje': ['Corporate photography', 'Корпоративная съёмка'],
+    'Fotografisanje enterijera': ['Interior photography', 'Интерьерная съёмка'],
+    'Fotografisanje modela': ['Model photography', 'Съёмка моделей'],
+    'Snimanje dronom, iz vazduha': ['Drone and aerial shots', 'Съёмка дроном, с воздуха'],
+    'Obrada i izrada': ['Editing and printing', 'Обработка и печать'],
+    'Izrada fotografija svih formata': ['Photo prints in every size', 'Печать фото любых форматов'],
+    'Brza izrada za dokumenta': ['Fast ID photo printing', 'Быстрая печать фото на документы'],
+    'Digitalna obrada fotografija': ['Digital photo editing', 'Цифровая обработка фото'],
+    'Skeniranje i obrada starih fotografija': ['Scanning and editing old photos', 'Сканирование и обработка старых фото'],
+    'Priprema za photo book i wedding book': ['Photo book and wedding book layout', 'Подготовка фотокниги и свадебной книги'],
+    'Narezivanje na CD ili DVD': ['Burning to CD or DVD', 'Запись на CD или DVD'],
+    'Skeniranje i fotokopiranje dokumenata': ['Document scanning and photocopying', 'Сканирование и копирование документов'],
+    'Prodaja filmova': ['Film for sale', 'Продажа фотоплёнки'],
+    'Foto proizvodi': ['Photo gifts', 'Фотосувениры'],
+    'Photo book': ['Photo book', 'Фотокнига'],
+    'Foto puzzle': ['Photo puzzle', 'Фотопазл'],
+    'Foto na šolji': ['Photo mug', 'Фото на кружке'],
+    'Foto kugla': ['Photo globe', 'Фотошар'],
+    'Foto magneti': ['Photo magnets', 'Фотомагниты'],
+    'Foto privezak': ['Photo keyring', 'Фотобрелок'],
+    'Podloga za miša': ['Mouse pad', 'Коврик для мыши'],
+    'Jastuk sa štampom': ['Printed pillow', 'Подушка с печатью'],
+    'Majica sa štampom': ['Printed T-shirt', 'Футболка с печатью'],
+    'Štampa na bedževima': ['Printed badges', 'Печать на значках'],
+    'Izrada kanvasa': ['Canvas prints', 'Печать на холсте'],
+    'Izrada kalendara': ['Calendars', 'Календари'],
+    'Foto ceger': ['Photo tote bag', 'Шопер с фото'],
+    'Foto kecelja': ['Photo apron', 'Фартук с фото'],
+    'Foto na rancu': ['Photo backpack', 'Фото на рюкзаке'],
+    'Foto kocka': ['Photo cube', 'Фотокуб'],
+    'Štampa na daskama': ['Prints on wood', 'Печать на дереве'],
+    'Foto na pepeljari': ['Photo ashtray', 'Фото на пепельнице'],
+    'Foto na kamenu': ['Photo on stone', 'Фото на камне'],
+    'Foto proizvode poručuješ i online, gotovi su za 48h': ['Photo gifts can be ordered online too, ready in 48h', 'Фотосувениры можно заказать онлайн, готовы за 48 ч'],
+
+    '02 / Radovi': ['02 / Portfolio', '02 / Работы'],
+    'Režim pregleda': ['Playback mode', 'Режим просмотра'],
+    'Sa naše memorijske kartice': ['From our memory card', 'С нашей карты памяти'],
+    'Šest kadrova iz studija i sa terena. Izaberi kategoriju sa liste ili listaj strelicama pored nje.': ['Six frames from the studio and on location. Pick a category from the list or browse with the arrows next to it.', 'Шесть кадров из студии и с выездов. Выберите категорию в списке или листайте стрелками рядом.'],
+    'Pregled': ['Playback', 'Просмотр'],
+    'Fotografija: venčanje': ['Photo: wedding', 'Фото: свадьба'],
+    'Mladenci na venčanju, fotografija Foto Studija Art Digital': ['Newlyweds at their wedding, photo by Foto Studio Art Digital', 'Молодожёны на свадьбе, фото Foto Studio Art Digital'],
+    'Fotografija: poslovni portret': ['Photo: business portrait', 'Фото: деловой портрет'],
+    'Poslovni portret snimljen u studiju Art Digital': ['Business portrait shot at the Art Digital studio', 'Деловой портрет, снятый в студии Art Digital'],
+    'Fotografija: lični portret': ['Photo: personal portrait', 'Фото: личный портрет'],
+    'Lični portret snimljen u studiju Art Digital': ['Personal portrait shot at the Art Digital studio', 'Личный портрет, снятый в студии Art Digital'],
+    'Fotografija: veridba': ['Photo: engagement', 'Фото: помолвка'],
+    'Par na fotografisanju za veridbu': ['A couple at their engagement shoot', 'Пара на фотосессии к помолвке'],
+    'Fotografija: restauracija, pre i posle': ['Photo: restoration, before and after', 'Фото: реставрация, до и после'],
+    'Stara fotografija pre i posle restauracije': ['An old photo before and after restoration', 'Старое фото до и после реставрации'],
+    'Fotografija: studio': ['Photo: studio', 'Фото: студия'],
+    'Studio Art Digital sa rasvetom i pozadinom za fotografisanje': ['The Art Digital studio with lighting and a backdrop', 'Студия Art Digital со светом и фоном для съёмки'],
+    'Venčanje': ['Wedding', 'Свадьба'],
+    'Izbor fotografije': ['Choose a photo', 'Выбор фотографии'],
+    'Poslovni portret': ['Business portrait', 'Деловой портрет'],
+    'Lični portret': ['Personal portrait', 'Личный портрет'],
+    'Veridba': ['Engagement', 'Помолвка'],
+    'Studio': ['Studio', 'Студия'],
+    'Prethodna fotografija': ['Previous photo', 'Предыдущее фото'],
+    'Sledeća fotografija': ['Next photo', 'Следующее фото'],
+    'Još radova': ['More work', 'Ещё работы'],
+    'Šest kadrova': ['Six frames', 'Шесть кадров'],
+    'Fotografija: krštenje': ['Photo: christening', 'Фото: крестины'],
+    'Krštenje u crkvi, fotografija Foto Studija Art Digital': ['A christening in church, photo by Foto Studio Art Digital', 'Крестины в церкви, фото Foto Studio Art Digital'],
+    'Krštenje': ['Christening', 'Крестины'],
+    'Fotografija: deca': ['Photo: children', 'Фото: дети'],
+    'Dete na fotografisanju u studiju Art Digital': ['A child at a photo shoot in the Art Digital studio', 'Ребёнок на фотосессии в студии Art Digital'],
+    'Deca': ['Children', 'Дети'],
+    'Fotografija: porodica': ['Photo: family', 'Фото: семья'],
+    'Porodica na zajedničkom fotografisanju u studiju': ['A family at a group photo shoot in the studio', 'Семья на совместной фотосессии в студии'],
+    'Porodica': ['Family', 'Семья'],
+    'Fotografija: proizvod': ['Photo: product', 'Фото: предмет'],
+    'Fotografisanje proizvoda na beloj pozadini': ['Product shot on a white background', 'Предметная съёмка на белом фоне'],
+    'Fotografija: enterijer': ['Photo: interior', 'Фото: интерьер'],
+    'Snimljen enterijer poslovnog prostora': ['Interior of a business space', 'Интерьер делового помещения'],
+    'Enterijer': ['Interior', 'Интерьер'],
+    'Fotografija: snimak dronom': ['Photo: drone shot', 'Фото: съёмка дроном'],
+    'Snimak iz vazduha načinjen dronom': ['Aerial shot taken with a drone', 'Снимок с воздуха, сделанный дроном'],
+    'Iz vazduha': ['Aerial', 'С воздуха'],
+
+    '03 / Postupak': ['03 / Process', '03 / Процесс'],
+    'Od okidanja do otiska': ['From shutter to print', 'От затвора до отпечатка'],
+    'Četiri koraka. Jedna adresa.': ['Four steps. One address.', 'Четыре шага. Один адрес.'],
+    'Ne nosiš fajlove nigde dalje. Sve od prvog kadra do gotove fotografije u ruci radimo mi.': ['You never take your files anywhere else. We handle everything from the first frame to the finished photo in your hand.', 'Вам не нужно никуда нести файлы. Всё от первого кадра до готового фото в руках делаем мы.'],
+    'Upit': ['Enquiry', 'Запрос'],
+    'Javiš se': ['You get in touch', 'Вы пишете нам'],
+    'Napišeš šta ti treba. Za dokumenta samo dođeš, za ostalo dogovaramo termin.': ['Tell us what you need. For ID photos just drop by, for everything else we set a date.', 'Напишите, что вам нужно. За фото на документы просто приходите, остальное делаем по записи.'],
+    'Snimanje': ['Shoot', 'Съёмка'],
+    'U studiju ili na tvojoj lokaciji. Vodimo te kroz poziranje, ne moraš da znaš šta radiš.': ['In the studio or at your location. We guide you through posing, no experience needed.', 'В студии или у вас. Подскажем, как позировать, опыт не нужен.'],
+    'Obrada': ['Editing', 'Обработка'],
+    'Biramo i obrađujemo': ['We select and edit', 'Отбираем и обрабатываем'],
+    'Izdvajamo najbolje kadrove i radimo retuš, boju i pripremu za štampu.': ['We pick the best frames and handle retouching, colour and print prep.', 'Отбираем лучшие кадры, делаем ретушь, цветокоррекцию и подготовку к печати.'],
+    'Otisak': ['Print', 'Отпечаток'],
+    'Nosiš gotove fotografije': ['You take home finished photos', 'Вы забираете готовые фото'],
+    'Štampamo u formatu koji izabereš, u istom studiju. Preuzmeš ih na istoj adresi.': ['We print in the size you choose, in the same studio. You pick them up at the same address.', 'Печатаем в выбранном формате в той же студии. Забираете по тому же адресу.'],
+
+    'Prostor studija': ['Studio space', 'Помещение студии'],
+    'Unutrašnjost Foto Studija Art Digital u Beogradu': ['Inside Foto Studio Art Digital in Belgrade', 'Интерьер Foto Studio Art Digital в Белграде'],
+    '04 / O nama': ['04 / About', '04 / О нас'],
+    'Studio, obrada i foto radnja. U istom prostoru.': ['Studio, editing and photo shop. Under one roof.', 'Студия, обработка и фотомагазин. В одном месте.'],
+    'Foto Studio Art Digital radi u Beogradu. Fotografišemo dokumenta, poslovne portrete i venčanja, a onda te iste fotografije obrađujemo i štampamo, bez slanja bilo gde dalje.': ['Foto Studio Art Digital is based in Belgrade. We shoot ID photos, business portraits and weddings, then edit and print those same photos without sending them anywhere else.', 'Foto Studio Art Digital работает в Белграде. Мы снимаем фото на документы, деловые портреты и свадьбы, а затем сами обрабатываем и печатаем эти фотографии, никуда их не отправляя.'],
+    'Zato znamo kako će fotografija izgledati odštampana još dok je snimamo.': ['That is why we know how a photo will look in print while we are still shooting it.', 'Поэтому мы знаем, как фото будет выглядеть в печати, ещё во время съёмки.'],
+    'Info · Studio': ['Info · Studio', 'Инфо · Студия'],
+    'Lokacija': ['Location', 'Локация'],
+    'Beograd': ['Belgrade', 'Белград'],
+    'Dokumenta, poslovni portreti, venčanja': ['ID photos, business portraits, weddings', 'Документы, деловые портреты, свадьбы'],
+    'Obrađujemo': ['We edit', 'Обрабатываем'],
+    'Retuš, restauracija, priprema za štampu': ['Retouching, restoration, print prep', 'Ретушь, реставрация, подготовка к печати'],
+    'Štampamo': ['We print', 'Печатаем'],
+    'Fotografije u svim formatima': ['Photos in every size', 'Фото любых форматов'],
+    'Dokumenta': ['ID photos', 'Документы'],
+    'Gotova isti dan': ['Ready the same day', 'Готовы в тот же день'],
+
+    '05 / Kontakt': ['05 / Contact', '05 / Контакты'],
+    'Zakaži svoj kadar': ['Book your shot', 'Запишитесь на съёмку'],
+    'Izaberi šta ti treba i ostavi broj ili email. Javljamo se sa slobodnim terminima.': ['Choose what you need and leave a phone number or email. We will get back to you with available times.', 'Выберите, что вам нужно, и оставьте телефон или email. Мы свяжемся с вами и предложим свободное время.'],
+    'Studio je u Beogradu.': ['The studio is in Belgrade.', 'Студия находится в Белграде.'],
+    'Bez zakazivanja. Dođeš, uslikamo te, fotografija je gotova isti dan.': ['No appointment needed. Come in, we take your photo and it is ready the same day.', 'Без записи. Приходите, мы вас сфотографируем, и фото будет готово в тот же день.'],
+    'Venčanja i poslovno': ['Weddings and business', 'Свадьбы и деловая съёмка'],
+    'Termin dogovaramo unapred, pa javi datum što ranije.': ['We book these in advance, so let us know your date as early as possible.', 'Время согласуем заранее, поэтому сообщите дату как можно раньше.'],
+    'Koraci zahteva za termin': ['Booking request steps', 'Шаги заявки на запись'],
+    'Usluga': ['Service', 'Услуга'],
+    'Detalji': ['Details', 'Детали'],
+    '01 · Šta snimamo': ['01 · What are we shooting', '01 · Что снимаем'],
+    'Obrada i štampa': ['Editing and printing', 'Обработка и печать'],
+    'Nešto drugo': ['Something else', 'Другое'],
+    'Tri koraka, minut posla': ['Three steps, one minute', 'Три шага, одна минута'],
+    'Dalje, detalji': ['Next: details', 'Далее: детали'],
+    '02 · Detalji': ['02 · Details', '02 · Детали'],
+    'Npr. fotografija za pasoš, venčanje 14. juna, 20 fotografija 13x18...': ['E.g. passport photo, wedding on 14 June, 20 prints 13x18...', 'Например: фото на паспорт, свадьба 14 июня, 20 фото 13x18...'],
+    'Nazad': ['Back', 'Назад'],
+    'Dalje, kontakt': ['Next: contact', 'Далее: контакты'],
+    '03 · Ime i prezime': ['03 · Full name', '03 · Имя и фамилия'],
+    'Tvoje ime': ['Your name', 'Ваше имя'],
+    '04 · Telefon ili email': ['04 · Phone or email', '04 · Телефон или email'],
+    'Gde da ti javimo termin': ['Where should we send your time', 'Куда сообщить время записи'],
+    'Javljamo se sa terminom': ['We will reply with a time', 'Мы ответим и предложим время'],
+    'Pošalji upit za termin': ['Send booking request', 'Отправить заявку'],
+    '© 2026 Foto Studio Art Digital, Beograd': ['© 2026 Foto Studio Art Digital, Belgrade', '© 2026 Foto Studio Art Digital, Белград'],
+    'Snimljeno, obrađeno i štampano na jednoj adresi': ['Shot, edited and printed at one address', 'Снято, обработано и напечатано по одному адресу'],
+
+    'Newsletter · Popust': ['Newsletter · Discount', 'Рассылка · Скидка'],
+    'Saznaj prvi za popuste': ['Be the first to hear about discounts', 'Узнавайте о скидках первыми'],
+    'Prijavi se na newsletter i ostvari 5% popusta.': ['Sign up for our newsletter and get 5% off.', 'Подпишитесь на рассылку и получите скидку 5%.'],
+    'Akcije i popuste šaljemo pre svih.': ['Our deals reach you before anyone else.', 'Об акциях вы узнаете раньше всех.'],
+    'Tvoja email adresa': ['Your email address', 'Ваш email'],
+    'Prijavi se': ['Sign up', 'Подписаться'],
+    'Ne, hvala': ['No, thanks', 'Нет, спасибо'],
+    'Zatvori': ['Close', 'Закрыть'],
+    'Hvala na prijavi!': ['Thanks for signing up!', 'Спасибо за подписку!'],
+    'Popust od 5% i akcije stižu ti na email.': ['Your 5% discount and our deals are on the way to your inbox.', 'Скидка 5% и акции придут вам на email.'],
+    'Upiši ispravnu email adresu.': ['Please enter a valid email address.', 'Введите корректный email.']
+  };
+  var LANGS = ['sr', 'en', 'ru'];
+  var curLang = 'sr';
+  function t(sr){
+    var i = LANGS.indexOf(curLang) - 1;
+    return i >= 0 && I18N[sr] ? I18N[sr][i] : sr;
+  }
+
+  // Svaki tekst i atribut koji ima prevod pamti svoj srpski original
+  var i18nText = [], i18nAttr = [];
+  (function(){
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){ return /^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; }
+    });
+    var n;
+    while((n = walker.nextNode())){
+      var key = n.nodeValue.replace(/\s+/g, ' ').trim();
+      if(I18N[key]){
+        var m = n.nodeValue.match(/^(\s*)[\s\S]*?(\s*)$/);
+        i18nText.push({node: n, key: key, pre: m[1], post: m[2]});
+      }
+    }
+    document.querySelectorAll('[alt],[placeholder],[aria-label],[data-cat]').forEach(function(el){
+      if(el === burger) return;
+      ['alt', 'placeholder', 'aria-label', 'data-cat'].forEach(function(a){
+        var v = el.getAttribute(a);
+        if(v && I18N[v.trim()]) i18nAttr.push({el: el, attr: a, key: v.trim()});
+      });
+    });
+  })();
+  var titleKey = document.title;
+  var descMeta = document.querySelector('meta[name="description"]');
+  var descSr = descMeta.content;
+  var DESC = [
+    'Foto Studio Art Digital: ID photos, business portraits, wedding photography, digital editing and photo printing in Belgrade. All at one address.',
+    'Foto Studio Art Digital: фото на документы, деловые портреты, свадебная съёмка, цифровая обработка и печать фотографий в Белграде. Всё по одному адресу.'
+  ];
+  var langBtns = document.querySelectorAll('[data-lang]');
+
+  function setLang(lang, save){
+    if(LANGS.indexOf(lang) < 0) lang = 'sr';
+    curLang = lang;
+    document.documentElement.lang = lang;
+    i18nText.forEach(function(x){ x.node.nodeValue = x.pre + t(x.key) + x.post; });
+    i18nAttr.forEach(function(x){ x.el.setAttribute(x.attr, t(x.key)); });
+    document.title = t(titleKey);
+    descMeta.content = lang === 'sr' ? descSr : DESC[LANGS.indexOf(lang) - 1];
+    burger.setAttribute('aria-label', t(menu.classList.contains('open') ? 'Zatvori meni' : 'Otvori meni'));
+    langBtns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'); });
+    show(pcur);
+    if(save){ try{ localStorage.setItem('lang', lang); }catch(e){} }
+  }
+  langBtns.forEach(function(b){
+    b.addEventListener('click', function(){ setLang(b.dataset.lang, true); });
+  });
+  var savedLang = null;
+  try{ savedLang = localStorage.getItem('lang'); }catch(e){}
+  if(savedLang && savedLang !== 'sr') setLang(savedLang);
+
+  // Popup: newsletter sa 5% popusta. Iskače posle 10 s ili na pola strane, najviše jednom u 7 dana.
+  (function(){
+    var promo = document.getElementById('promo');
+    var form = document.getElementById('promoForm');
+    var email = document.getElementById('promoEmail');
+    var err = document.getElementById('promoErr');
+    var card = promo.querySelector('.promo-card');
+    var KEY = 'promoSeen', WEEK = 7 * 24 * 3600 * 1000;
+    var shown = false, lastFocus = null, timer;
+
+    try{
+      var seen = +localStorage.getItem(KEY);
+      if(seen && Date.now() - seen < WEEK) return;
+    }catch(e){}
+
+    function open(){
+      if(shown) return;
+      if(menu.classList.contains('open')){ setTimeout(open, 3000); return; }
+      shown = true;
+      clearTimeout(timer);
+      window.removeEventListener('scroll', onScrollPromo);
+      try{ localStorage.setItem(KEY, Date.now()); }catch(e){}
+      lastFocus = document.activeElement;
+      promo.hidden = false;
+      void promo.offsetWidth;
+      promo.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      promo.querySelector('.promo-x').focus();
+    }
+    function close(){
+      promo.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(function(){ promo.hidden = true; }, reduce ? 0 : 400);
+      if(lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    function onScrollPromo(){
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if(max > 0 && window.scrollY / max > 0.5) open();
+    }
+
+    timer = setTimeout(open, 10000);
+    window.addEventListener('scroll', onScrollPromo, {passive:true});
+
+    promo.querySelectorAll('[data-close]').forEach(function(b){ b.addEventListener('click', close); });
+    document.addEventListener('keydown', function(e){
+      if(promo.hidden) return;
+      if(e.key === 'Escape'){ close(); return; }
+      if(e.key === 'Tab'){
+        var f = Array.prototype.filter.call(card.querySelectorAll('button, input'), function(el){ return el.offsetParent !== null; });
+        if(!f.length) return;
+        if(e.shiftKey && document.activeElement === f[0]){ e.preventDefault(); f[f.length - 1].focus(); }
+        else if(!e.shiftKey && document.activeElement === f[f.length - 1]){ e.preventDefault(); f[0].focus(); }
+      }
+    });
+
+    // Forma još nije povezana sa newsletter servisom: samo potvrda
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+      email.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      err.textContent = ok ? '' : t('Upiši ispravnu email adresu.');
+      if(!ok){ email.focus(); return; }
+      fire();
+      promo.classList.add('sent');
+      promo.querySelector('.promo-x').focus();
+    });
+  })();
 </script>
 
 </body>
