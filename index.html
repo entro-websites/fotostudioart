@@ -1421,6 +1421,255 @@
   .reveal{transition:transform 0.8s cubic-bezier(0.2,0.7,0.2,1);}
   .js .reveal:not(.in-view){transform:translateY(12px);}
 
+  /* ---------- NAV: ONLINE PORUČIVANJE ---------- */
+  .nav-links a.nav-hot{color:var(--signal);display:inline-flex;align-items:center;gap:8px;}
+  .nav-links a.nav-hot::before{content:"";width:8px;height:8px;background:var(--signal);box-shadow:0 0 8px var(--signal-glow);}
+  .nav-links a.nav-hot:hover{color:var(--text);}
+  /* uz šest linkova i jezike merač ekspozicije ne staje u header */
+  .readout{display:none;}
+  .nav-links a,
+  .brand-name,
+  .brand-name small{white-space:nowrap;}
+  @media (min-width:992px) and (max-width:1279px){
+    .navbar{gap:16px;}
+    .nav-desktop{gap:20px;}
+    .nav-links{gap:16px;}
+    .brand-name{display:none;}
+  }
+
+  /* ---------- ONLINE PORUČIVANJE: APLIKACIJA ---------- */
+  .order-grid{
+    display:grid;
+    grid-template-columns:minmax(0, 7fr) minmax(0, 5fr);
+    gap:64px;
+    align-items:center;
+  }
+  .order-copy h2{
+    margin-top:24px;
+    font-size:clamp(32px, 4vw, 56px);
+    text-wrap:balance;
+  }
+  .order-copy > p{margin-top:24px;max-width:56ch;}
+  .order-steps{
+    margin-top:40px;
+    border-top:1px solid var(--line);
+  }
+  .order-steps li{
+    display:grid;
+    grid-template-columns:48px minmax(0, 1fr);
+    gap:16px;
+    align-items:baseline;
+    padding-top:16px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--line);
+    font-size:16px;
+    color:var(--text);
+  }
+  .order-steps b{color:var(--signal);font-weight:700;}
+  .order-cta{
+    display:flex;
+    align-items:center;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:40px;
+  }
+  .order-url{color:var(--text-faint);}
+  .all-svc-note a{color:var(--signal);text-decoration:underline;text-underline-offset:4px;}
+
+  .order-phone{display:grid;place-items:center;}
+  .phone{
+    position:relative;
+    width:100%;
+    max-width:320px;
+    border:2px solid var(--line-strong);
+    border-radius:40px;
+    background:var(--lcd);
+    padding-top:48px;
+    padding-bottom:24px;
+    padding-left:20px;
+    padding-right:20px;
+    box-shadow:0 32px 80px rgba(0,0,0,0.5), inset 0 0 48px rgba(0,0,0,0.6);
+  }
+  .phone-notch{
+    position:absolute;
+    top:16px;
+    left:50%;
+    width:80px;
+    height:20px;
+    margin-left:-40px;
+    border-radius:12px;
+    background:var(--body);
+  }
+  .phone-bar,
+  .phone-prog,
+  .phone-row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    color:rgba(63,216,220,0.72);
+  }
+  .phone-bar{padding-bottom:12px;border-bottom:1px solid rgba(63,216,220,0.2);}
+  .phone-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:8px;
+    margin-top:16px;
+  }
+  .phone-grid i{
+    aspect-ratio:1;
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 8px, transparent 8px 16px),
+      linear-gradient(160deg, var(--accent-mid), var(--accent-dark));
+    position:relative;
+  }
+  .phone-grid i:nth-child(3n+2){background:repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 8px, transparent 8px 16px), linear-gradient(200deg, #2b3a3a, #121a1a);}
+  .phone-grid i:nth-child(4n+3){background:repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 8px, transparent 8px 16px), linear-gradient(120deg, var(--signal), var(--accent-mid));}
+  .phone-grid i::after{
+    content:"";
+    position:absolute;
+    right:4px;
+    bottom:4px;
+    width:12px;
+    height:12px;
+    background:var(--signal);
+    clip-path:polygon(14% 52%, 0 66%, 38% 100%, 100% 28%, 86% 14%, 38% 72%);
+  }
+  .phone-prog{margin-top:20px;}
+  .phone-track{height:4px;margin-top:8px;background:rgba(63,216,220,0.16);}
+  .phone-track b{display:block;height:100%;width:100%;background:var(--signal);box-shadow:0 0 8px var(--signal-glow);transform-origin:left;}
+  .phone-row{margin-top:20px;padding-top:12px;border-top:1px solid rgba(63,216,220,0.2);}
+  .phone-row .ok{color:var(--signal);}
+  .phone-btn{
+    margin-top:16px;
+    height:48px;
+    display:grid;
+    place-items:center;
+    background:var(--signal);
+    color:var(--accent-dark);
+    font-weight:700;
+  }
+  /* otpremanje: sličice ulaze jedna po jedna, traka se puni */
+  .js .order-phone:not(.in-view) .phone-grid i{opacity:0;transform:scale(0.8);}
+  .js .order-phone:not(.in-view) .phone-track b{transform:scaleX(0);}
+  .phone-grid i{transition:opacity 0.4s ease, transform 0.4s cubic-bezier(0.2,0.7,0.2,1);}
+  .phone-grid i:nth-child(2){transition-delay:0.12s;}
+  .phone-grid i:nth-child(3){transition-delay:0.24s;}
+  .phone-grid i:nth-child(4){transition-delay:0.36s;}
+  .phone-grid i:nth-child(5){transition-delay:0.48s;}
+  .phone-grid i:nth-child(6){transition-delay:0.6s;}
+  .phone-grid i:nth-child(7){transition-delay:0.72s;}
+  .phone-grid i:nth-child(8){transition-delay:0.84s;}
+  .phone-grid i:nth-child(9){transition-delay:0.96s;}
+  .phone-track b{transition:transform 1.2s cubic-bezier(0.4,0,0.2,1) 0.1s;}
+  @media (max-width:900px){
+    .order-grid{grid-template-columns:1fr;gap:56px;}
+  }
+
+  /* ---------- CENOVNIK ---------- */
+  .price-tabs{
+    position:relative;
+    z-index:1;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    padding-bottom:24px;
+    margin-bottom:24px;
+    border-bottom:1px solid rgba(63,216,220,0.2);
+  }
+  .price-tabs button{
+    height:40px;
+    padding-left:16px;
+    padding-right:16px;
+    border:1px solid rgba(63,216,220,0.28);
+    color:rgba(63,216,220,0.8);
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    transition:background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .price-tabs button:hover{border-color:var(--signal);color:var(--signal);}
+  .price-tabs button[aria-selected="true"]{background:var(--signal);border-color:var(--signal);color:var(--accent-dark);font-weight:700;}
+  .price-tabs button:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .price-panel{position:relative;z-index:1;}
+  .price-panel[hidden]{display:none;}
+  .ptable{width:100%;border-collapse:collapse;font-size:16px;}
+  .ptable th,
+  .ptable td{
+    padding-top:12px;
+    padding-bottom:12px;
+    padding-left:12px;
+    border-bottom:1px solid rgba(63,216,220,0.16);
+    text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  .ptable th:first-child,
+  .ptable td:first-child{text-align:left;padding-left:0;}
+  .ptable thead th{
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:400;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:rgba(63,216,220,0.72);
+    border-bottom-color:rgba(63,216,220,0.32);
+  }
+  .ptable tbody th{font-weight:600;color:var(--text);}
+  .ptable td{color:var(--text);}
+  .ptable td:last-child{color:var(--signal);}
+  .ptable tbody tr:hover{background:rgba(63,216,220,0.05);}
+  .price-note{margin-top:20px;color:var(--text-faint);line-height:1.6;}
+  .price-foot{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:32px;
+    padding-top:24px;
+    border-top:1px solid rgba(63,216,220,0.2);
+  }
+  .price-foot .mono{color:rgba(63,216,220,0.72);}
+  @media (max-width:520px){
+    .ptable{font-size:14px;}
+    .ptable th,
+    .ptable td{padding-left:8px;}
+    .ptable thead th{font-size:10px;letter-spacing:0.06em;}
+    .price-tabs button{padding-left:12px;padding-right:12px;}
+    .price-foot .btn{width:100%;}
+  }
+
+  /* ---------- KONTAKT: RADNJE ---------- */
+  .contact-grid > .menu{align-self:start;position:sticky;top:104px;}
+  @media (max-width:991px){
+    .contact-grid > .menu{position:static;}
+  }
+  .c-row p + p{margin-top:8px;}
+  .c-links a{color:var(--text);border-bottom:1px solid var(--line-strong);transition:color 0.2s ease, border-color 0.2s ease;}
+  .c-links a:hover{color:var(--signal);border-bottom-color:var(--signal);}
+  .c-hours{
+    display:grid;
+    grid-template-columns:max-content max-content;
+    gap:4px 24px;
+    margin-top:16px;
+    color:var(--text-faint);
+  }
+  .c-hours dd{color:var(--text-muted);}
+  .c-social span{display:block;}
+  .c-social b{color:var(--text);font-weight:600;}
+
+  /* ---------- FOOTER: ADRESE ---------- */
+  .footer-info{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px 32px;
+    color:var(--text-muted);
+  }
+  .footer-info a:hover{color:var(--signal);}
+
   /* ---------- JEZIK: SR / EN / RU ---------- */
   .lang{
     display:flex;
@@ -1601,6 +1850,8 @@
       <nav class="nav-desktop" aria-label="Glavni meni">
         <ul class="nav-links">
           <li><a href="#usluge">Usluge</a></li>
+          <li><a href="#poruci" class="nav-hot">Poruči online</a></li>
+          <li><a href="#cenovnik">Cenovnik</a></li>
           <li><a href="#radovi">Radovi</a></li>
           <li><a href="#o-nama">O nama</a></li>
           <li><a href="#kontakt">Kontakt</a></li>
@@ -1622,9 +1873,11 @@
 
   <div class="mobile-menu" id="mobileMenu">
     <a href="#usluge" class="m-link"><span>01</span>Usluge</a>
-    <a href="#radovi" class="m-link"><span>02</span>Radovi</a>
-    <a href="#o-nama" class="m-link"><span>03</span>O nama</a>
-    <a href="#kontakt" class="m-link"><span>04</span>Kontakt</a>
+    <a href="#poruci" class="m-link"><span>02</span>Poruči online</a>
+    <a href="#cenovnik" class="m-link"><span>03</span>Cenovnik</a>
+    <a href="#radovi" class="m-link"><span>04</span>Radovi</a>
+    <a href="#o-nama" class="m-link"><span>05</span>O nama</a>
+    <a href="#kontakt" class="m-link"><span>06</span>Kontakt</a>
     <a href="#kontakt" class="btn m-link-btn">Zakaži termin</a>
     <div class="lang" role="group" aria-label="Jezik">
       <button type="button" data-lang="sr" aria-pressed="true" lang="sr">SR</button>
@@ -1796,7 +2049,7 @@
                 <li><span>Donosiš</span><span>Telefon, USB ili fajlove</span></li>
                 <li><span>Uz to</span><span>Obrada pre štampe ako treba</span></li>
               </ul>
-              <a href="#kontakt" class="btn" data-type="obrada">Naruči izradu fotografija</a>
+              <a href="https://app.fotostudioart.rs/kategorije/izrada-fotografija-online" class="btn">Poruči izradu online</a>
             </div>
 
             <div class="panel" id="panel-5" role="tabpanel" aria-labelledby="tab-5">
@@ -1891,8 +2144,155 @@
             </div>
           </div>
 
-          <p class="mono all-svc-note">Foto proizvode poručuješ i online, gotovi su za 48h</p>
+          <p class="mono all-svc-note">Fotografije i foto poklone poručuješ i <a href="#poruci">online</a>. Fotografije su spremne za preuzimanje za 24h</p>
         </details>
+      </div>
+    </section>
+
+    <!-- ONLINE PORUČIVANJE: APLIKACIJA -->
+    <section class="section" id="poruci" data-frame="3">
+      <div class="wrap order-grid">
+        <div class="order-copy reveal">
+          <div class="mono sec-tag">02 / Online<b>Aplikacija za poručivanje</b></div>
+          <h2>Fotografije iz telefona. Spremne za 24h.</h2>
+          <p>Izradu fotografija i foto poklone poručuješ kroz našu aplikaciju. Gotove fotografije preuzimaš u radnji na Terazijama ili na Bulevaru despota Stefana.</p>
+          <ol class="order-steps">
+            <li><b class="mono">01</b><span>Otpremiš fotografije iz telefona ili računara</span></li>
+            <li><b class="mono">02</b><span>Izabereš format, papir i količinu</span></li>
+            <li><b class="mono">03</b><span>Preuzmeš gotove fotografije za 24h</span></li>
+          </ol>
+          <div class="order-cta">
+            <a href="https://app.fotostudioart.rs/kategorije/izrada-fotografija-online" class="btn">Poruči fotografije online</a>
+            <span class="mono order-url">app.fotostudioart.rs</span>
+          </div>
+        </div>
+
+        <div class="order-phone reveal" aria-hidden="true">
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-bar mono"><span>Art Digital</span><span>Korpa · 9</span></div>
+            <div class="phone-grid"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="phone-prog mono"><span>Otpremanje</span><span>9/9</span></div>
+            <div class="phone-track"><b></b></div>
+            <div class="phone-row mono"><span>10×15 · 9 kom</span><span class="ok">Za 24h</span></div>
+            <div class="phone-btn mono">Poruči</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CENOVNIK -->
+    <section class="section" id="cenovnik" data-frame="3" style="background:var(--body-2);">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="mono sec-tag">03 / Cenovnik<b>Cene u dinarima</b></div>
+          <div>
+            <h2>Cenovnik</h2>
+            <p>Izrada fotografija, dokumenta, posteri, kanvas i filmovi. Što više fotografija istog formata, to je niža cena po komadu.</p>
+          </div>
+        </div>
+
+        <div class="lcd price reveal">
+          <div class="price-tabs mono" role="tablist" aria-label="Kategorije cenovnika">
+            <button type="button" role="tab" id="ptab-0" aria-controls="ppanel-0" aria-selected="true">Fotografije</button>
+            <button type="button" role="tab" id="ptab-1" aria-controls="ppanel-1" aria-selected="false" tabindex="-1">Dokumenta</button>
+            <button type="button" role="tab" id="ptab-2" aria-controls="ppanel-2" aria-selected="false" tabindex="-1">Posteri</button>
+            <button type="button" role="tab" id="ptab-3" aria-controls="ppanel-3" aria-selected="false" tabindex="-1">Kanvas</button>
+            <button type="button" role="tab" id="ptab-4" aria-controls="ppanel-4" aria-selected="false" tabindex="-1">Filmovi i VHS</button>
+            <button type="button" role="tab" id="ptab-5" aria-controls="ppanel-5" aria-selected="false" tabindex="-1">Instax</button>
+          </div>
+            <div class="price-panel" id="ppanel-0" role="tabpanel" aria-labelledby="ptab-0">
+              <table class="ptable">
+                <thead><tr><th scope="col">Format</th><th scope="col">do 50 kom</th><th scope="col">50 do 100</th><th scope="col">100+ kom</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">9×13</th><td>70</td><td>35</td><td>16</td></tr>
+                <tr><th scope="row">10×15</th><td>80</td><td>40</td><td>18,99</td></tr>
+                <tr><th scope="row">13×18</th><td>90</td><td>45</td><td>25,99</td></tr>
+                <tr><th scope="row">15×21</th><td>100</td><td>50</td><td>30</td></tr>
+                <tr><th scope="row">Polaroid</th><td>50</td><td>25</td><td>20</td></tr>
+                <tr><th scope="row">20×30</th><td>450</td><td>450</td><td>450</td></tr>
+                <tr><th scope="row">30×40</th><td>890</td><td>890</td><td>890</td></tr>
+                <tr><th scope="row">30×60</th><td>950</td><td>450</td><td>350</td></tr>
+                <tr><th scope="row">40×50</th><td>1 500</td><td>1 500</td><td>1 500</td></tr>
+                <tr><th scope="row">50×70</th><td>2 500</td><td>2 500</td><td>2 500</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Količinski popust računa se po formatu. Za cenu 100+ treba ti 100 fotografija istog formata.</p>
+            </div>
+            <div class="price-panel" id="ppanel-1" role="tabpanel" aria-labelledby="ptab-1" hidden>
+              <table class="ptable">
+                <thead><tr><th scope="col">Usluga</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">4 fotografije</th><td>850</td></tr>
+                <tr><th scope="row">8 fotografija, kombinacija</th><td>950</td></tr>
+                <tr><th scope="row">Dorada</th><td>690</td></tr>
+                <tr><th scope="row">Fotografisanje za CV: 4 poze i po jedna fotografija 10×15</th><td>1 500</td></tr>
+                <tr><th scope="row">Slanje na mejl</th><td>Besplatno</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Fotografija za dokumenta je gotova isti dan, bez zakazivanja.</p>
+            </div>
+            <div class="price-panel" id="ppanel-2" role="tabpanel" aria-labelledby="ptab-2" hidden>
+              <table class="ptable">
+                <thead><tr><th scope="col">Format</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">30×40</th><td>850</td></tr>
+                <tr><th scope="row">40×40</th><td>950</td></tr>
+                <tr><th scope="row">40×50</th><td>1 100</td></tr>
+                <tr><th scope="row">40×60</th><td>1 300</td></tr>
+                <tr><th scope="row">50×60</th><td>1 500</td></tr>
+                <tr><th scope="row">50×70</th><td>1 800</td></tr>
+                <tr><th scope="row">60×60</th><td>1 600</td></tr>
+                <tr><th scope="row">60×90</th><td>1 800</td></tr>
+                <tr><th scope="row">60×100</th><td>1 990</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Za preko 10 komada cena je po dogovoru.</p>
+            </div>
+            <div class="price-panel" id="ppanel-3" role="tabpanel" aria-labelledby="ptab-3" hidden>
+              <table class="ptable">
+                <thead><tr><th scope="col">Format</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">20×30</th><td>1 592</td></tr>
+                <tr><th scope="row">30×40</th><td>1 752</td></tr>
+                <tr><th scope="row">40×40</th><td>1 992</td></tr>
+                <tr><th scope="row">40×60</th><td>2 312</td></tr>
+                <tr><th scope="row">50×70</th><td>2 952</td></tr>
+                <tr><th scope="row">60×90</th><td>4 100</td></tr>
+                <tr><th scope="row">70×100</th><td>4 592</td></tr>
+                <tr><th scope="row">100×150</th><td>8 600</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Kanvas poručuješ i online, kroz aplikaciju.</p>
+            </div>
+            <div class="price-panel" id="ppanel-4" role="tabpanel" aria-labelledby="ptab-4" hidden>
+              <table class="ptable">
+                <thead><tr><th scope="col">Usluga</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">Razvijanje i skeniranje filma</th><td>1 200</td></tr>
+                <tr><th scope="row">Samo skeniranje filma</th><td>600</td></tr>
+                <tr><th scope="row">Presnimavanje VHS kasete</th><td>500 po satu</td></tr>
+                <tr><th scope="row">6 i više kaseta</th><td>Dogovor</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Za 6 i više VHS kaseta cena je po dogovoru.</p>
+            </div>
+            <div class="price-panel" id="ppanel-5" role="tabpanel" aria-labelledby="ptab-5" hidden>
+              <table class="ptable">
+                <thead><tr><th scope="col">Proizvod</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">FUJIFILM Instax Mini Glossy film, 20 kom</th><td>3 100</td></tr>
+                <tr><th scope="row">Crno-beli Fomapan film ISO 400</th><td>1 900</td></tr>
+                <tr><th scope="row">Instax aparat</th><td>13 500</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Instax filmove i aparat kupuješ u radnji.</p>
+            </div>
+          <div class="price-foot">
+            <span class="mono">Primamo kartice u obe radnje</span>
+            <a href="https://app.fotostudioart.rs/kategorije/izrada-fotografija-online" class="btn">Poruči online</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1900,7 +2300,7 @@
     <section class="section" id="radovi" data-frame="4">
       <div class="wrap">
         <div class="sec-head reveal">
-          <div class="mono sec-tag">02 / Radovi<b>Režim pregleda</b></div>
+          <div class="mono sec-tag">04 / Radovi<b>Režim pregleda</b></div>
           <div>
             <h2 style="max-width:none;">Sa naše memorijske kartice</h2>
             <p>Šest kadrova iz studija i sa terena. Izaberi kategoriju sa liste ili listaj strelicama pored nje.</p>
@@ -1995,7 +2395,7 @@
     <section class="section paper" data-frame="5">
       <div class="wrap">
         <div class="sec-head reveal">
-          <div class="mono sec-tag">03 / Postupak<b>Od okidanja do otiska</b></div>
+          <div class="mono sec-tag">05 / Postupak<b>Od okidanja do otiska</b></div>
           <div>
             <h2>Četiri koraka. Jedna adresa.</h2>
             <p>Ne nosiš fajlove nigde dalje. Sve od prvog kadra do gotove fotografije u ruci radimo mi.</p>
@@ -2044,15 +2444,15 @@
         </div>
 
         <div class="about-text reveal">
-          <span class="mono sec-tag">04 / O nama</span>
+          <span class="mono sec-tag">06 / O nama</span>
           <h2 style="margin-top:24px;">Studio, obrada i foto radnja. U istom prostoru.</h2>
-          <p>Foto Studio Art Digital radi u Beogradu. Fotografišemo dokumenta, poslovne portrete i venčanja, a onda te iste fotografije obrađujemo i štampamo, bez slanja bilo gde dalje.</p>
+          <p>Foto Studio Art Digital radi u Beogradu, u dve radnje: na Terazijama i na Bulevaru despota Stefana. Fotografišemo dokumenta, poslovne portrete i venčanja, a onda te iste fotografije obrađujemo i štampamo, bez slanja bilo gde dalje.</p>
           <p>Zato znamo kako će fotografija izgledati odštampana još dok je snimamo.</p>
 
           <div class="exif">
             <div class="exif-head mono"><span>Info · Studio</span><b>Art Digital</b></div>
             <dl>
-              <dt class="mono">Lokacija</dt><dd>Beograd</dd>
+              <dt class="mono">Radnje</dt><dd>Terazije 5 · Bulevar despota Stefana 48</dd>
               <dt class="mono">Snimamo</dt><dd>Dokumenta, poslovni portreti, venčanja</dd>
               <dt class="mono">Obrađujemo</dt><dd>Retuš, restauracija, priprema za štampu</dd>
               <dt class="mono">Štampamo</dt><dd>Fotografije u svim formatima</dd>
@@ -2067,14 +2467,36 @@
     <section class="section" id="kontakt" data-frame="6" style="background:var(--body-2);">
       <div class="wrap contact-grid">
         <div class="contact-intro reveal">
-          <span class="mono sec-tag">05 / Kontakt</span>
+          <span class="mono sec-tag">07 / Kontakt</span>
           <h2 style="margin-top:24px;">Zakaži svoj kadar</h2>
           <p>Izaberi šta ti treba i ostavi broj ili email. Javljamo se sa slobodnim terminima.</p>
 
           <div class="c-rows">
             <div class="c-row">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
-              <div><h3>Lokacija</h3><p>Studio je u Beogradu.</p></div>
+              <div>
+                <h3>Terazije 5</h3>
+                <p>Prolaz u pasažu, 11000 Beograd</p>
+                <p class="c-links"><a href="tel:+381113223525">(011) 3223-525</a> <span aria-hidden="true">·</span> <a href="tel:+38163594112">(063) 594-112</a><br><a href="mailto:artdigital29@gmail.com">artdigital29@gmail.com</a></p>
+                <dl class="c-hours mono">
+                  <dt>Pon–pet</dt><dd>09–19h</dd>
+                  <dt>Subota</dt><dd>10–15h</dd>
+                  <dt>Nedelja</dt><dd>Ne radimo</dd>
+                </dl>
+              </div>
+            </div>
+            <div class="c-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              <div>
+                <h3>Bulevar despota Stefana 48</h3>
+                <p>11000 Beograd</p>
+                <p class="c-links"><a href="tel:+381113222965">(011) 3222-965</a> <span aria-hidden="true">·</span> <a href="tel:+38163594034">(063) 594-034</a><br><a href="mailto:artdigital26@gmail.com">artdigital26@gmail.com</a></p>
+                <dl class="c-hours mono">
+                  <dt>Pon–pet</dt><dd>09–20h</dd>
+                  <dt>Subota</dt><dd>10–15h</dd>
+                  <dt>Nedelja</dt><dd>Ne radimo</dd>
+                </dl>
+              </div>
             </div>
             <div class="c-row">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
@@ -2083,6 +2505,10 @@
             <div class="c-row">
               <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>
               <div><h3>Venčanja i poslovno</h3><p>Termin dogovaramo unapred, pa javi datum što ranije.</p></div>
+            </div>
+            <div class="c-row">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6"/></svg>
+              <div><h3>Instagram i TikTok</h3><p class="c-social"><span><b>@fotoartdigital_</b> na Instagramu</span> <span><b>@fotoartdigital</b> na TikToku</span></p></div>
             </div>
           </div>
         </div>
@@ -2154,10 +2580,17 @@
       </a>
       <nav class="footer-links mono" aria-label="Meni u futeru">
         <a href="#usluge">Usluge</a>
+        <a href="#poruci">Poruči online</a>
+        <a href="#cenovnik">Cenovnik</a>
         <a href="#radovi">Radovi</a>
         <a href="#o-nama">O nama</a>
         <a href="#kontakt">Kontakt</a>
       </nav>
+      <div class="footer-info mono">
+        <span>Terazije 5 · <a href="tel:+381113223525">(011) 3223-525</a></span>
+        <span>Bulevar despota Stefana 48 · <a href="tel:+381113222965">(011) 3222-965</a></span>
+        <span>Instagram @fotoartdigital_ · TikTok @fotoartdigital</span>
+      </div>
       <div class="footer-copy mono">
         <span>© 2026 Foto Studio Art Digital, Beograd</span>
         <span>Snimljeno, obrađeno i štampano na jednoj adresi</span>
@@ -2429,6 +2862,27 @@
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
   }
 
+  // Cenovnik: tabovi po kategorijama
+  var ptabs = Array.prototype.slice.call(document.querySelectorAll('.price-tabs [role="tab"]'));
+  var ppanels = ptabs.map(function(t){ return document.getElementById(t.getAttribute('aria-controls')); });
+  function showPrice(i, focus){
+    i = (i + ptabs.length) % ptabs.length;
+    ptabs.forEach(function(t, j){
+      var on = j === i;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      ppanels[j].hidden = !on;
+    });
+    if(focus) ptabs[i].focus();
+  }
+  ptabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ showPrice(i); });
+    t.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight'){ e.preventDefault(); showPrice(i + 1, true); }
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); showPrice(i - 1, true); }
+    });
+  });
+
   // Jezici sa starog sajta: srpski, engleski, ruski. Ključ je srpski tekst, vrednost [en, ru].
   var I18N = {
     'Foto Studio Art Digital - Fotografisanje, obrada i štampa u Beogradu': ['Foto Studio Art Digital - Photography, editing and printing in Belgrade', 'Foto Studio Art Digital - Фотосъёмка, обработка и печать в Белграде'],
@@ -2680,6 +3134,86 @@
     'Pošalji upit za termin': ['Send booking request', 'Отправить заявку'],
     '© 2026 Foto Studio Art Digital, Beograd': ['© 2026 Foto Studio Art Digital, Belgrade', '© 2026 Foto Studio Art Digital, Белград'],
     'Snimljeno, obrađeno i štampano na jednoj adresi': ['Shot, edited and printed at one address', 'Снято, обработано и напечатано по одному адресу'],
+
+    'Poruči online': ['Order online', 'Заказ онлайн'],
+    'Cenovnik': ['Prices', 'Цены'],
+    'Poruči izradu online': ['Order prints online', 'Заказать печать онлайн'],
+    'Fotografije i foto poklone poručuješ i': ['Photos and photo gifts can also be ordered', 'Фото и фотосувениры можно заказать и'],
+    'online': ['online', 'онлайн'],
+    '. Fotografije su spremne za preuzimanje za 24h': ['. Photos are ready for pickup in 24h', '. Фото готовы к получению за 24 ч'],
+    '02 / Online': ['02 / Online', '02 / Онлайн'],
+    'Aplikacija za poručivanje': ['Ordering app', 'Приложение для заказа'],
+    'Fotografije iz telefona. Spremne za 24h.': ['Photos from your phone. Ready in 24h.', 'Фото с телефона. Готовы за 24 ч.'],
+    'Izradu fotografija i foto poklone poručuješ kroz našu aplikaciju. Gotove fotografije preuzimaš u radnji na Terazijama ili na Bulevaru despota Stefana.': ['Order photo prints and photo gifts through our app. Pick up your finished photos at our shop on Terazije or on Bulevar despota Stefana.', 'Заказывайте печать фото и фотосувениры через наше приложение. Готовые фото забирайте в магазине на Теразие или на бульваре Деспота Стефана.'],
+    'Otpremiš fotografije iz telefona ili računara': ['Upload photos from your phone or computer', 'Загрузите фото с телефона или компьютера'],
+    'Izabereš format, papir i količinu': ['Choose size, paper and quantity', 'Выберите формат, бумагу и количество'],
+    'Preuzmeš gotove fotografije za 24h': ['Pick up your finished photos in 24h', 'Заберите готовые фото через 24 ч'],
+    'Poruči fotografije online': ['Order photos online', 'Заказать фото онлайн'],
+    'Korpa · 9': ['Cart · 9', 'Корзина · 9'],
+    'Otpremanje': ['Uploading', 'Загрузка'],
+    '10×15 · 9 kom': ['10×15 · 9 pcs', '10×15 · 9 шт'],
+    'Za 24h': ['In 24h', 'За 24 ч'],
+    'Poruči': ['Order', 'Заказать'],
+    '03 / Cenovnik': ['03 / Prices', '03 / Цены'],
+    'Cene u dinarima': ['Prices in RSD', 'Цены в динарах'],
+    'Izrada fotografija, dokumenta, posteri, kanvas i filmovi. Što više fotografija istog formata, to je niža cena po komadu.': ['Photo prints, ID photos, posters, canvas and film. The more photos of the same size, the lower the price per print.', 'Печать фото, документы, постеры, холст и плёнка. Чем больше фото одного формата, тем ниже цена за штуку.'],
+    'Kategorije cenovnika': ['Price categories', 'Категории цен'],
+    'Fotografije': ['Photos', 'Фото'],
+    'Posteri': ['Posters', 'Постеры'],
+    'Kanvas': ['Canvas', 'Холст'],
+    'Filmovi i VHS': ['Film and VHS', 'Плёнка и VHS'],
+    'Instax': ['Instax', 'Instax'],
+    'Format': ['Size', 'Формат'],
+    'do 50 kom': ['up to 50', 'до 50 шт'],
+    '50 do 100': ['50 to 100', 'от 50 до 100'],
+    '100+ kom': ['100+', '100+ шт'],
+    'Polaroid': ['Polaroid', 'Полароид'],
+    '18,99': ['18.99', '18,99'],
+    '25,99': ['25.99', '25,99'],
+    'Cena': ['Price', 'Цена'],
+    'Proizvod': ['Product', 'Товар'],
+    '4 fotografije': ['4 photos', '4 фото'],
+    '8 fotografija, kombinacija': ['8 photos, combination', '8 фото, комбинация'],
+    'Dorada': ['Retouching', 'Доработка'],
+    'Fotografisanje za CV: 4 poze i po jedna fotografija 10×15': ['CV photo shoot: 4 poses, one 10×15 print of each', 'Фото для резюме: 4 позы и по одному фото 10×15'],
+    'Slanje na mejl': ['Sent by email', 'Отправка на email'],
+    'Besplatno': ['Free', 'Бесплатно'],
+    'Razvijanje i skeniranje filma': ['Film developing and scanning', 'Проявка и сканирование плёнки'],
+    'Samo skeniranje filma': ['Film scanning only', 'Только сканирование плёнки'],
+    'Presnimavanje VHS kasete': ['VHS tape transfer', 'Оцифровка VHS-кассеты'],
+    '500 po satu': ['500 per hour', '500 за час'],
+    '6 i više kaseta': ['6 or more tapes', '6 и более кассет'],
+    'Dogovor': ['On request', 'По договорённости'],
+    'FUJIFILM Instax Mini Glossy film, 20 kom': ['FUJIFILM Instax Mini Glossy film, 20 pcs', 'Плёнка FUJIFILM Instax Mini Glossy, 20 шт'],
+    'Crno-beli Fomapan film ISO 400': ['Fomapan black and white film ISO 400', 'Чёрно-белая плёнка Fomapan ISO 400'],
+    'Instax aparat': ['Instax camera', 'Фотоаппарат Instax'],
+    'Količinski popust računa se po formatu. Za cenu 100+ treba ti 100 fotografija istog formata.': ['Quantity discounts are counted per size. The 100+ price needs 100 photos of the same size.', 'Скидка за количество считается по формату. Цена 100+ действует при 100 фото одного формата.'],
+    'Fotografija za dokumenta je gotova isti dan, bez zakazivanja.': ['ID photos are ready the same day, no appointment needed.', 'Фото на документы готовы в тот же день, без записи.'],
+    'Za preko 10 komada cena je po dogovoru.': ['For more than 10 pieces, price on request.', 'Для заказа от 10 штук цена по договорённости.'],
+    'Kanvas poručuješ i online, kroz aplikaciju.': ['Canvas prints can also be ordered online in the app.', 'Холст можно заказать и онлайн, через приложение.'],
+    'Za 6 i više VHS kaseta cena je po dogovoru.': ['For 6 or more VHS tapes, price on request.', 'Для 6 и более VHS-кассет цена по договорённости.'],
+    'Instax filmove i aparat kupuješ u radnji.': ['Instax film and cameras are sold in the shop.', 'Плёнку и фотоаппараты Instax можно купить в магазине.'],
+    'Primamo kartice u obe radnje': ['Cards accepted in both shops', 'Принимаем карты в обоих магазинах'],
+    'Radnje': ['Shops', 'Магазины'],
+    'Terazije 5 · Bulevar despota Stefana 48': ['Terazije 5 · Bulevar despota Stefana 48', 'Теразие 5 · бульвар Деспота Стефана 48'],
+    'Terazije 5': ['Terazije 5', 'Теразие 5'],
+    'Bulevar despota Stefana 48': ['Bulevar despota Stefana 48', 'Бульвар Деспота Стефана 48'],
+    'Prolaz u pasažu, 11000 Beograd': ['In the arcade passage, 11000 Belgrade', 'Проход в пассаже, 11000 Белград'],
+    '11000 Beograd': ['11000 Belgrade', '11000 Белград'],
+    'Pon–pet': ['Mon–Fri', 'Пн–пт'],
+    'Subota': ['Saturday', 'Суббота'],
+    'Nedelja': ['Sunday', 'Воскресенье'],
+    'Ne radimo': ['Closed', 'Выходной'],
+    'Instagram i TikTok': ['Instagram and TikTok', 'Instagram и TikTok'],
+    'na Instagramu': ['on Instagram', 'в Instagram'],
+    'na TikToku': ['on TikTok', 'в TikTok'],
+    'Terazije 5 ·': ['Terazije 5 ·', 'Теразие 5 ·'],
+    'Bulevar despota Stefana 48 ·': ['Bulevar despota Stefana 48 ·', 'Бульвар Деспота Стефана 48 ·'],
+    'Foto Studio Art Digital radi u Beogradu, u dve radnje: na Terazijama i na Bulevaru despota Stefana. Fotografišemo dokumenta, poslovne portrete i venčanja, a onda te iste fotografije obrađujemo i štampamo, bez slanja bilo gde dalje.': ['Foto Studio Art Digital is based in Belgrade, with two shops: on Terazije and on Bulevar despota Stefana. We shoot ID photos, business portraits and weddings, then edit and print those same photos without sending them anywhere else.', 'Foto Studio Art Digital работает в Белграде, в двух магазинах: на Теразие и на бульваре Деспота Стефана. Мы снимаем фото на документы, деловые портреты и свадьбы, а затем сами обрабатываем и печатаем эти фотографии, никуда их не отправляя.'],
+    '04 / Radovi': ['04 / Portfolio', '04 / Работы'],
+    '05 / Postupak': ['05 / Process', '05 / Процесс'],
+    '06 / O nama': ['06 / About', '06 / О нас'],
+    '07 / Kontakt': ['07 / Contact', '07 / Контакты'],
 
     'Newsletter · Popust': ['Newsletter · Discount', 'Рассылка · Скидка'],
     'Saznaj prvi za popuste': ['Be the first to hear about discounts', 'Узнавайте о скидках первыми'],
