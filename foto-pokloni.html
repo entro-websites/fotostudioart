@@ -1425,25 +1425,21 @@
   .nav-links a.nav-hot{color:var(--signal);display:inline-flex;align-items:center;gap:8px;}
   .nav-links a.nav-hot::before{content:"";width:8px;height:8px;background:var(--signal);box-shadow:0 0 8px var(--signal-glow);}
   .nav-links a.nav-hot:hover{color:var(--text);}
-  /* uz šest linkova i jezike merač ekspozicije ne staje u header */
+  /* uz sedam linkova merač ekspozicije ne staje u header */
   .readout{display:none;}
   .nav-links a,
   .brand-name,
   .brand-name small{white-space:nowrap;}
+  /* sedam linkova, jezik je izmešten dole levo */
+  .nav-desktop{gap:40px;}
+  .nav-links{gap:32px;}
   @media (min-width:992px) and (max-width:1279px){
     .navbar{gap:16px;}
-    .nav-desktop{gap:20px;}
-    .nav-links{gap:16px;}
     .brand-name{display:none;}
   }
-  /* sa linkom Foto pokloni meni ima sedam stavki */
   @media (min-width:992px) and (max-width:1099px){
-    .nav-desktop{display:none;}
-    .hamburger{display:block;}
-  }
-  @media (min-width:1280px){
-    .nav-desktop{gap:24px;}
-    .nav-links{gap:16px;}
+    .nav-desktop{gap:28px;}
+    .nav-links{gap:20px;}
   }
 
   /* ---------- ONLINE PORUČIVANJE: APLIKACIJA ---------- */
@@ -1700,14 +1696,30 @@
   .lang button:hover{color:var(--signal);}
   .lang button[aria-pressed="true"]{background:var(--signal);color:var(--accent-dark);font-weight:700;}
   .lang button:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
-  .navbar .lang{margin-left:auto;}
+  /* na računaru jezik stoji uz levu ivicu ekrana, da linkovi u headeru imaju mesta */
+  .navbar .lang-head{margin-left:auto;}
+  .lang-dock{
+    position:fixed;
+    left:0;
+    bottom:24px;
+    z-index:900;
+    flex-direction:column;
+    border-left:0;
+    background:rgba(10,13,13,0.84);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+  }
+  .lang-dock button{height:40px;}
+  .lang-dock button + button{border-left:0;border-top:1px solid var(--line-strong);}
+  @media (min-width:992px){ .navbar .lang-head{display:none;} }
+  @media (max-width:991px){ .lang-dock{display:none;} }
   .mobile-menu .lang{align-self:flex-start;margin-top:16px;}
   /* zatvoren meni ne sme da viri na niskim ekranima */
   .mobile-menu{visibility:hidden;transition:transform 0.4s cubic-bezier(0.7,0,0.2,1), visibility 0s linear 0.4s;}
   .mobile-menu.open{visibility:visible;transition:transform 0.4s cubic-bezier(0.7,0,0.2,1);}
   .mobile-menu .lang button{height:48px;min-width:56px;}
   @media (max-width:519px){
-    .navbar .lang{display:none;}
+    .navbar .lang-head{display:none;}
   }
 
   /* ---------- POPUP: NEWSLETTER -5% ---------- */
@@ -1947,13 +1959,13 @@
   .hero--page{min-height:auto;padding-top:112px;padding-bottom:32px;}
   .hero--page .viewfinder{min-height:min(720px, calc(100svh - 144px));}
   .hero--page .hero-copy{container-type:inline-size;}
-  .hero--page h1{font-size:clamp(32px, 8vw, 112px);font-size:clamp(28px, 11.5cqi, 112px);}
+  .hero--page h1{font-size:clamp(32px, 7.5vw, 112px);font-size:clamp(28px, 10.4cqi, 112px);}
   .hero--page h1 span{display:block;white-space:nowrap;}
   .hero--page .hero-side p .s{display:block;text-wrap:balance;}
   @media (max-width:768px){
     .hero--page{padding-top:96px;}
     .hero--page .viewfinder{min-height:calc(100svh - 128px);}
-    .hero--page h1{font-stretch:112%;}
+    .hero--page h1{font-stretch:112%;font-size:clamp(28px, 11.5cqi, 112px);}
   }
 
   .s{display:block;text-wrap:balance;}
@@ -2381,7 +2393,8 @@
         <a href="index.html#kontakt" class="btn">Zakaži termin</a>
       </nav>
 
-      <div class="lang" role="group" aria-label="Jezik">
+
+      <div class="lang lang-head" role="group" aria-label="Jezik">
         <button type="button" data-lang="sr" aria-pressed="true" lang="sr">SR</button>
         <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
         <button type="button" data-lang="ru" aria-pressed="false" lang="ru">RU</button>
@@ -2392,6 +2405,12 @@
       </button>
     </div>
   </header>
+
+  <div class="lang lang-dock" role="group" aria-label="Jezik">
+    <button type="button" data-lang="sr" aria-pressed="true" lang="sr">SR</button>
+    <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+    <button type="button" data-lang="ru" aria-pressed="false" lang="ru">RU</button>
+  </div>
 
   <div class="mobile-menu" id="mobileMenu">
     <a href="index.html#usluge" class="m-link"><span>01</span>Usluge</a>
