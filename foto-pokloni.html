@@ -1,0 +1,5100 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foto pokloni sa slikom - Foto Studio Art Digital, Beograd</title>
+<meta name="description" content="Foto pokloni sa slikom u Beogradu: šolje, puzzle, kanvas, kalendari 2027, photo book, majice, magneti i još 12 poklona. Izrada 1 do 2 dana, preuzimanje na Terazijama ili na Bulevaru, ili kurirom.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* telo aparata */
+    --body:#0a0d0d;
+    --body-2:#0f1414;
+    --panel:#131a1a;
+    --line:rgba(233,242,242,0.12);
+    --line-strong:rgba(233,242,242,0.28);
+
+    /* jedna boja: brend teal #033537 i njena porodica */
+    --accent:#033537;
+    --accent-dark:#021f20;
+    --accent-mid:#0b6b6f;
+    --signal:#3fd8dc;
+    --signal-soft:rgba(63,216,220,0.14);
+    --signal-glow:rgba(63,216,220,0.32);
+    --lcd:#061d1e;
+
+    /* tekst */
+    --text:#e9f2f2;
+    --text-muted:rgba(233,242,242,0.68);
+    --text-faint:rgba(233,242,242,0.44);
+
+    /* papir (sekcija izrade) */
+    --paper:#f2f1ec;
+    --ink:#0a1414;
+    --ink-muted:rgba(10,20,20,0.68);
+
+    --display:'Archivo', sans-serif;
+    --mono:'JetBrains Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;scroll-padding-top:80px;}
+
+  body{
+    background:var(--body);
+    color:var(--text);
+    font-family:var(--display);
+    font-stretch:100%;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3{
+    font-family:var(--display);
+    font-stretch:125%;
+    font-weight:800;
+    line-height:1;
+    text-transform:uppercase;
+    letter-spacing:-0.01em;
+  }
+
+  p{color:var(--text-muted);}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  ul,ol{list-style:none;}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;}
+
+  .wrap{
+    max-width:1280px;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left:32px;
+    padding-right:32px;
+  }
+  @media (max-width:768px){
+    .wrap{padding-left:20px;padding-right:20px;}
+  }
+
+  .section{
+    padding-top:128px;
+    padding-bottom:128px;
+    position:relative;
+  }
+  @media (max-width:768px){
+    .section{padding-top:80px;padding-bottom:80px;}
+  }
+
+  .mono{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+  }
+
+  /* ---------- DUGME (jedan stil, oštri uglovi) ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    padding-top:16px;
+    padding-bottom:16px;
+    padding-left:24px;
+    padding-right:24px;
+    background:var(--signal);
+    color:var(--accent-dark);
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    border:1px solid var(--signal);
+    border-radius:0;
+    transition:background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{
+    background:transparent;
+    color:var(--signal);
+    box-shadow:0 0 0 4px var(--signal-soft);
+  }
+  .btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;}
+
+  /* modifikator: okidač (krug) */
+  .btn.has-shutter{padding-left:8px;}
+  .shutter{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:2px solid currentColor;
+    display:grid;
+    place-items:center;
+    flex-shrink:0;
+  }
+  .shutter::after{
+    content:"";
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:currentColor;
+    transition:transform 0.15s ease;
+  }
+  .btn.has-shutter:hover .shutter::after{transform:scale(0.72);}
+  .btn.has-shutter:active .shutter::after{transform:scale(0.52);}
+
+  /* ---------- FLEŠ ---------- */
+  .flash{
+    position:fixed;
+    inset:0;
+    background:#fff;
+    z-index:3000;
+    pointer-events:none;
+    opacity:0;
+  }
+  .flash.go{animation:flash 0.45s ease-out;}
+  @keyframes flash{0%{opacity:0.92;}100%{opacity:0;}}
+
+  /* ---------- OTVARANJE BLENDE (intro, dodaje ga JS) ---------- */
+  .iris{
+    position:fixed;
+    inset:0;
+    z-index:4000;
+    pointer-events:none;
+    overflow:hidden;
+    display:grid;
+    place-items:center;
+  }
+  .iris-hole{
+    width:0;
+    height:0;
+    border-radius:50%;
+    box-shadow:0 0 0 200vmax var(--body);
+    animation:iris 1s cubic-bezier(0.7,0,0.2,1) 0.35s forwards;
+  }
+  .iris-label{
+    position:absolute;
+    color:var(--signal);
+    animation:irisLabel 0.6s ease 0.2s forwards;
+  }
+  @keyframes iris{to{width:300vmax;height:300vmax;}}
+  @keyframes irisLabel{to{opacity:0;}}
+
+  /* ---------- HEADER (gornji LCD) ---------- */
+  .site-header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+    border-bottom:1px solid transparent;
+    transition:background 0.3s ease, border-color 0.3s ease;
+  }
+  .site-header.scrolled{
+    background:rgba(10,13,13,0.84);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom-color:var(--line);
+  }
+  .navbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    height:80px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .brand-plate{
+    width:48px;
+    height:48px;
+    background:#fff;
+    display:grid;
+    place-items:center;
+    flex-shrink:0;
+  }
+  .brand-plate img{width:44px;height:44px;object-fit:contain;}
+  .brand-name{
+    font-stretch:125%;
+    font-weight:800;
+    font-size:16px;
+    line-height:1;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .brand-name small{
+    display:block;
+    margin-top:4px;
+    font-family:var(--mono);
+    font-stretch:100%;
+    font-weight:400;
+    font-size:12px;
+    letter-spacing:0.12em;
+    color:var(--text-faint);
+  }
+
+  .readout{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    color:var(--text-faint);
+  }
+  .meter{
+    position:relative;
+    width:192px;
+    height:24px;
+  }
+  .meter-scale{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:8px;
+    background:
+      repeating-linear-gradient(90deg, var(--line-strong) 0 1px, transparent 1px 16px) left bottom/100% 4px no-repeat,
+      repeating-linear-gradient(90deg, var(--text-faint) 0 1px, transparent 1px 32px) left bottom/100% 8px no-repeat;
+  }
+  .meter-labels{
+    position:absolute;
+    left:-4px;
+    right:-4px;
+    top:0;
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--mono);
+    font-size:8px;
+    line-height:1;
+  }
+  .meter-needle{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:2px;
+    height:12px;
+    background:var(--signal);
+    box-shadow:0 0 8px var(--signal-glow);
+    transform:translateX(calc(var(--p, 0) * 190px));
+  }
+  .frame-count b{color:var(--signal);font-weight:700;}
+
+  .nav-desktop{
+    display:flex;
+    align-items:center;
+    gap:32px;
+  }
+  .nav-links{display:flex;gap:28px;}
+  .nav-links a{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    transition:color 0.2s ease;
+  }
+  .nav-links a:hover{color:var(--signal);}
+
+  .hamburger{
+    display:none;
+    width:48px;
+    height:48px;
+    border:1px solid var(--line-strong);
+    position:relative;
+    z-index:1200;
+  }
+  .hamburger span{
+    position:absolute;
+    left:12px;
+    right:12px;
+    height:2px;
+    background:var(--text);
+    transition:transform 0.25s ease, opacity 0.25s ease;
+  }
+  .hamburger span:nth-child(1){top:16px;}
+  .hamburger span:nth-child(2){top:24px;}
+  .hamburger span:nth-child(3){top:32px;}
+  .hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+
+  .mobile-menu{
+    position:fixed;
+    inset:0;
+    z-index:1100;
+    background:var(--body);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:24px;
+    padding-left:20px;
+    padding-right:20px;
+    transform:translateY(-100%);
+    transition:transform 0.4s cubic-bezier(0.7,0,0.2,1);
+  }
+  .mobile-menu.open{transform:translateY(0);}
+  body.menu-open .site-header{z-index:1150;}
+  .mobile-menu .m-link{
+    font-stretch:125%;
+    font-weight:800;
+    font-size:40px;
+    line-height:1;
+    text-transform:uppercase;
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+  }
+  .mobile-menu .m-link span{
+    font-family:var(--mono);
+    font-stretch:100%;
+    font-weight:400;
+    font-size:12px;
+    color:var(--signal);
+  }
+  .mobile-menu .btn{align-self:flex-start;margin-top:16px;}
+
+  @media (max-width:1199px){
+    .readout{display:none;}
+  }
+  @media (max-width:991px){
+    .nav-desktop{display:none;}
+    .hamburger{display:block;}
+  }
+
+  /* ---------- FOTO / PLACEHOLDER ---------- */
+  .ph{
+    position:relative;
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0 12px, transparent 12px 24px),
+      #1b2222;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+  }
+  .ph-label{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    text-align:center;
+    padding-left:16px;
+    padding-right:16px;
+  }
+  .ph img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .ph.has-photo .ph-label{display:none;}
+
+  /* uglovi tražila, koriste se na više mesta */
+  .corners{position:absolute;inset:0;pointer-events:none;}
+  .corners::before,
+  .corners::after{
+    content:"";
+    position:absolute;
+    width:32px;
+    height:32px;
+    border-color:var(--text);
+    border-style:solid;
+    transition:border-color 0.25s ease;
+  }
+  .corners::before{top:0;left:0;border-width:2px 0 0 2px;}
+  .corners::after{bottom:0;right:0;border-width:0 2px 2px 0;}
+  .corners i::before,
+  .corners i::after{
+    content:"";
+    position:absolute;
+    width:32px;
+    height:32px;
+    border-color:var(--text);
+    border-style:solid;
+    transition:border-color 0.25s ease;
+  }
+  .corners i::before{top:0;right:0;border-width:2px 2px 0 0;}
+  .corners i::after{bottom:0;left:0;border-width:0 0 2px 2px;}
+
+  /* ---------- HERO: TRAŽILO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    min-height:100svh;
+    padding-top:112px;
+    padding-bottom:32px;
+    display:flex;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;
+    inset:0;
+    place-items:start end;
+  }
+  .hero-bg .ph-label{padding-top:176px;padding-right:48px;}
+  .hero-bg::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      linear-gradient(180deg, rgba(10,13,13,0.72) 0%, rgba(10,13,13,0.2) 40%, rgba(10,13,13,0.92) 100%),
+      radial-gradient(ellipse at 20% 80%, rgba(3,53,55,0.6), transparent 60%);
+  }
+  .hero > .wrap{
+    position:relative;
+    z-index:2;
+    width:100%;
+    display:flex;
+  }
+  .viewfinder{
+    position:relative;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:32px;
+    padding-top:24px;
+    padding-bottom:24px;
+    padding-left:24px;
+    padding-right:24px;
+    cursor:crosshair;
+  }
+  .viewfinder.locked .corners::before,
+  .viewfinder.locked .corners::after,
+  .viewfinder.locked .corners i::before,
+  .viewfinder.locked .corners i::after{border-color:var(--signal);}
+
+  .thirds{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:
+      linear-gradient(90deg, transparent calc(33.333% - 0.5px), rgba(233,242,242,0.08) calc(33.333% - 0.5px) calc(33.333% + 0.5px), transparent calc(33.333% + 0.5px) calc(66.666% - 0.5px), rgba(233,242,242,0.08) calc(66.666% - 0.5px) calc(66.666% + 0.5px), transparent calc(66.666% + 0.5px)),
+      linear-gradient(180deg, transparent calc(33.333% - 0.5px), rgba(233,242,242,0.08) calc(33.333% - 0.5px) calc(33.333% + 0.5px), transparent calc(33.333% + 0.5px) calc(66.666% - 0.5px), rgba(233,242,242,0.08) calc(66.666% - 0.5px) calc(66.666% + 0.5px), transparent calc(66.666% + 0.5px));
+  }
+
+  .vf-top,
+  .vf-bottom-bar{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+    color:var(--text-muted);
+  }
+  .vf-set{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .vf-mode{
+    border:1px solid var(--text-muted);
+    color:var(--text);
+    padding-left:8px;
+    padding-right:8px;
+    padding-top:4px;
+    padding-bottom:4px;
+  }
+  .battery{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+  }
+  .battery svg{width:28px;height:16px;stroke:var(--text-muted);fill:none;stroke-width:1.5;}
+  .battery svg .lvl{fill:var(--signal);stroke:none;}
+
+  .af-field{
+    position:relative;
+    flex:1;
+    min-height:120px;
+    width:64%;
+    margin-left:auto;
+    margin-right:auto;
+    display:grid;
+    grid-template-columns:repeat(7, 1fr);
+    grid-template-rows:repeat(3, 1fr);
+    place-items:center;
+    pointer-events:none;
+    z-index:1;
+  }
+  .af{
+    width:24px;
+    height:16px;
+    border:1px solid rgba(233,242,242,0.18);
+    transition:border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  }
+  .af.on{
+    border-color:var(--signal);
+    border-width:2px;
+    box-shadow:0 0 12px var(--signal-glow);
+    transform:scale(1.2);
+  }
+
+  .hero-copy{
+    position:relative;
+    z-index:2;
+  }
+  .hero-kicker{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    color:var(--signal);
+    margin-bottom:24px;
+  }
+  .hero-kicker::before{
+    content:"";
+    width:8px;
+    height:8px;
+    background:var(--signal);
+    box-shadow:0 0 12px var(--signal-glow);
+  }
+  .hero h1{
+    font-size:clamp(40px, 6vw, 88px);
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:transparent;
+    -webkit-text-stroke:2px var(--text);
+  }
+  .hero-side{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:48px;
+    margin-top:40px;
+    padding-top:24px;
+    border-top:1px solid var(--line-strong);
+  }
+  .hero-side p{font-size:16px;max-width:52ch;}
+
+  @media (max-width:991px){
+    .hero-side{flex-direction:column;align-items:flex-start;gap:24px;}
+    .af-field{width:88%;}
+  }
+  @media (max-width:768px){
+    .hero{padding-top:96px;}
+    .hero-bg{place-items:end center;}
+    .hero-bg .ph-label{padding-top:0;padding-right:16px;padding-bottom:8px;}
+    .viewfinder{padding-left:16px;padding-right:16px;}
+    .vf-hide-sm{display:none;}
+    .hero h1{font-size:32px;font-stretch:112%;}
+    .hero h1 em{-webkit-text-stroke:1px var(--text);}
+    .af{width:16px;height:12px;}
+  }
+
+  /* ---------- SEKCIJSKI NASLOV ---------- */
+  .sec-head{
+    display:grid;
+    grid-template-columns:200px minmax(0, 1fr);
+    gap:32px;
+    margin-bottom:64px;
+    border-top:1px solid var(--line);
+    padding-top:24px;
+  }
+  .sec-tag{color:var(--signal);}
+  .sec-tag b{display:block;color:var(--text-faint);font-weight:400;margin-top:4px;}
+  .sec-head h2{
+    font-size:clamp(32px, 4.8vw, 64px);
+    max-width:16ch;
+  }
+  .sec-head p{
+    margin-top:24px;
+    max-width:60ch;
+    font-size:16px;
+  }
+  @media (max-width:768px){
+    .sec-head{grid-template-columns:1fr;gap:16px;margin-bottom:48px;}
+  }
+
+  /* ---------- FOKUS (bol uvod) ---------- */
+  .focus-grid{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);
+    gap:64px;
+    align-items:center;
+  }
+  .focus-grid h2{
+    font-size:clamp(28px, 3.6vw, 48px);
+    margin-bottom:24px;
+  }
+  .focus-grid p{max-width:60ch;margin-bottom:16px;}
+  .focus-grid p strong{color:var(--text);font-weight:600;}
+
+  .focus-box{
+    border:1px solid var(--line);
+    background:var(--body-2);
+    padding-top:24px;
+    padding-bottom:24px;
+    padding-left:24px;
+    padding-right:24px;
+  }
+  .focus-top{
+    display:flex;
+    justify-content:space-between;
+    color:var(--text-faint);
+    margin-bottom:24px;
+  }
+  .focus-top .ok{color:var(--signal);opacity:0;transition:opacity 0.2s ease;}
+  .focus-box.sharp .focus-top .ok{opacity:1;}
+  .focus-stage{
+    position:relative;
+    aspect-ratio:16/9;
+    display:grid;
+    place-items:center;
+    background:radial-gradient(ellipse at center, rgba(3,53,55,0.5), transparent 70%);
+    margin-bottom:24px;
+  }
+  .focus-word{
+    font-stretch:125%;
+    font-weight:900;
+    font-size:clamp(28px, 4vw, 56px);
+    line-height:1;
+    text-transform:uppercase;
+    text-align:center;
+    filter:blur(var(--blur, 0px));
+    transition:filter 0.08s linear;
+  }
+  .focus-word span{display:block;color:var(--signal);}
+  .focus-stage .corners{inset:12px;}
+  .focus-stage .corners::before,
+  .focus-stage .corners::after,
+  .focus-stage .corners i::before,
+  .focus-stage .corners i::after{width:16px;height:16px;}
+  .focus-box.sharp .focus-stage .corners::before,
+  .focus-box.sharp .focus-stage .corners::after,
+  .focus-box.sharp .focus-stage .corners i::before,
+  .focus-box.sharp .focus-stage .corners i::after{border-color:var(--signal);}
+
+  .ring{display:flex;align-items:center;gap:16px;}
+  .ring label{color:var(--text-muted);flex-shrink:0;}
+  .ring input[type=range]{
+    -webkit-appearance:none;
+    appearance:none;
+    flex:1;
+    height:32px;
+    background:
+      repeating-linear-gradient(90deg, var(--line-strong) 0 2px, transparent 2px 8px) center/100% 16px no-repeat,
+      var(--panel);
+    cursor:ew-resize;
+    min-width:0;
+  }
+  .ring input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:4px;
+    height:32px;
+    background:var(--signal);
+    box-shadow:0 0 12px var(--signal-glow);
+  }
+  .ring input[type=range]::-moz-range-thumb{
+    width:4px;
+    height:32px;
+    border:none;
+    border-radius:0;
+    background:var(--signal);
+  }
+  .ring input[type=range]:focus-visible{outline:2px solid var(--signal);outline-offset:4px;}
+  .ring-scale{
+    display:flex;
+    justify-content:space-between;
+    color:var(--text-faint);
+    margin-top:8px;
+    margin-left:52px;
+    font-size:12px;
+  }
+  .af-btn{
+    border:1px solid var(--line-strong);
+    padding-left:12px;
+    padding-right:12px;
+    height:32px;
+    color:var(--text);
+    flex-shrink:0;
+  }
+  .af-btn:hover{border-color:var(--signal);color:var(--signal);}
+
+  @media (max-width:900px){
+    .focus-grid{grid-template-columns:1fr;gap:48px;}
+  }
+
+  /* ---------- USLUGE: TOČKIĆ ZA REŽIME ---------- */
+  .dial-layout{
+    display:grid;
+    grid-template-columns:440px minmax(0, 1fr);
+    gap:64px;
+    align-items:center;
+  }
+  .dial-wrap{
+    --size:400px;
+    position:relative;
+    width:var(--size);
+    height:var(--size);
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .dial-index{
+    position:absolute;
+    top:-20px;
+    left:50%;
+    width:0;
+    height:0;
+    transform:translateX(-50%);
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    border-top:12px solid var(--signal);
+    z-index:3;
+    filter:drop-shadow(0 0 6px var(--signal-glow));
+  }
+  .dial{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 50% 50%, #161d1d 0 36%, transparent 36.2%),
+      radial-gradient(circle at 50% 50%, transparent 0 61%, #0d1212 61.2% 100%),
+      repeating-conic-gradient(from 0deg, #1f2828 0 1.5deg, #0c1010 1.5deg 3deg);
+    box-shadow:
+      inset 0 0 0 1px var(--line-strong),
+      inset 0 2px 0 rgba(255,255,255,0.08),
+      0 40px 80px -24px rgba(0,0,0,0.8);
+    transform:rotate(var(--rot, 0deg));
+    transition:transform 0.7s cubic-bezier(0.5,0,0.1,1);
+  }
+  .dial-center{
+    position:absolute;
+    inset:36%;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    z-index:2;
+    pointer-events:none;
+    color:var(--text-faint);
+    border:1px solid var(--line);
+  }
+  .dial-center b{
+    display:block;
+    font-family:var(--display);
+    font-stretch:125%;
+    font-weight:800;
+    font-size:24px;
+    letter-spacing:0;
+    color:var(--text);
+    margin-top:4px;
+  }
+  .dial-mode{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:72px;
+    height:48px;
+    margin-left:-36px;
+    margin-top:-24px;
+    transform:rotate(var(--a)) translateY(calc(var(--size) * -0.39));
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:0.04em;
+    color:var(--text-faint);
+    transition:color 0.3s ease;
+  }
+  .dial-mode:hover{color:var(--text);}
+  .dial-mode[aria-selected="true"]{color:var(--signal);text-shadow:0 0 12px var(--signal-glow);}
+  .dial-mode:focus-visible{outline:2px solid var(--signal);outline-offset:-4px;}
+  .dial-hint{
+    text-align:center;
+    color:var(--text-faint);
+    margin-top:32px;
+  }
+
+  .lcd{
+    background:var(--lcd);
+    border:1px solid rgba(63,216,220,0.24);
+    box-shadow:inset 0 0 48px rgba(0,0,0,0.6);
+    padding-top:32px;
+    padding-bottom:32px;
+    padding-left:32px;
+    padding-right:32px;
+    position:relative;
+  }
+  .lcd::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0 1px, transparent 1px 4px);
+  }
+  .lcd-bar{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    color:rgba(63,216,220,0.64);
+    border-bottom:1px solid rgba(63,216,220,0.2);
+    padding-bottom:16px;
+    margin-bottom:32px;
+  }
+  .panel{position:relative;z-index:1;}
+  .panel[hidden]{display:none;}
+  .panel.enter{animation:panelIn 0.4s ease;}
+  @keyframes panelIn{from{transform:translateY(8px);}to{transform:translateY(0);}}
+  .panel-code{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:64px;
+    line-height:1;
+    color:var(--signal);
+    text-shadow:0 0 24px var(--signal-glow);
+    margin-bottom:16px;
+  }
+  .panel h3{
+    font-size:clamp(24px, 2.8vw, 36px);
+    margin-bottom:16px;
+  }
+  .panel p{max-width:56ch;margin-bottom:24px;}
+  .specs{
+    border-top:1px solid rgba(63,216,220,0.2);
+    margin-bottom:32px;
+  }
+  .specs li{
+    display:flex;
+    justify-content:space-between;
+    gap:24px;
+    padding-top:12px;
+    padding-bottom:12px;
+    border-bottom:1px solid rgba(63,216,220,0.2);
+    font-size:16px;
+  }
+  .specs li span:first-child{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:rgba(63,216,220,0.72);
+    padding-top:4px;
+    flex-shrink:0;
+  }
+  .specs li span:last-child{text-align:right;color:var(--text);}
+
+  @media (max-width:1100px){
+    .dial-layout{grid-template-columns:1fr;gap:48px;}
+  }
+  @media (max-width:520px){
+    .dial-wrap{--size:320px;}
+    .dial-mode{font-size:12px;width:56px;margin-left:-28px;}
+    .dial-center b{font-size:20px;}
+    .lcd{padding-left:20px;padding-right:20px;padding-top:24px;padding-bottom:24px;}
+    .panel-code{font-size:48px;}
+    .specs li{flex-direction:column;gap:4px;}
+    .specs li span:last-child{text-align:left;}
+  }
+  @media (max-width:360px){
+    .dial-wrap{--size:280px;}
+  }
+
+  /* ---------- KOMPLETAN SPISAK USLUGA (rasklopivo) ---------- */
+  .all-svc{
+    margin-top:64px;
+    border:1px solid var(--line);
+    background:var(--panel);
+  }
+  .all-svc summary{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    padding-top:24px;
+    padding-bottom:24px;
+    padding-left:32px;
+    padding-right:32px;
+    cursor:pointer;
+    list-style:none;
+    transition:background 0.2s ease;
+  }
+  .all-svc summary::-webkit-details-marker{display:none;}
+  .all-svc summary:hover{background:rgba(63,216,220,0.06);}
+  .all-svc summary:focus-visible{outline:2px solid var(--signal);outline-offset:-2px;}
+  .all-svc-label{color:var(--signal);}
+  .all-svc-label b{
+    display:block;
+    margin-top:4px;
+    font-weight:400;
+    color:var(--text-faint);
+  }
+  .all-svc-ico{
+    width:24px;
+    height:24px;
+    flex-shrink:0;
+    stroke:var(--signal);
+    fill:none;
+    stroke-width:2;
+    transition:transform 0.3s ease;
+  }
+  .all-svc[open] .all-svc-ico{transform:rotate(45deg);}
+  .all-svc-body{
+    border-top:1px solid var(--line);
+    padding-top:40px;
+    padding-bottom:40px;
+    padding-left:32px;
+    padding-right:32px;
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:40px;
+  }
+  .all-svc-col--wide{
+    grid-column:1 / -1;
+    border-top:1px solid var(--line);
+    padding-top:32px;
+  }
+  .all-svc-col--wide ul{
+    columns:4;
+    column-gap:40px;
+  }
+  .all-svc-col h3{
+    font-size:16px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    font-family:var(--mono);
+    font-weight:700;
+    color:var(--signal);
+    padding-bottom:12px;
+    margin-bottom:16px;
+    border-bottom:1px solid rgba(63,216,220,0.2);
+  }
+  .all-svc-col li{
+    font-size:16px;
+    color:var(--text-muted);
+    padding-top:8px;
+    padding-bottom:8px;
+    break-inside:avoid;
+  }
+  .all-svc-note{
+    border-top:1px solid var(--line);
+    padding-top:24px;
+    padding-bottom:24px;
+    padding-left:32px;
+    padding-right:32px;
+    color:var(--text-faint);
+  }
+  @media (max-width:900px){
+    .all-svc-body{grid-template-columns:repeat(2, minmax(0, 1fr));gap:32px;}
+    .all-svc-col--wide ul{columns:2;}
+  }
+  @media (max-width:520px){
+    .all-svc-body{grid-template-columns:1fr;gap:32px;padding-left:20px;padding-right:20px;}
+    .all-svc-col--wide ul{columns:1;}
+    .all-svc summary{padding-left:20px;padding-right:20px;}
+    .all-svc-note{padding-left:20px;padding-right:20px;}
+  }
+
+  /* ---------- GALERIJA: PREGLED SNIMAKA ---------- */
+  .playback{
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) 280px;
+    gap:24px;
+  }
+  .pb-screen{
+    position:relative;
+    aspect-ratio:3/2;
+    background:#000;
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  .pb-frame{position:absolute;inset:0;}
+  .pb-frame[hidden]{display:none;}
+  .pb-hud{
+    position:absolute;
+    left:0;
+    right:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:16px;
+    padding-bottom:16px;
+    color:var(--text);
+    z-index:2;
+    pointer-events:none;
+  }
+  .pb-hud.top{top:0;background:linear-gradient(180deg, rgba(0,0,0,0.64), transparent);}
+  .pb-hud.bot{bottom:0;background:linear-gradient(0deg, rgba(0,0,0,0.64), transparent);}
+  .pb-hud .play{display:inline-flex;align-items:center;gap:8px;}
+  .pb-hud .play svg{width:12px;height:12px;fill:var(--signal);}
+  .pb-hud .cat{color:var(--signal);}
+
+  .pb-side{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .pb-list{
+    display:flex;
+    flex-direction:column;
+    border-top:1px solid var(--line);
+  }
+  .pb-thumb{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    text-align:left;
+    padding-top:16px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--line);
+    color:var(--text-faint);
+    transition:color 0.2s ease, padding-left 0.2s ease;
+  }
+  .pb-thumb:hover{color:var(--text);}
+  .pb-thumb[aria-selected="true"]{color:var(--text);padding-left:12px;box-shadow:inset 2px 0 0 var(--signal);}
+  .pb-thumb .n{color:var(--signal);}
+  .pb-nav{display:flex;gap:8px;margin-top:auto;}
+  .pb-nav button{
+    flex:1;
+    height:48px;
+    border:1px solid var(--line-strong);
+    display:grid;
+    place-items:center;
+    transition:border-color 0.2s ease;
+  }
+  .pb-nav button:hover{border-color:var(--signal);}
+  .pb-nav svg{width:20px;height:20px;stroke:var(--text);fill:none;stroke-width:2;}
+
+  @media (max-width:900px){
+    .playback{grid-template-columns:minmax(0, 1fr);}
+    .pb-list{flex-direction:row;overflow-x:auto;border-top:none;gap:8px;}
+    .pb-thumb{flex-shrink:0;border:1px solid var(--line);padding-left:12px;padding-right:12px;padding-top:12px;padding-bottom:12px;}
+    .pb-thumb[aria-selected="true"]{padding-left:12px;box-shadow:inset 0 -2px 0 var(--signal);}
+  }
+  @media (max-width:520px){
+    .pb-hud .hide-xs{display:none;}
+  }
+
+  /* ---------- JOŠ RADOVA: MREŽA FOTOGRAFIJA ---------- */
+  .more-shots{
+    margin-top:64px;
+    border-top:1px solid var(--line);
+    padding-top:40px;
+  }
+  .more-shots-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:32px;
+  }
+  .more-shots-head span:first-child{color:var(--signal);}
+  .more-shots-head span:last-child{color:var(--text-faint);}
+  .shot-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:24px;
+  }
+  .shot figure{margin:0;}
+  .shot .ph{
+    aspect-ratio:4 / 3;
+    border:1px solid var(--line);
+  }
+  .shot figcaption{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    padding-top:12px;
+    color:var(--text-muted);
+  }
+  .shot figcaption .n{color:var(--text-faint);}
+  @media (max-width:900px){
+    .shot-grid{grid-template-columns:repeat(2, minmax(0, 1fr));}
+  }
+  @media (max-width:520px){
+    .shot-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- PROCES: OD OKIDANJA DO OTISKA (papir) ---------- */
+  .paper{background:var(--paper);color:var(--ink);}
+  .paper p{color:var(--ink-muted);}
+  .paper .sec-head{border-top-color:rgba(10,20,20,0.16);}
+  .paper .sec-tag{color:var(--accent-mid);}
+  .paper .sec-tag b{color:rgba(10,20,20,0.44);}
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border-top:2px solid var(--ink);
+    position:relative;
+  }
+  .steps::before{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    height:12px;
+    background:repeating-linear-gradient(90deg, var(--ink) 0 1px, transparent 1px 16px);
+    opacity:0.4;
+  }
+  .step{
+    padding-top:48px;
+    padding-right:32px;
+    position:relative;
+  }
+  .step + .step{border-left:1px solid rgba(10,20,20,0.16);padding-left:32px;}
+  .step-no{
+    font-stretch:125%;
+    font-weight:900;
+    font-size:80px;
+    line-height:1;
+    color:var(--accent);
+    margin-bottom:24px;
+  }
+  .step-meta{color:var(--accent-mid);margin-bottom:12px;}
+  .step h3{font-size:20px;margin-bottom:12px;line-height:1.2;}
+  .step p{font-size:16px;}
+
+  @media (max-width:900px){
+    .steps{grid-template-columns:repeat(2, 1fr);}
+    .step:nth-child(3){border-left:none;padding-left:0;}
+    .step:nth-child(n+3){border-top:1px solid rgba(10,20,20,0.16);margin-top:48px;}
+  }
+  @media (max-width:560px){
+    .steps{grid-template-columns:1fr;}
+    .step,.step + .step{border-left:none;padding-left:0;padding-right:0;}
+    .step:nth-child(n+2){border-top:1px solid rgba(10,20,20,0.16);margin-top:40px;}
+    .step-no{font-size:56px;}
+  }
+
+  /* ---------- O NAMA: EXIF ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns:minmax(0, 5fr) minmax(0, 7fr);
+    gap:64px;
+    align-items:start;
+  }
+  .about-photo{
+    position:relative;
+    aspect-ratio:4/5;
+  }
+  .about-photo .corners{inset:-12px;}
+  .about-photo .caption{
+    position:absolute;
+    left:16px;
+    bottom:16px;
+    z-index:2;
+    color:var(--text);
+    background:rgba(0,0,0,0.56);
+    padding-left:8px;
+    padding-right:8px;
+    padding-top:4px;
+    padding-bottom:4px;
+  }
+  .about-text h2{
+    font-size:clamp(28px, 3.6vw, 48px);
+    margin-bottom:32px;
+  }
+  .about-text > p{max-width:60ch;margin-bottom:16px;}
+  .exif{
+    margin-top:48px;
+    border:1px solid var(--line);
+  }
+  .exif-head{
+    display:flex;
+    justify-content:space-between;
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:12px;
+    padding-bottom:12px;
+    border-bottom:1px solid var(--line);
+    background:var(--body-2);
+    color:var(--text-faint);
+  }
+  .exif-head b{color:var(--signal);font-weight:500;}
+  .exif dl{display:grid;grid-template-columns:200px minmax(0, 1fr);}
+  .exif dt,
+  .exif dd{
+    padding-top:16px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--line);
+  }
+  .exif dt{padding-left:20px;color:var(--text-faint);}
+  .exif dd{padding-right:20px;color:var(--text);}
+  .exif dt:nth-last-of-type(1),
+  .exif dd:nth-last-of-type(1){border-bottom:none;}
+
+  @media (max-width:900px){
+    .about-grid{grid-template-columns:1fr;gap:56px;}
+    .about-photo{max-width:420px;}
+  }
+  @media (max-width:520px){
+    .exif dl{grid-template-columns:1fr;}
+    .exif dt{padding-bottom:0;border-bottom:none;padding-right:20px;}
+    .exif dd{padding-left:20px;padding-top:4px;}
+  }
+
+  /* ---------- KONTAKT: MENI ZAKAZIVANJA ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:minmax(0, 5fr) minmax(0, 7fr);
+    gap:64px;
+  }
+  .contact-intro h2{
+    font-size:clamp(32px, 3.6vw, 48px);
+    margin-bottom:24px;
+  }
+  .contact-intro > p{max-width:48ch;margin-bottom:48px;}
+  .c-rows{border-top:1px solid var(--line);}
+  .c-row{
+    display:grid;
+    grid-template-columns:40px minmax(0, 1fr);
+    gap:16px;
+    padding-top:20px;
+    padding-bottom:20px;
+    border-bottom:1px solid var(--line);
+  }
+  .c-row svg{width:24px;height:24px;stroke:var(--signal);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-top:4px;}
+  .c-row h3{font-size:16px;letter-spacing:0.02em;margin-bottom:8px;line-height:1.2;}
+  .c-row p{font-size:16px;}
+
+  .menu{
+    border:1px solid var(--line-strong);
+    background:var(--body-2);
+  }
+  .menu-tabs{
+    display:flex;
+    border-bottom:1px solid var(--line-strong);
+  }
+  .menu-tabs button{
+    flex:1;
+    text-align:center;
+    padding-top:12px;
+    padding-bottom:12px;
+    padding-left:8px;
+    padding-right:8px;
+    color:var(--text-faint);
+    background:transparent;
+    border:none;
+    border-right:1px solid var(--line);
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:color 0.2s ease, background 0.2s ease;
+  }
+  .menu-tabs button:last-child{border-right:none;}
+  .menu-tabs button:hover{color:var(--text);}
+  .menu-tabs button:focus-visible{outline:2px solid var(--signal);outline-offset:-2px;}
+  .menu-tabs button[aria-selected="true"]{
+    background:var(--signal);
+    color:var(--accent-dark);
+    font-weight:700;
+  }
+
+  /* koraci forme: bez JS-a stoje jedan ispod drugog i forma i dalje radi */
+  .js .menu-step[hidden]{display:none;}
+  .form-foot.step-nav,
+  button.step-nav{display:none;}
+  .js .form-foot.step-nav{display:flex;}
+  .js button.step-nav{display:inline-flex;align-items:center;}
+  .step-back{
+    background:transparent;
+    border:none;
+    padding-left:0;
+    padding-right:0;
+    color:var(--text-faint);
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    cursor:pointer;
+    text-decoration:underline;
+    text-underline-offset:4px;
+    transition:color 0.2s ease;
+  }
+  .step-back:hover{color:var(--signal);}
+  .step-back:focus-visible{outline:2px solid var(--signal);outline-offset:4px;}
+  .form-note{color:var(--text-faint);margin-top:32px;}
+  .form-note + .form-foot{margin-top:16px;}
+  .menu-body{
+    padding-top:32px;
+    padding-bottom:32px;
+    padding-left:32px;
+    padding-right:32px;
+  }
+  .field{margin-bottom:24px;}
+  .field > label,
+  .field legend{
+    display:block;
+    color:var(--text-muted);
+    margin-bottom:12px;
+  }
+  fieldset.field{border:none;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip input{position:absolute;opacity:0;pointer-events:none;}
+  .chip span{
+    display:inline-block;
+    border:1px solid var(--line-strong);
+    padding-left:16px;
+    padding-right:16px;
+    padding-top:8px;
+    padding-bottom:8px;
+    font-size:16px;
+    cursor:pointer;
+    transition:background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .chip span:hover{border-color:var(--signal);}
+  .chip input:checked + span{background:var(--signal);border-color:var(--signal);color:var(--accent-dark);font-weight:600;}
+  .chip input:focus-visible + span{outline:2px solid var(--signal);outline-offset:2px;}
+
+  .field input[type=text],
+  .field textarea{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--line-strong);
+    color:var(--text);
+    font-family:var(--display);
+    font-size:20px;
+    padding-top:8px;
+    padding-bottom:12px;
+    border-radius:0;
+    transition:border-color 0.2s ease;
+  }
+  .field textarea{min-height:96px;resize:vertical;font-size:16px;line-height:1.6;}
+  .field input::placeholder,
+  .field textarea::placeholder{color:var(--text-faint);}
+  .field input:focus,
+  .field textarea:focus{outline:none;border-bottom-color:var(--signal);}
+  .form-foot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:32px;
+  }
+  .form-foot .mono{color:var(--text-faint);}
+
+  @media (max-width:991px){
+    .contact-grid{grid-template-columns:1fr;gap:56px;}
+  }
+  @media (max-width:520px){
+    .menu-body{padding-left:20px;padding-right:20px;padding-top:24px;padding-bottom:24px;}
+    .menu-tabs button{font-size:10px;letter-spacing:0.08em;padding-left:4px;padding-right:4px;}
+    .form-foot{gap:16px;}
+    .form-foot .btn{width:100%;order:2;}
+    .form-foot .step-back{order:3;align-self:center;}
+  }
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    border-top:1px solid var(--line);
+    padding-top:48px;
+    padding-bottom:48px;
+  }
+  .footer-inner{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+    gap:24px;
+  }
+  .footer-links{display:flex;gap:28px;flex-wrap:wrap;}
+  .footer-links a{color:var(--text-muted);}
+  .footer-links a:hover{color:var(--signal);}
+  .footer-copy{
+    width:100%;
+    color:var(--text-faint);
+    border-top:1px solid var(--line);
+    padding-top:24px;
+    margin-top:8px;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  /* ---------- REVEAL (sadržaj je uvek vidljiv) ---------- */
+  .reveal{transition:transform 0.8s cubic-bezier(0.2,0.7,0.2,1);}
+  .js .reveal:not(.in-view){transform:translateY(12px);}
+
+  /* ---------- NAV: ONLINE PORUČIVANJE ---------- */
+  .nav-links a.nav-hot{color:var(--signal);display:inline-flex;align-items:center;gap:8px;}
+  .nav-links a.nav-hot::before{content:"";width:8px;height:8px;background:var(--signal);box-shadow:0 0 8px var(--signal-glow);}
+  .nav-links a.nav-hot:hover{color:var(--text);}
+  /* uz šest linkova i jezike merač ekspozicije ne staje u header */
+  .readout{display:none;}
+  .nav-links a,
+  .brand-name,
+  .brand-name small{white-space:nowrap;}
+  @media (min-width:992px) and (max-width:1279px){
+    .navbar{gap:16px;}
+    .nav-desktop{gap:20px;}
+    .nav-links{gap:16px;}
+    .brand-name{display:none;}
+  }
+  /* sa linkom Foto pokloni meni ima sedam stavki */
+  @media (min-width:992px) and (max-width:1099px){
+    .nav-desktop{display:none;}
+    .hamburger{display:block;}
+  }
+  @media (min-width:1280px){
+    .nav-desktop{gap:24px;}
+    .nav-links{gap:16px;}
+  }
+
+  /* ---------- ONLINE PORUČIVANJE: APLIKACIJA ---------- */
+  .order-grid{
+    display:grid;
+    grid-template-columns:minmax(0, 7fr) minmax(0, 5fr);
+    gap:64px;
+    align-items:center;
+  }
+  .order-copy h2{
+    margin-top:24px;
+    font-size:clamp(32px, 4vw, 56px);
+    text-wrap:balance;
+  }
+  .order-copy > p{margin-top:24px;max-width:56ch;}
+  .order-steps{
+    margin-top:40px;
+    border-top:1px solid var(--line);
+  }
+  .order-steps li{
+    display:grid;
+    grid-template-columns:48px minmax(0, 1fr);
+    gap:16px;
+    align-items:baseline;
+    padding-top:16px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--line);
+    font-size:16px;
+    color:var(--text);
+  }
+  .order-steps b{color:var(--signal);font-weight:700;}
+  .order-cta{
+    display:flex;
+    align-items:center;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:40px;
+  }
+  .order-url{color:var(--text-faint);}
+  .all-svc-note a{color:var(--signal);text-decoration:underline;text-underline-offset:4px;}
+
+  .order-phone{display:grid;place-items:center;}
+  .phone{
+    position:relative;
+    width:100%;
+    max-width:320px;
+    border:2px solid var(--line-strong);
+    border-radius:40px;
+    background:var(--lcd);
+    padding-top:48px;
+    padding-bottom:24px;
+    padding-left:20px;
+    padding-right:20px;
+    box-shadow:0 32px 80px rgba(0,0,0,0.5), inset 0 0 48px rgba(0,0,0,0.6);
+  }
+  .phone-notch{
+    position:absolute;
+    top:16px;
+    left:50%;
+    width:80px;
+    height:20px;
+    margin-left:-40px;
+    border-radius:12px;
+    background:var(--body);
+  }
+  .phone-bar,
+  .phone-prog,
+  .phone-row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    color:rgba(63,216,220,0.72);
+  }
+  .phone-bar{padding-bottom:12px;border-bottom:1px solid rgba(63,216,220,0.2);}
+  .phone-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:8px;
+    margin-top:16px;
+  }
+  .phone-grid i{
+    aspect-ratio:1;
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 8px, transparent 8px 16px),
+      linear-gradient(160deg, var(--accent-mid), var(--accent-dark));
+    position:relative;
+  }
+  .phone-grid i:nth-child(3n+2){background:repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 8px, transparent 8px 16px), linear-gradient(200deg, #2b3a3a, #121a1a);}
+  .phone-grid i:nth-child(4n+3){background:repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 8px, transparent 8px 16px), linear-gradient(120deg, var(--signal), var(--accent-mid));}
+  .phone-grid i::after{
+    content:"";
+    position:absolute;
+    right:4px;
+    bottom:4px;
+    width:12px;
+    height:12px;
+    background:var(--signal);
+    clip-path:polygon(14% 52%, 0 66%, 38% 100%, 100% 28%, 86% 14%, 38% 72%);
+  }
+  .phone-prog{margin-top:20px;}
+  .phone-track{height:4px;margin-top:8px;background:rgba(63,216,220,0.16);}
+  .phone-track b{display:block;height:100%;width:100%;background:var(--signal);box-shadow:0 0 8px var(--signal-glow);transform-origin:left;}
+  .phone-row{margin-top:20px;padding-top:12px;border-top:1px solid rgba(63,216,220,0.2);}
+  .phone-row .ok{color:var(--signal);}
+  .phone-btn{
+    margin-top:16px;
+    height:48px;
+    display:grid;
+    place-items:center;
+    background:var(--signal);
+    color:var(--accent-dark);
+    font-weight:700;
+  }
+  /* otpremanje: sličice ulaze jedna po jedna, traka se puni */
+  .js .order-phone:not(.in-view) .phone-grid i{opacity:0;transform:scale(0.8);}
+  .js .order-phone:not(.in-view) .phone-track b{transform:scaleX(0);}
+  .phone-grid i{transition:opacity 0.4s ease, transform 0.4s cubic-bezier(0.2,0.7,0.2,1);}
+  .phone-grid i:nth-child(2){transition-delay:0.12s;}
+  .phone-grid i:nth-child(3){transition-delay:0.24s;}
+  .phone-grid i:nth-child(4){transition-delay:0.36s;}
+  .phone-grid i:nth-child(5){transition-delay:0.48s;}
+  .phone-grid i:nth-child(6){transition-delay:0.6s;}
+  .phone-grid i:nth-child(7){transition-delay:0.72s;}
+  .phone-grid i:nth-child(8){transition-delay:0.84s;}
+  .phone-grid i:nth-child(9){transition-delay:0.96s;}
+  .phone-track b{transition:transform 1.2s cubic-bezier(0.4,0,0.2,1) 0.1s;}
+  @media (max-width:900px){
+    .order-grid{grid-template-columns:1fr;gap:56px;}
+  }
+
+  /* ---------- CENOVNIK ---------- */
+  .price-tabs{
+    position:relative;
+    z-index:1;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    padding-bottom:24px;
+    margin-bottom:24px;
+    border-bottom:1px solid rgba(63,216,220,0.2);
+  }
+  .price-tabs button{
+    height:40px;
+    padding-left:16px;
+    padding-right:16px;
+    border:1px solid rgba(63,216,220,0.28);
+    color:rgba(63,216,220,0.8);
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    transition:background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .price-tabs button:hover{border-color:var(--signal);color:var(--signal);}
+  .price-tabs button[aria-selected="true"]{background:var(--signal);border-color:var(--signal);color:var(--accent-dark);font-weight:700;}
+  .price-tabs button:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .price-panel{position:relative;z-index:1;}
+  .price-panel[hidden]{display:none;}
+  .ptable{width:100%;border-collapse:collapse;font-size:16px;}
+  .ptable th,
+  .ptable td{
+    padding-top:12px;
+    padding-bottom:12px;
+    padding-left:12px;
+    border-bottom:1px solid rgba(63,216,220,0.16);
+    text-align:right;
+    font-variant-numeric:tabular-nums;
+  }
+  .ptable th:first-child,
+  .ptable td:first-child{text-align:left;padding-left:0;}
+  .ptable thead th{
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:400;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:rgba(63,216,220,0.72);
+    border-bottom-color:rgba(63,216,220,0.32);
+  }
+  .ptable tbody th{font-weight:600;color:var(--text);}
+  .ptable td{color:var(--text);}
+  .ptable td:last-child{color:var(--signal);}
+  .ptable tbody tr:hover{background:rgba(63,216,220,0.05);}
+  .price-note{margin-top:20px;color:var(--text-faint);line-height:1.6;}
+  .price-foot{
+    position:relative;
+    z-index:1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:32px;
+    padding-top:24px;
+    border-top:1px solid rgba(63,216,220,0.2);
+  }
+  .price-foot .mono{color:rgba(63,216,220,0.72);}
+  @media (max-width:520px){
+    .ptable{font-size:14px;}
+    .ptable th,
+    .ptable td{padding-left:8px;}
+    .ptable thead th{font-size:10px;letter-spacing:0.06em;}
+    .price-tabs button{padding-left:12px;padding-right:12px;}
+    .price-foot .btn{width:100%;}
+  }
+
+  /* ---------- KONTAKT: RADNJE ---------- */
+  .contact-grid > .menu{align-self:start;position:sticky;top:104px;}
+  @media (max-width:991px){
+    .contact-grid > .menu{position:static;}
+  }
+  .c-row p + p{margin-top:8px;}
+  .c-links a{color:var(--text);border-bottom:1px solid var(--line-strong);transition:color 0.2s ease, border-color 0.2s ease;}
+  .c-links a:hover{color:var(--signal);border-bottom-color:var(--signal);}
+  .c-hours{
+    display:grid;
+    grid-template-columns:max-content max-content;
+    gap:4px 24px;
+    margin-top:16px;
+    color:var(--text-faint);
+  }
+  .c-hours dd{color:var(--text-muted);}
+  .c-social span{display:block;}
+  .c-social b{color:var(--text);font-weight:600;}
+
+  /* ---------- FOOTER: ADRESE ---------- */
+  .footer-info{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px 32px;
+    color:var(--text-muted);
+  }
+  .footer-info a:hover{color:var(--signal);}
+
+  /* ---------- JEZIK: SR / EN / RU ---------- */
+  .lang{
+    display:flex;
+    border:1px solid var(--line-strong);
+    flex-shrink:0;
+  }
+  .lang button{
+    height:32px;
+    min-width:40px;
+    padding-left:8px;
+    padding-right:8px;
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    color:var(--text-muted);
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .lang button + button{border-left:1px solid var(--line-strong);}
+  .lang button:hover{color:var(--signal);}
+  .lang button[aria-pressed="true"]{background:var(--signal);color:var(--accent-dark);font-weight:700;}
+  .lang button:focus-visible{outline:2px solid var(--signal);outline-offset:2px;}
+  .navbar .lang{margin-left:auto;}
+  .mobile-menu .lang{align-self:flex-start;margin-top:16px;}
+  /* zatvoren meni ne sme da viri na niskim ekranima */
+  .mobile-menu{visibility:hidden;transition:transform 0.4s cubic-bezier(0.7,0,0.2,1), visibility 0s linear 0.4s;}
+  .mobile-menu.open{visibility:visible;transition:transform 0.4s cubic-bezier(0.7,0,0.2,1);}
+  .mobile-menu .lang button{height:48px;min-width:56px;}
+  @media (max-width:519px){
+    .navbar .lang{display:none;}
+  }
+
+  /* ---------- POPUP: NEWSLETTER -5% ---------- */
+  .promo{
+    position:fixed;
+    inset:0;
+    z-index:1300;
+    display:grid;
+    place-items:center;
+    padding-left:16px;
+    padding-right:16px;
+  }
+  .promo[hidden]{display:none;}
+  .promo-backdrop{
+    position:absolute;
+    inset:0;
+    background:rgba(5,8,8,0.72);
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+    opacity:0;
+    transition:opacity 0.3s ease;
+  }
+  .promo-card{
+    position:relative;
+    width:100%;
+    max-width:480px;
+    max-height:calc(100vh - 32px);
+    overflow-y:auto;
+    background:var(--panel);
+    border:1px solid var(--line-strong);
+    padding-top:48px;
+    padding-bottom:40px;
+    padding-left:40px;
+    padding-right:40px;
+    text-align:center;
+    opacity:0;
+    transform:translateY(16px) scale(0.96);
+    transition:opacity 0.3s ease, transform 0.4s cubic-bezier(0.2,0.7,0.2,1);
+  }
+  .promo.open .promo-backdrop{opacity:1;}
+  .promo.open .promo-card{opacity:1;transform:none;}
+  .promo-card > .corners{inset:12px;}
+  .promo-card > .corners::before,
+  .promo-card > .corners::after,
+  .promo-card > .corners i::before,
+  .promo-card > .corners i::after{width:16px;height:16px;border-color:var(--signal);}
+  .promo-x{
+    position:absolute;
+    top:16px;
+    right:16px;
+    width:40px;
+    height:40px;
+    display:grid;
+    place-items:center;
+    color:var(--text-muted);
+    z-index:1;
+    transition:color 0.2s ease;
+  }
+  .promo-x:hover{color:var(--signal);}
+  .promo-x svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;}
+  .promo-x:focus-visible{outline:2px solid var(--signal);outline-offset:-4px;}
+  .promo-tag{color:var(--signal);display:block;}
+  .promo-off{
+    display:block;
+    margin-top:16px;
+    font-family:var(--display);
+    font-stretch:125%;
+    font-weight:800;
+    font-size:96px;
+    line-height:1;
+    color:transparent;
+    -webkit-text-stroke:2px var(--signal);
+    filter:blur(var(--b, 0px));
+    transition:filter 0.9s cubic-bezier(0.2,0.7,0.2,1) 0.15s;
+  }
+  .promo:not(.open) .promo-off{--b:8px;}
+  .promo-card h2{
+    margin-top:16px;
+    font-size:28px;
+    text-wrap:balance;
+  }
+  .promo-card p{margin-top:16px;}
+  .promo-card p .s{display:block;text-wrap:balance;}
+  .promo-form{margin-top:32px;text-align:left;}
+  .promo-form label{display:block;color:var(--text-muted);margin-bottom:8px;}
+  .promo-form input{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--line-strong);
+    color:var(--text);
+    font-family:var(--display);
+    font-size:20px;
+    padding-top:8px;
+    padding-bottom:12px;
+    border-radius:0;
+    transition:border-color 0.2s ease;
+  }
+  .promo-form input::placeholder{color:var(--text-faint);}
+  .promo-form input:focus{outline:none;border-bottom-color:var(--signal);}
+  .promo-form input[aria-invalid="true"]{border-bottom-color:#ff8a7a;}
+  .promo-err{display:block;min-height:20px;margin-top:8px;color:#ff8a7a;font-size:12px;}
+  .promo-form .btn{width:100%;margin-top:8px;}
+  .promo-no{
+    margin-top:16px;
+    color:var(--text-faint);
+    padding-top:8px;
+    padding-bottom:8px;
+    transition:color 0.2s ease;
+  }
+  .promo-no:hover{color:var(--text);}
+  .promo-done{display:none;margin-top:32px;}
+  .promo-done b{display:block;color:var(--signal);font-family:var(--display);font-stretch:125%;font-size:20px;text-transform:uppercase;}
+  .promo.sent .promo-form,
+  .promo.sent .promo-no{display:none;}
+  .promo.sent .promo-done{display:block;}
+  @media (max-width:520px){
+    .promo-card{padding-top:48px;padding-bottom:32px;padding-left:24px;padding-right:24px;}
+    .promo-off{font-size:72px;}
+    .promo-card h2{font-size:24px;}
+  }
+
+  /* ---------- PORUČIVANJE NA SAJTU ---------- */
+  .ocard{max-width:640px;text-align:left;}
+  .ocard > .corners{display:none;}
+  .ocard .promo-tag{text-align:left;}
+  .ocard h2{margin-top:16px;font-size:clamp(24px, 3.2vw, 32px);}
+  .oform{margin-top:32px;}
+  .ofs{border:none;padding-top:24px;border-top:1px solid var(--line);margin-bottom:24px;}
+  .ofs legend{float:left;width:100%;color:var(--text-muted);margin-bottom:16px;}
+  .ofs legend + *{clear:both;}
+  .drop{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    padding-top:24px;
+    padding-bottom:24px;
+    border:1px dashed rgba(63,216,220,0.48);
+    background:var(--signal-soft);
+    text-align:center;
+    cursor:pointer;
+    transition:background 0.2s ease, border-color 0.2s ease;
+  }
+  .drop:hover{border-color:var(--signal);background:rgba(63,216,220,0.2);}
+  .drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;}
+  .drop input:focus-visible + .drop-ico{outline:2px solid var(--signal);outline-offset:4px;}
+  .drop-ico{
+    width:40px;
+    height:40px;
+    display:grid;
+    place-items:center;
+    border:1px solid var(--signal);
+    color:var(--signal);
+    font-family:var(--mono);
+    font-size:24px;
+    line-height:1;
+    margin-bottom:8px;
+  }
+  .drop b{font-size:16px;color:var(--text);}
+  .drop .mono{color:var(--text-faint);}
+  .othumbs{display:grid;grid-template-columns:repeat(auto-fill, minmax(72px, 1fr));gap:8px;}
+  .othumbs:not(:empty){margin-top:12px;}
+  .othumb{position:relative;aspect-ratio:1;background:#1b2222 center/cover no-repeat;}
+  .othumb button{
+    position:absolute;
+    top:4px;
+    right:4px;
+    width:24px;
+    height:24px;
+    display:grid;
+    place-items:center;
+    background:rgba(5,8,8,0.8);
+    color:var(--text);
+    font-size:16px;
+    line-height:1;
+  }
+  .othumb button:hover{background:var(--signal);color:var(--accent-dark);}
+  .oqty{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:20px;}
+  .oqty label{font-size:16px;color:var(--text-muted);}
+  .stepper{display:flex;border:1px solid var(--line-strong);}
+  .stepper button{width:40px;height:40px;font-size:20px;color:var(--signal);}
+  .stepper button:hover{background:var(--signal-soft);}
+  .stepper input{
+    width:56px;
+    height:40px;
+    text-align:center;
+    background:transparent;
+    border:none;
+    border-left:1px solid var(--line-strong);
+    border-right:1px solid var(--line-strong);
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:16px;
+    -moz-appearance:textfield;
+  }
+  .stepper input::-webkit-outer-spin-button,
+  .stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .ofs .field{margin-bottom:16px;}
+  .ofs .field:last-child{margin-bottom:0;}
+  .osum{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+    padding:20px;
+    background:var(--lcd);
+    border:1px solid rgba(63,216,220,0.24);
+  }
+  .osum-l{display:flex;flex-direction:column;gap:4px;}
+  .osum-l .mono{color:rgba(63,216,220,0.72);}
+  .osum-l b{font-family:var(--mono);font-size:28px;line-height:1.1;color:var(--signal);text-shadow:0 0 16px var(--signal-glow);}
+  .odone{display:none;margin-top:32px;}
+  .odone b{display:block;color:var(--signal);font-family:var(--display);font-stretch:125%;font-size:20px;text-transform:uppercase;}
+  .odone p{margin-top:8px;}
+  .omodal.sent .oform{display:none;}
+  .omodal.sent .odone{display:block;}
+  @media (max-width:520px){
+    .osum .btn{width:100%;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{transition:none !important;animation:none !important;}
+  }
+
+  /* =====================================================================
+     FOTO POKLONI (podstranica, nastavlja stil početne strane)
+     ===================================================================== */
+  .nav-links a[aria-current="page"],
+  .footer-links a[aria-current="page"]{color:var(--signal);}
+  .mobile-menu .m-link[aria-current="page"]{color:var(--signal);}
+
+  /* hero podstranice: isto tražilo, niže */
+  .hero--page{min-height:auto;padding-top:112px;padding-bottom:32px;}
+  .hero--page .viewfinder{min-height:min(720px, calc(100svh - 144px));}
+  .hero--page .hero-copy{container-type:inline-size;}
+  .hero--page h1{font-size:clamp(32px, 8vw, 112px);font-size:clamp(28px, 11.5cqi, 112px);}
+  .hero--page h1 span{display:block;white-space:nowrap;}
+  .hero--page .hero-side p .s{display:block;text-wrap:balance;}
+  @media (max-width:768px){
+    .hero--page{padding-top:96px;}
+    .hero--page .viewfinder{min-height:calc(100svh - 128px);}
+    .hero--page h1{font-stretch:112%;}
+  }
+
+  .s{display:block;text-wrap:balance;}
+  .sec-head h2,.season h3,.gift h3,.step h3,.pick h3{text-wrap:balance;}
+
+  /* ---------- SEZONA: NOVOGODIŠNJI POKLONI ---------- */
+  .season-grid{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:24px;
+  }
+  .season{
+    display:grid;
+    grid-template-columns:56px minmax(0, 1fr);
+    column-gap:32px;
+    align-content:start;
+  }
+  .season-top,
+  .season-foot{grid-column:1 / -1;}
+  .season-ico{grid-row:2 / span 2;}
+  .season > *{position:relative;z-index:1;}
+  .season-top{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    color:rgba(63,216,220,0.64);
+    border-bottom:1px solid rgba(63,216,220,0.2);
+    padding-bottom:16px;
+    margin-bottom:24px;
+  }
+  .season-ico{width:56px;height:56px;stroke:var(--signal);fill:none;stroke-width:1.5;filter:drop-shadow(0 0 12px var(--signal-glow));margin-bottom:24px;}
+  .season h3{font-size:20px;line-height:1.2;margin-bottom:12px;}
+  .season p{font-size:16px;margin-bottom:24px;}
+  .season-foot{
+    margin-top:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding-top:16px;
+    border-top:1px solid rgba(63,216,220,0.2);
+  }
+  .price-tag{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--signal);white-space:nowrap;}
+  .price-tag small{font-size:12px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:rgba(63,216,220,0.72);}
+  .btn.btn-sm{padding-top:12px;padding-bottom:12px;padding-left:16px;padding-right:16px;}
+  @media (max-width:991px){
+    .season-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:520px){
+    .season{grid-template-columns:1fr;}
+    .season-ico{grid-row:auto;}
+  }
+
+  /* ---------- KATALOG ---------- */
+  .gift-filter{margin-bottom:40px;}
+  .gift-filter button b{font-weight:400;opacity:0.64;margin-left:8px;}
+  .gift-grid{
+    display:grid;
+    grid-template-columns:repeat(4, minmax(0, 1fr));
+    gap:24px;
+  }
+  .gift{
+    display:flex;
+    flex-direction:column;
+    border:1px solid var(--line);
+    background:var(--panel);
+    transition:border-color 0.25s ease;
+  }
+  .gift[hidden]{display:none;}
+  .gift:hover{border-color:rgba(63,216,220,0.4);}
+  .gift:hover .corners::before,
+  .gift:hover .corners::after,
+  .gift:hover .corners i::before,
+  .gift:hover .corners i::after{border-color:var(--signal);}
+  .gift-media{aspect-ratio:4 / 3;border-bottom:1px solid var(--line);}
+  .gift-media .corners{inset:12px;}
+  .gift-media .corners::before,
+  .gift-media .corners::after,
+  .gift-media .corners i::before,
+  .gift-media .corners i::after{width:16px;height:16px;border-color:var(--text-faint);}
+  .gift-ico{width:64px;height:64px;stroke:var(--signal);fill:none;stroke-width:1.5;opacity:0.88;transition:transform 0.4s cubic-bezier(0.2,0.7,0.2,1);}
+  .gift:hover .gift-ico{transform:scale(1.08);}
+  .ph.has-photo .gift-ico{display:none;}
+  .gift-no{position:absolute;left:20px;bottom:16px;color:var(--text-faint);}
+  .gift-body{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    padding-top:24px;
+    padding-bottom:24px;
+    padding-left:24px;
+    padding-right:24px;
+  }
+  .gift-cat{color:var(--signal);margin-bottom:12px;}
+  .gift h3{font-size:20px;line-height:1.2;margin-bottom:12px;}
+  .gift p{font-size:16px;margin-bottom:16px;}
+  .gift-specs{margin-bottom:24px;border-top:1px solid var(--line);}
+  .gift-specs li{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    padding-top:8px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--line);
+  }
+  .gift-specs li span:first-child{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    padding-top:2px;
+    flex-shrink:0;
+  }
+  .gift-specs li span:last-child{font-size:14px;color:var(--text);text-align:right;}
+  .gift-foot{
+    margin-top:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .gift.off .gift-media{opacity:0.56;}
+  .gift.off .gift-specs li span:last-child{color:#ff8a7a;}
+  .gift.off .price-tag{color:var(--text-faint);}
+  .gift.off .price-tag small{color:var(--text-faint);}
+  .btn-line{
+    background:transparent;
+    color:var(--signal);
+  }
+  .btn-line:hover{background:var(--signal);color:var(--accent-dark);}
+  @media (max-width:1180px){
+    .gift-grid{grid-template-columns:repeat(3, minmax(0, 1fr));}
+  }
+  @media (max-width:860px){
+    .gift-grid{grid-template-columns:repeat(2, minmax(0, 1fr));gap:16px;}
+  }
+  @media (max-width:560px){
+    .gift-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- PROBA PRE ŠTAMPE ---------- */
+  .try-grid{
+    display:grid;
+    grid-template-columns:minmax(0, 5fr) minmax(0, 7fr);
+    gap:64px;
+    align-items:center;
+  }
+  .try-copy h2{font-size:clamp(28px, 3.6vw, 48px);margin-top:24px;margin-bottom:24px;text-wrap:balance;}
+  .try-copy > p{margin-bottom:32px;}
+  .try-copy .price-tabs{border-bottom:none;padding-bottom:0;margin-bottom:24px;}
+  .try-copy .drop{margin-bottom:24px;}
+  .try-note{color:var(--text-faint);margin-top:24px;}
+  .try-stage{padding-top:24px;padding-bottom:24px;padding-left:24px;padding-right:24px;}
+  .try-stage .lcd-bar{margin-bottom:24px;}
+  .stage{
+    position:relative;
+    z-index:1;
+    aspect-ratio:4 / 3;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(63,216,220,0.10), transparent 64%),
+      repeating-linear-gradient(90deg, rgba(63,216,220,0.05) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(0deg, rgba(63,216,220,0.05) 0 1px, transparent 1px 32px);
+  }
+  .stage > .corners{inset:16px;}
+  .stage > .corners::before,
+  .stage > .corners::after,
+  .stage > .corners i::before,
+  .stage > .corners i::after{width:24px;height:24px;border-color:var(--signal);}
+  .mock{grid-area:1 / 1;opacity:0;transform:scale(0.94);transition:opacity 0.35s ease, transform 0.5s cubic-bezier(0.2,0.7,0.2,1);pointer-events:none;}
+  .mock.on{opacity:1;transform:none;}
+  .photo{background:#1b2222 var(--img) center/cover no-repeat;}
+
+  /* šolja */
+  .m-mug{position:relative;width:min(36%, 220px);aspect-ratio:0.92;}
+  .m-mug-body{
+    position:absolute;
+    inset:0;
+    background:#eceae4;
+    border-radius:6px 6px 28px 28px / 6px 6px 20px 20px;
+    overflow:hidden;
+    box-shadow:0 32px 48px rgba(0,0,0,0.48);
+  }
+  .m-mug-body .photo{position:absolute;top:14%;bottom:14%;left:12%;right:12%;}
+  .m-mug-body::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(90deg, rgba(0,0,0,0.42), rgba(0,0,0,0.04) 24%, rgba(255,255,255,0.28) 40%, rgba(255,255,255,0) 56%, rgba(0,0,0,0.12) 80%, rgba(0,0,0,0.44));
+  }
+  .m-mug-rim{
+    position:absolute;
+    left:0;
+    right:0;
+    top:-6%;
+    height:12%;
+    border-radius:50%;
+    background:radial-gradient(ellipse at 50% 60%, #2a2f2f 0 54%, #f6f5f0 56%, #cfcdc6 100%);
+    z-index:2;
+  }
+  .m-mug-handle{
+    position:absolute;
+    right:-30%;
+    top:18%;
+    width:44%;
+    height:52%;
+    border:14px solid #d9d7d0;
+    border-left-color:transparent;
+    border-radius:50%;
+    z-index:-1;
+  }
+
+  /* puzzle */
+  .m-puzzle{position:relative;width:62%;aspect-ratio:4 / 3;transform:rotate(-3deg);box-shadow:0 32px 56px rgba(0,0,0,0.5);}
+  .m-puzzle .photo{position:absolute;inset:0;}
+  .m-puzzle svg{position:absolute;inset:0;width:100%;height:100%;}
+  .m-puzzle svg path{fill:none;stroke:rgba(255,255,255,0.64);stroke-width:1.5;}
+  .m-puzzle svg path.sh{stroke:rgba(0,0,0,0.36);stroke-width:3;}
+  .m-puzzle-piece{
+    position:absolute;
+    width:25%;
+    height:33.333%;
+    right:-6%;
+    top:-8%;
+    background-size:400% 300%;
+    background-position:100% 0;
+    transform:rotate(14deg);
+    box-shadow:0 16px 24px rgba(0,0,0,0.5);
+  }
+
+  /* kanvas */
+  .m-canvas{position:relative;width:64%;aspect-ratio:3 / 2;perspective:900px;}
+  .m-canvas .photo{
+    position:absolute;
+    inset:0;
+    transform:rotateY(-16deg);
+    transform-origin:left center;
+    box-shadow:14px 0 0 -1px #10302f, 40px 40px 64px rgba(0,0,0,0.56);
+  }
+
+  /* magnet */
+  .m-fridge{
+    position:relative;
+    width:72%;
+    aspect-ratio:4 / 3;
+    background:linear-gradient(100deg, #dfe3e2, #f3f5f4 48%, #cfd4d3);
+    display:grid;
+    place-items:center;
+    box-shadow:inset -12px 0 24px rgba(0,0,0,0.12);
+  }
+  .m-fridge::before{content:"";position:absolute;left:8%;top:12%;bottom:12%;width:3%;border-radius:8px;background:linear-gradient(90deg, #b9bfbe, #eef1f0);}
+  .m-magnet{width:32%;aspect-ratio:7.3 / 10.3;padding:5%;background:#fff;transform:rotate(5deg);box-shadow:0 12px 20px rgba(0,0,0,0.28);}
+  .m-magnet .photo{width:100%;height:100%;}
+  .m-size{position:absolute;right:16px;bottom:12px;color:rgba(10,20,20,0.56);}
+
+  /* jastuk */
+  .m-pillow{
+    position:relative;
+    width:min(46%, 280px);
+    aspect-ratio:1;
+    border-radius:22% / 22%;
+    overflow:hidden;
+    box-shadow:0 32px 56px rgba(0,0,0,0.5);
+  }
+  .m-pillow .photo{position:absolute;inset:0;}
+  .m-pillow::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    background:radial-gradient(ellipse at 45% 40%, rgba(255,255,255,0.18), rgba(255,255,255,0) 46%, rgba(0,0,0,0.36) 100%);
+    box-shadow:inset 0 0 0 4px rgba(255,255,255,0.12);
+  }
+  @media (max-width:991px){
+    .try-grid{grid-template-columns:1fr;gap:48px;}
+  }
+  @media (max-width:520px){
+    .try-stage{padding-left:12px;padding-right:12px;}
+    .m-mug-handle{border-width:8px;}
+  }
+
+  /* ---------- CENOVNIK: tabela uz poklone ---------- */
+  .ptable td.unit{color:var(--text-faint);}
+  .price-note a{color:var(--signal);border-bottom:1px solid rgba(63,216,220,0.4);}
+
+  /* ---------- PITANJA ---------- */
+  .faq{border-top:1px solid var(--line);}
+  .faq details{border-bottom:1px solid var(--line);}
+  .faq summary{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    padding-top:24px;
+    padding-bottom:24px;
+    cursor:pointer;
+    list-style:none;
+    font-stretch:112%;
+    font-weight:700;
+    font-size:20px;
+    line-height:1.3;
+    transition:color 0.2s ease;
+  }
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary:hover{color:var(--signal);}
+  .faq summary:focus-visible{outline:2px solid var(--signal);outline-offset:4px;}
+  .faq summary .n{font-family:var(--mono);font-size:12px;font-weight:400;letter-spacing:0.12em;color:var(--signal);flex-shrink:0;width:40px;}
+  .faq summary .q{flex:1;text-wrap:balance;}
+  .faq .all-svc-ico{width:20px;height:20px;}
+  .faq details[open] .all-svc-ico{transform:rotate(45deg);}
+  .faq details p{padding-left:64px;padding-bottom:24px;max-width:72ch;}
+  .faq-grid{display:grid;grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);gap:0 64px;}
+  @media (max-width:900px){
+    .faq-grid{grid-template-columns:1fr;}
+    .faq-grid .faq + .faq{border-top:none;}
+  }
+  @media (max-width:520px){
+    .faq summary{font-size:16px;gap:16px;}
+    .faq summary .n{width:24px;}
+    .faq details p{padding-left:40px;}
+  }
+
+  /* ---------- PREUZIMANJE ---------- */
+  .pick-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:24px;
+  }
+  .pick{border:1px solid var(--line);background:var(--panel);padding-top:32px;padding-bottom:32px;padding-left:32px;padding-right:32px;}
+  .pick svg{width:32px;height:32px;stroke:var(--signal);fill:none;stroke-width:1.5;margin-bottom:24px;}
+  .pick h3{font-size:20px;line-height:1.2;margin-bottom:8px;}
+  .pick p + p{margin-top:8px;}
+  .pick-cta{
+    display:flex;
+    align-items:center;
+    gap:32px;
+    flex-wrap:wrap;
+    margin-top:48px;
+  }
+  .text-link{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    text-decoration:underline;
+    text-underline-offset:4px;
+    transition:color 0.2s ease;
+  }
+  .text-link:hover{color:var(--signal);}
+  @media (max-width:991px){
+    .pick-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- MODAL: PORUČIVANJE POKLONA ---------- */
+  .gselect{
+    width:100%;
+    appearance:none;
+    -webkit-appearance:none;
+    background:transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233fd8dc' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") right 4px center/20px no-repeat;
+    border:none;
+    border-bottom:1px solid var(--line-strong);
+    border-radius:0;
+    color:var(--text);
+    font-family:var(--display);
+    font-size:20px;
+    padding-top:8px;
+    padding-bottom:12px;
+    padding-right:32px;
+    cursor:pointer;
+  }
+  .gselect:focus{outline:none;border-bottom-color:var(--signal);}
+  .gselect option,
+  .gselect optgroup{background:var(--panel);color:var(--text);}
+  .gsub{display:block;color:var(--text-faint);margin-top:20px;margin-bottom:12px;}
+  .gmax{display:block;color:var(--text-faint);margin-top:8px;}
+  .ofs textarea{
+    width:100%;
+    min-height:80px;
+    resize:vertical;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid var(--line-strong);
+    color:var(--text);
+    font-family:var(--display);
+    font-size:16px;
+    line-height:1.6;
+    padding-top:8px;
+    padding-bottom:12px;
+    border-radius:0;
+  }
+  .ofs textarea::placeholder{color:var(--text-faint);}
+  .ofs textarea:focus{outline:none;border-bottom-color:var(--signal);}
+  .ofs .field[hidden]{display:none;}
+  .ofs .field + .chips,
+  .ofs .chips + .field{margin-top:16px;}
+</style>
+</head>
+
+<body>
+
+  <div class="flash" id="flash" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="wrap navbar">
+      <a href="index.html" class="brand" aria-label="Foto Studio Art Digital, početna strana">
+        <span class="brand-plate"><img src="assets/logo.png" alt="Logo Foto Studio Art Digital, fotoaparat sa siluetom Beograda u objektivu"></span>
+        <span class="brand-name">Art Digital<small>Foto studio · Beograd</small></span>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Glavni meni">
+        <ul class="nav-links">
+          <li><a href="index.html#usluge">Usluge</a></li>
+          <li><a href="foto-pokloni.html" aria-current="page">Foto pokloni</a></li>
+          <li><a href="index.html#poruci" class="nav-hot">Poruči online</a></li>
+          <li><a href="index.html#cenovnik">Cenovnik</a></li>
+          <li><a href="index.html#radovi">Radovi</a></li>
+          <li><a href="index.html#o-nama">O nama</a></li>
+          <li><a href="index.html#kontakt">Kontakt</a></li>
+        </ul>
+        <a href="index.html#kontakt" class="btn">Zakaži termin</a>
+      </nav>
+
+      <div class="lang" role="group" aria-label="Jezik">
+        <button type="button" data-lang="sr" aria-pressed="true" lang="sr">SR</button>
+        <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+        <button type="button" data-lang="ru" aria-pressed="false" lang="ru">RU</button>
+      </div>
+
+      <button class="hamburger" id="hamburgerBtn" aria-label="Otvori meni" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#usluge" class="m-link"><span>01</span>Usluge</a>
+    <a href="foto-pokloni.html" class="m-link" aria-current="page"><span>02</span>Foto pokloni</a>
+    <a href="index.html#poruci" class="m-link"><span>03</span>Poruči online</a>
+    <a href="index.html#cenovnik" class="m-link"><span>04</span>Cenovnik</a>
+    <a href="index.html#radovi" class="m-link"><span>05</span>Radovi</a>
+    <a href="index.html#o-nama" class="m-link"><span>06</span>O nama</a>
+    <a href="index.html#kontakt" class="m-link"><span>07</span>Kontakt</a>
+    <a href="index.html#kontakt" class="btn m-link-btn">Zakaži termin</a>
+    <div class="lang" role="group" aria-label="Jezik">
+        <button type="button" data-lang="sr" aria-pressed="true" lang="sr">SR</button>
+        <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+        <button type="button" data-lang="ru" aria-pressed="false" lang="ru">RU</button>
+      </div>
+  </div>
+
+  <main id="top">
+
+    <!-- HERO: TRAŽILO (makro) -->
+    <section class="hero hero--page" data-frame="1">
+      <div class="hero-bg ph">
+        <span class="ph-label">Fotografija poklona</span>
+        <img src="assets/pokloni-hero.jpg" alt="Pokloni sa fotografijama iz Foto Studija Art Digital">
+      </div>
+
+      <div class="wrap">
+        <div class="viewfinder" id="viewfinder">
+          <div class="corners"><i></i></div>
+          <div class="thirds"></div>
+
+          <div class="vf-top mono" aria-hidden="true">
+            <div class="vf-set">
+              <span class="vf-mode">MACRO</span>
+              <span>1/60</span>
+              <span>F8</span>
+              <span>ISO 200</span>
+              <span class="vf-hide-sm">AWB</span>
+            </div>
+            <div class="vf-set">
+              <span class="vf-hide-sm">RAW+JPG</span>
+              <span class="battery"><svg viewBox="0 0 28 16"><rect x="1" y="2" width="22" height="12"/><rect x="23" y="5" width="3" height="6"/><rect class="lvl" x="3" y="4" width="18" height="8"/></svg></span>
+              <span>[0019]</span>
+            </div>
+          </div>
+
+          <div class="af-field" id="afField" aria-hidden="true"></div>
+
+          <div class="hero-copy">
+            <div>
+              <span class="hero-kicker mono">Foto pokloni · Beograd</span>
+              <h1><span>Fotografija</span> <span><em>na poklonu.</em></span></h1>
+            </div>
+            <div class="hero-side">
+              <p><span class="s">Šolja, puzzle, kanvas, kalendar i još 15 poklona sa tvojom slikom.</span> <span class="s">Izrada traje 1 do 2 dana, preuzimaš u radnji ili stiže kurirom.</span></p>
+              <a href="#katalog" class="btn has-shutter" id="heroShutter"><span class="shutter" aria-hidden="true"></span>Izaberi poklon</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEZONA: NOVOGODIŠNJI POKLONI -->
+    <section class="section" data-frame="2">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="mono sec-tag">01 / Sezona<b>Novogodišnji pokloni</b></div>
+          <div>
+            <h2 style="max-width:none;">Pokloni sa slikom za praznike</h2>
+            <p><span class="s">Kalendar za 2027, snežna kugla, šolja i foto knjiga.</span> <span class="s">Poruči na vreme, izrada traje od 1 do 3 dana.</span></p>
+          </div>
+        </div>
+        <div class="season-grid">
+          <article class="season lcd reveal">
+            <div class="season-top mono"><span>Kalendar · 2027</span><span>01/04</span></div>
+            <svg class="season-ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="10" width="32" height="30"/><path d="M8 18h32M16 6v8M32 6v8"/><path d="M14 24h4M22 24h4M30 24h4M14 31h4M22 31h4"/></svg>
+            <h3>Foto kalendar 2027</h3>
+            <p><span class="s">Zidni ili stoni kalendar sa tvojim fotografijama.</span> <span class="s">Akcija 3+1 na A4, A3 i premium.</span></p>
+            <div class="season-foot">
+              <span class="price-tag"><small>od</small> 300 <small>din</small></span>
+              <button type="button" class="btn btn-sm" data-gift="kalendar">Poruči</button>
+            </div>
+          </article>
+          <article class="season lcd reveal">
+            <div class="season-top mono"><span>Kugla · Sneg</span><span>02/04</span></div>
+            <svg class="season-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="20" r="13"/><path d="M14 35h20l3 7H11z"/><path d="M16 24l5-6 4 4 3-3 5 5"/></svg>
+            <h3>Snežna kugla</h3>
+            <p><span class="s">Protreseš je i oko fotografije pada sneg.</span> <span class="s">Ima i verzija sa srcima za dvoje.</span></p>
+            <div class="season-foot">
+              <span class="price-tag">1 190 <small>din</small></span>
+              <button type="button" class="btn btn-sm" data-gift="kugla">Poruči</button>
+            </div>
+          </article>
+          <article class="season lcd reveal">
+            <div class="season-top mono"><span>Šolja · Kolaž</span><span>03/04</span></div>
+            <svg class="season-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 14h24v20a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6z"/><path d="M34 18h3a5 5 0 0 1 0 10h-3"/><path d="M17 6c0 2 2 3 2 5M24 6c0 2 2 3 2 5"/></svg>
+            <h3>Foto šolja</h3>
+            <p><span class="s">Tvoja fotografija uz svaku jutarnju kafu.</span> <span class="s">Do 6 fotografija u kolažu, besplatno.</span></p>
+            <div class="season-foot">
+              <span class="price-tag"><small>od</small> 990 <small>din</small></span>
+              <button type="button" class="btn btn-sm" data-gift="solja">Poruči</button>
+            </div>
+          </article>
+          <article class="season lcd reveal">
+            <div class="season-top mono"><span>Knjiga · 50 strana</span><span>04/04</span></div>
+            <svg class="season-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 10h14a4 4 0 0 1 4 4v28a3 3 0 0 0-3-3H6z"/><path d="M42 10H28a4 4 0 0 0-4 4v28a3 3 0 0 1 3-3h15z"/></svg>
+            <h3>Photo book</h3>
+            <p><span class="s">Cela godina u 50 fotografija.</span> <span class="s">Četiri formata, izrada traje 3 dana.</span></p>
+            <div class="season-foot">
+              <span class="price-tag"><small>od</small> 990 <small>din</small></span>
+              <button type="button" class="btn btn-sm" data-gift="photobook">Poruči</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- KATALOG -->
+    <section class="section" id="katalog" data-frame="3" style="background:var(--body-2);">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="mono sec-tag">02 / Katalog<b>19 poklona</b></div>
+          <div>
+            <h2>Izaberi poklon. Mi štampamo.</h2>
+            <p><span class="s">Od magneta za frižider do kanvasa za dnevnu sobu.</span> <span class="s">Izaberi grupu da suziš izbor.</span></p>
+          </div>
+        </div>
+        <div class="price-tabs gift-filter mono" role="group" aria-label="Grupe poklona">
+            <button type="button" aria-pressed="true" data-filter="all">Svi pokloni<b>19</b></button>
+            <button type="button" aria-pressed="false" data-filter="kuhinja">Kuhinja i sto<b>4</b></button>
+            <button type="button" aria-pressed="false" data-filter="igra">Igra i uspomene<b>4</b></button>
+            <button type="button" aria-pressed="false" data-filter="sitnice">Sitnice<b>4</b></button>
+            <button type="button" aria-pressed="false" data-filter="tekstil">Tekstil<b>4</b></button>
+            <button type="button" aria-pressed="false" data-filter="zid">Zid i albumi<b>3</b></button>
+        </div>
+        <div class="gift-grid" id="giftGrid">
+          <article class="gift reveal" data-group="kuhinja" id="g-solja">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 14h24v20a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6z"/><path d="M34 18h3a5 5 0 0 1 0 10h-3"/><path d="M17 6c0 2 2 3 2 5M24 6c0 2 2 3 2 5"/></svg>
+              <img src="assets/poklon-solja.jpg" alt="Foto šolja">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">01/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Kuhinja i sto</span>
+              <h3>Foto šolja</h3>
+              <p><span class="s">Tvoja fotografija uz svaku jutarnju kafu.</span> <span class="s">Do 6 fotografija slažemo u kolaž besplatno.</span></p>
+              <ul class="gift-specs"><li><span>Izbor</span><span>Bela, magična, lonče</span></li><li><span>Izrada</span><span>1 do 2 dana</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag"><small>od</small> 990 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="solja">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="kuhinja" id="g-kecelja">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M18 6h12v8l8 4v24H10V18l8-4z"/><path d="M10 22H4M38 22h6"/><rect x="18" y="24" width="12" height="9"/></svg>
+              <img src="assets/poklon-kecelja.jpg" alt="Foto kecelja">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">02/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Kuhinja i sto</span>
+              <h3>Foto kecelja</h3>
+              <p><span class="s">Kecelja sa fotografijom, motivom ili porukom.</span> <span class="s">Lako se pere i ne boji se kuhinje.</span></p>
+              <ul class="gift-specs"><li><span>Štampa</span><span>Fotografija ili poruka</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">1 990 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="kecelja">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal off" data-group="kuhinja" id="g-daska">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="12" width="26" height="30" rx="4"/><path d="M34 22h4a3 3 0 0 1 0 6h-4"/><circle cx="14" cy="17" r="1.5"/></svg>
+              <img src="assets/poklon-daska.jpg" alt="Daska sa štampom">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">03/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Kuhinja i sto</span>
+              <h3>Daska sa štampom</h3>
+              <p><span class="s">Fotografija, citat ili dizajn na dasci.</span> <span class="s">Ukras za kuhinju sa ličnim pečatom.</span></p>
+              <ul class="gift-specs"><li><span>Status</span><span>Trenutno nedostupno</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">990 <small>din</small></span>
+                <a href="index.html#kontakt" class="btn btn-sm btn-line">Pitaj za dostupnost</a>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="kuhinja" id="g-pepeljara">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="24" rx="18" ry="7"/><path d="M6 24v5c0 4 8 7 18 7s18-3 18-7v-5"/><path d="M27 22l13-7"/></svg>
+              <img src="assets/poklon-pepeljara.jpg" alt="Foto pepeljara">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">04/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Kuhinja i sto</span>
+              <h3>Foto pepeljara</h3>
+              <p><span class="s">Piksla sa tvojom fotografijom ili porukom.</span> <span class="s">Praktičan poklon koji traje.</span></p>
+              <ul class="gift-specs"><li><span>Štampa</span><span>Fotografija ili poruka</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">990 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="pepeljara">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="igra" id="g-puzzle">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 14h10a4 4 0 1 1 8 0h12v10a4 4 0 1 0 0 8v10H26a4 4 0 1 0-8 0H8V32a4 4 0 1 1 0-8z"/></svg>
+              <img src="assets/poklon-puzzle.jpg" alt="Foto puzzle">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">05/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Igra i uspomene</span>
+              <h3>Foto puzzle</h3>
+              <p><span class="s">A4 puzzle od 120 delova sa tvojom fotografijom.</span> <span class="s">Stižu u kutiji sa istom slikom na poklopcu.</span></p>
+              <ul class="gift-specs"><li><span>Formati</span><span>A5, A4, srce, A3</span></li><li><span>Uz to</span><span>Ram ili pesma</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag"><small>od</small> 990 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="puzzle">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="igra" id="g-kugla">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="20" r="13"/><path d="M14 35h20l3 7H11z"/><path d="M16 24l5-6 4 4 3-3 5 5"/></svg>
+              <img src="assets/poklon-kugla.jpg" alt="Foto kugla">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">06/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Igra i uspomene</span>
+              <h3>Foto kugla</h3>
+              <p><span class="s">Protreseš je i oko fotografije pada sneg.</span> <span class="s">Ima i verzija sa srcima za dvoje.</span></p>
+              <ul class="gift-specs"><li><span>Modeli</span><span>Sneg, srca, srce</span></li><li><span>Fotografija</span><span>Jedna, krupan kadar</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">1 190 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="kugla">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="igra" id="g-kocka">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6l16 9v18l-16 9-16-9V15z"/><path d="M8 15l16 9 16-9M24 24v18"/></svg>
+              <img src="assets/poklon-kocka.jpg" alt="Foto kocka">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">07/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Igra i uspomene</span>
+              <h3>Foto kocka</h3>
+              <p><span class="s">Kocka, kristal ili prizma sa više fotografija.</span> <span class="s">Ukras za sto koji priča celu priču.</span></p>
+              <ul class="gift-specs"><li><span>Kocka</span><span>3 uspravne i 8 položenih</span></li><li><span>Kristal</span><span>11 kvadratnih</span></li><li><span>Prizma</span><span>9 kvadratnih i 6 položenih</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">3 990 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="kocka">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="igra" id="g-kamen">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M7 30c0-10 8-18 19-18 9 0 15 6 15 14s-7 15-17 15S7 38 7 30z"/><path d="M15 31l6-6 4 4 3-3 5 5"/></svg>
+              <img src="assets/poklon-kamen.jpg" alt="Foto na kamenu">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">08/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Igra i uspomene</span>
+              <h3>Foto na kamenu</h3>
+              <p><span class="s">Fotografija preneta na prirodni kamen.</span> <span class="s">Uspomena koja bukvalno traje.</span></p>
+              <ul class="gift-specs"><li><span>Podloga</span><span>Prirodni kamen</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">1 600 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="kamen">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="sitnice" id="g-magneti">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="7" width="24" height="34"/><rect x="16" y="11" width="16" height="20"/></svg>
+              <img src="assets/poklon-magneti.jpg" alt="Foto magneti">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">09/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Sitnice</span>
+              <h3>Foto magneti</h3>
+              <p><span class="s">Magnet 7,3 × 10,3 cm sa tvojom fotografijom.</span> <span class="s">Ne ostavlja lepak i lako se premešta.</span></p>
+              <ul class="gift-specs"><li><span>Format</span><span>7,3 × 10,3 cm</span></li><li><span>Najmanje</span><span>3 komada</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">300 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="magneti">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="sitnice" id="g-privezak">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="8" r="4"/><path d="M24 12v4"/><rect x="14" y="16" width="20" height="26" rx="3"/><rect x="18" y="20" width="12" height="14"/></svg>
+              <img src="assets/poklon-privezak.jpg" alt="Foto privezak">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">10/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Sitnice</span>
+              <h3>Foto privezak</h3>
+              <p><span class="s">Privezak 3,5 × 4,5 cm za ključeve ili torbu.</span> <span class="s">Može i sa pesmom po tvom izboru.</span></p>
+              <ul class="gift-specs"><li><span>Format</span><span>3,5 × 4,5 cm</span></li><li><span>Najmanje</span><span>3 komada</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">300 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="privezak">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="sitnice" id="g-bedz">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><circle cx="24" cy="24" r="11"/><path d="M18 28l4-5 3 3 3-4 3 4"/></svg>
+              <img src="assets/poklon-bedz.jpg" alt="Foto bedž">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">11/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Sitnice</span>
+              <h3>Foto bedž</h3>
+              <p><span class="s">Bedž sa fotografijom ili porukom.</span> <span class="s">Za proslave, momačke večeri i firme.</span></p>
+              <ul class="gift-specs"><li><span>Za</span><span>Odeću, torbe, promocije</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">300 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="bedz">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="sitnice" id="g-podloga">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="12" width="38" height="26" rx="4"/><path d="M29 19a4 4 0 0 1 8 0v7a4 4 0 0 1-8 0z"/><path d="M33 15v4"/></svg>
+              <img src="assets/poklon-podloga.jpg" alt="Podloga za miša">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">12/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Sitnice</span>
+              <h3>Podloga za miša</h3>
+              <p><span class="s">Fotografija koju gledaš ceo radni dan.</span> <span class="s">Poklon za svakog ko radi za računarom.</span></p>
+              <ul class="gift-specs"><li><span>Za</span><span>Kancelariju i kuću</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">990 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="podloga">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="tekstil" id="g-majica">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M16 8l-9 6 4 7 5-3v22h16V18l5 3 4-7-9-6a8 8 0 0 1-16 0z"/></svg>
+              <img src="assets/poklon-majica.jpg" alt="Majica sa štampom">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">13/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Tekstil</span>
+              <h3>Majica sa štampom</h3>
+              <p><span class="s">Fotografija, kolaž ili natpis na majici.</span> <span class="s">Boje ostaju i posle mnogo pranja.</span></p>
+              <ul class="gift-specs"><li><span>Veličine</span><span>S do 4XL, dečje 2 do 12</span></li><li><span>Materijal</span><span>50% pamuk, 50% poliester</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag"><small>od</small> 1 800 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="majica">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="tekstil" id="g-jastuk">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 10q14 5 28 0q-5 14 0 28q-14-5-28 0q5-14 0-28z"/></svg>
+              <img src="assets/poklon-jastuk.jpg" alt="Jastuk sa štampom">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">14/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Tekstil</span>
+              <h3>Jastuk sa štampom</h3>
+              <p><span class="s">Kvadratni jastuk sa fotografijom i tekstom.</span> <span class="s">Do 6 fotografija slažemo u kolaž.</span></p>
+              <ul class="gift-specs"><li><span>Oblik</span><span>Kvadrat</span></li><li><span>Štampa</span><span>Fotografija, kolaž, tekst</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">1 990 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="jastuk">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="tekstil" id="g-ceger">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 18h28l-2 24H12z"/><path d="M18 18v-4a6 6 0 0 1 12 0v4"/></svg>
+              <img src="assets/poklon-ceger.jpg" alt="Foto ceger">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">15/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Tekstil</span>
+              <h3>Foto ceger</h3>
+              <p><span class="s">Ceger sa fotografijom za šoping i posao.</span> <span class="s">Nosiš uspomenu svuda sa sobom.</span></p>
+              <ul class="gift-specs"><li><span>Štampa</span><span>Fotografija ili poruka</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">1 990 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="ceger">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="tekstil" id="g-ranac">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M13 12h22l-2 30H15z"/><path d="M13 12q11 6 22 0"/><path d="M13 12L9 40M35 12l4 28"/></svg>
+              <img src="assets/poklon-ranac.jpg" alt="Foto ranac">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">16/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Tekstil</span>
+              <h3>Foto ranac</h3>
+              <p><span class="s">Ranac sa slikom za školu i putovanja.</span> <span class="s">Lep dodatak uz foto šolju.</span></p>
+              <ul class="gift-specs"><li><span>Za</span><span>Školu, trening, put</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag">1 990 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="ranac">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="zid" id="g-kanvas">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="9" width="32" height="24"/><path d="M39 9l3 3v24H10l-3-3"/><path d="M11 29l8-9 6 6 4-4 6 7"/></svg>
+              <img src="assets/poklon-kanvas.jpg" alt="Kanvas">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">17/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Zid i albumi</span>
+              <h3>Kanvas</h3>
+              <p><span class="s">Fotografija na platnu zategnutom na drveni ram.</span> <span class="s">Formati od 20 × 30 do 100 × 150 cm.</span></p>
+              <ul class="gift-specs"><li><span>Ram</span><span>Drveni blind ram</span></li><li><span>Posebne mere</span><span>Po dogovoru</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag"><small>od</small> 1 592 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="kanvas">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="zid" id="g-kalendar">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="10" width="32" height="30"/><path d="M8 18h32M16 6v8M32 6v8"/><path d="M14 24h4M22 24h4M30 24h4M14 31h4M22 31h4"/></svg>
+              <img src="assets/poklon-kalendar.jpg" alt="Foto kalendar 2027">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">18/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Zid i albumi</span>
+              <h3>Foto kalendar 2027</h3>
+              <p><span class="s">Zidni ili stoni kalendar sa tvojim fotografijama.</span> <span class="s">Na A4, A3 i premium važi akcija 3+1.</span></p>
+              <ul class="gift-specs"><li><span>Formati</span><span>A4, A3, 30 × 60, stoni</span></li><li><span>Izrada</span><span>1 do 2 dana</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag"><small>od</small> 300 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="kalendar">Poruči</button>
+              </div>
+            </div>
+          </article>
+          <article class="gift reveal" data-group="zid" id="g-photobook">
+            <div class="gift-media ph">
+              <svg class="gift-ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 10h14a4 4 0 0 1 4 4v28a3 3 0 0 0-3-3H6z"/><path d="M42 10H28a4 4 0 0 0-4 4v28a3 3 0 0 1 3-3h15z"/></svg>
+              <img src="assets/poklon-photobook.jpg" alt="Photo book">
+              <div class="corners" aria-hidden="true"><i></i></div>
+              <span class="gift-no mono" aria-hidden="true">19/19</span>
+            </div>
+            <div class="gift-body">
+              <span class="mono gift-cat">Zid i albumi</span>
+              <h3>Photo book</h3>
+              <p><span class="s">Foto knjiga sa 50 strana i 50 fotografija.</span> <span class="s">Četiri formata, izrada traje 3 dana.</span></p>
+              <ul class="gift-specs"><li><span>Formati</span><span>15 × 15 do 20 × 30 cm</span></li><li><span>Izrada</span><span>3 dana</span></li></ul>
+              <div class="gift-foot">
+                <span class="price-tag"><small>od</small> 990 <small>din</small></span>
+                <button type="button" class="btn btn-sm" data-gift="photobook">Poruči</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBA PRE ŠTAMPE -->
+    <section class="section" id="proba" data-frame="4">
+      <div class="wrap try-grid">
+        <div class="try-copy reveal">
+          <div class="mono sec-tag">03 / Pregled<b>Probaj pre štampe</b></div>
+          <h2>Vidi svoju fotografiju na poklonu</h2>
+          <p><span class="s">Izaberi fotografiju i pogledaj je na šolji, puzzli, kanvasu, magnetu ili jastuku.</span> <span class="s">Fotografija ostaje na tvom uređaju dok ne poručiš.</span></p>
+          <div class="price-tabs mono" role="tablist" aria-label="Poklon za pregled">
+            <button type="button" role="tab" id="ttab-0" aria-controls="tryStage" aria-selected="true" data-mock="solja">Šolja</button>
+            <button type="button" role="tab" id="ttab-1" aria-controls="tryStage" aria-selected="false" tabindex="-1" data-mock="puzzle">Puzzle</button>
+            <button type="button" role="tab" id="ttab-2" aria-controls="tryStage" aria-selected="false" tabindex="-1" data-mock="kanvas">Kanvas</button>
+            <button type="button" role="tab" id="ttab-3" aria-controls="tryStage" aria-selected="false" tabindex="-1" data-mock="magneti">Magnet</button>
+            <button type="button" role="tab" id="ttab-4" aria-controls="tryStage" aria-selected="false" tabindex="-1" data-mock="jastuk">Jastuk</button>
+          </div>
+          <label class="drop" for="tryFile">
+            <input type="file" id="tryFile" accept="image/*">
+            <span class="drop-ico" aria-hidden="true">+</span>
+            <b>Izaberi svoju fotografiju</b>
+            <span class="mono">Iz telefona ili računara</span>
+          </label>
+          <button type="button" class="btn" id="tryOrder">Poruči ovaj poklon</button>
+          <p class="mono try-note">Pregled je približan. Pre štampe svaku fotografiju doteramo.</p>
+        </div>
+
+        <div class="lcd try-stage reveal">
+          <div class="lcd-bar mono" aria-hidden="true"><span>Pregled pre štampe</span><span id="tryWhat">Primer</span></div>
+          <div class="stage" id="tryStage" role="tabpanel" aria-label="Pregled poklona sa izabranom fotografijom">
+            <div class="corners" aria-hidden="true"><i></i></div>
+            <div class="mock m-mug on" data-mock="solja"><div class="m-mug-handle"></div><div class="m-mug-rim"></div><div class="m-mug-body"><div class="photo"></div></div></div>
+            <div class="mock m-puzzle" data-mock="puzzle"><div class="photo"></div><svg viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true"><path class="sh" id="jigShadow"/><path id="jigLines"/></svg><div class="photo m-puzzle-piece"></div></div>
+            <div class="mock m-canvas" data-mock="kanvas"><div class="photo"></div></div>
+            <div class="mock m-fridge" data-mock="magneti"><div class="m-magnet"><div class="photo"></div></div><span class="m-size mono">7,3 × 10,3 cm</span></div>
+            <div class="mock m-pillow" data-mock="jastuk"><div class="photo"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CENOVNIK POKLONA -->
+    <section class="section" id="cene" data-frame="5" style="background:var(--body-2);">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="mono sec-tag">04 / Cenovnik<b>Cene u dinarima</b></div>
+          <div>
+            <h2>Cenovnik poklona</h2>
+            <p><span class="s">Cene su po komadu.</span> <span class="s">Na veće količine odobravamo popust.</span></p>
+          </div>
+        </div>
+        <div class="lcd price reveal">
+          <div class="price-tabs mono" role="tablist" aria-label="Kategorije cenovnika poklona">
+            <button type="button" role="tab" id="gptab-0" aria-controls="gppanel-0" aria-selected="true">Šolje</button>
+            <button type="button" role="tab" id="gptab-1" aria-controls="gppanel-1" aria-selected="false" tabindex="-1">Puzzle</button>
+            <button type="button" role="tab" id="gptab-2" aria-controls="gppanel-2" aria-selected="false" tabindex="-1">Kalendari</button>
+            <button type="button" role="tab" id="gptab-3" aria-controls="gppanel-3" aria-selected="false" tabindex="-1">Photo book</button>
+            <button type="button" role="tab" id="gptab-4" aria-controls="gppanel-4" aria-selected="false" tabindex="-1">Kanvas</button>
+            <button type="button" role="tab" id="gptab-5" aria-controls="gppanel-5" aria-selected="false" tabindex="-1">Tekstil</button>
+            <button type="button" role="tab" id="gptab-6" aria-controls="gppanel-6" aria-selected="false" tabindex="-1">Sitnice i dekor</button>
+          </div>
+            <div class="price-panel" id="gppanel-0" role="tabpanel" aria-labelledby="gptab-0">
+              <table class="ptable">
+                <thead><tr><th scope="col">Proizvod</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">Bela šolja 3 dcl</th><td>990</td></tr>
+                <tr><th scope="row">Lonče</th><td>990</td></tr>
+                <tr><th scope="row">Magična šolja 3 dcl, crna</th><td>1 190</td></tr>
+                <tr><th scope="row">Šolja sa obojenom unutrašnjošću</th><td>1 190</td></tr>
+                <tr><th scope="row">Šolja sa tanjirićem</th><td>1 490</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Do 6 fotografija slažemo u kolaž besplatno.</p>
+            </div>
+            <div class="price-panel" id="gppanel-1" role="tabpanel" aria-labelledby="gptab-1" hidden>
+              <table class="ptable">
+                <thead><tr><th scope="col">Proizvod</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">Puzzle A5</th><td>990</td></tr>
+                <tr><th scope="row">Puzzle A4, 120 delova</th><td>1 490</td></tr>
+                <tr><th scope="row">Puzzle u obliku srca</th><td>1 490</td></tr>
+                <tr><th scope="row">Puzzle A3, 300 delova</th><td>2 490</td></tr>
+                <tr><th scope="row">Ram za puzzle A4</th><td>899</td></tr>
+                <tr><th scope="row">Ram za puzzle A3</th><td>1 250</td></tr>
+                <tr><th scope="row">Pesma uz puzzle</th><td>+800</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Puzzle od 48 delova radimo samo po narudžbini, od 100 komada.</p>
+            </div>
+            <div class="price-panel" id="gppanel-2" role="tabpanel" aria-labelledby="gptab-2" hidden>
+              <table class="ptable">
+                <thead><tr><th scope="col">Proizvod</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">A4, položen</th><td>500</td></tr>
+                <tr><th scope="row">A4, akcija 3+1</th><td>1 500</td></tr>
+                <tr><th scope="row">A3, uspravan</th><td>700</td></tr>
+                <tr><th scope="row">A3, akcija 3+1</th><td>2 100</td></tr>
+                <tr><th scope="row">Premium 30 × 60 cm</th><td>990</td></tr>
+                <tr><th scope="row">Premium, akcija 3+1</th><td>2 970</td></tr>
+                <tr><th scope="row">Zimski stoni kalendar, 1 slika</th><td>300</td></tr>
+                <tr><th scope="row">Novogodišnji stoni ram, 3 slike</th><td>490</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Akcija 3+1: četiri kalendara po ceni tri.</p>
+            </div>
+            <div class="price-panel" id="gppanel-3" role="tabpanel" aria-labelledby="gptab-3" hidden>
+              <table class="ptable">
+                <thead><tr><th scope="col">Format</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">15 × 15 cm</th><td>990</td></tr>
+                <tr><th scope="row">15 × 20 cm</th><td>1 490</td></tr>
+                <tr><th scope="row">20 × 20 cm</th><td>1 990</td></tr>
+                <tr><th scope="row">20 × 30 cm</th><td>2 490</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">50 strana i 50 fotografija. Izrada traje 3 dana.</p>
+            </div>
+            <div class="price-panel" id="gppanel-4" role="tabpanel" aria-labelledby="gptab-4" hidden>
+              <table class="ptable">
+                <thead><tr><th scope="col">Format</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">20 × 30 cm</th><td>1 592</td></tr>
+                <tr><th scope="row">30 × 40 cm</th><td>1 752</td></tr>
+                <tr><th scope="row">40 × 40 cm</th><td>1 992</td></tr>
+                <tr><th scope="row">40 × 60 cm</th><td>2 312</td></tr>
+                <tr><th scope="row">50 × 70 cm</th><td>2 952</td></tr>
+                <tr><th scope="row">60 × 90 cm</th><td>4 100</td></tr>
+                <tr><th scope="row">70 × 100 cm</th><td>4 592</td></tr>
+                <tr><th scope="row">100 × 150 cm</th><td>8 600</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Ram je drveni blind ram. Posebne mere radimo po dogovoru.</p>
+            </div>
+            <div class="price-panel" id="gppanel-5" role="tabpanel" aria-labelledby="gptab-5" hidden>
+              <table class="ptable">
+                <thead><tr><th scope="col">Proizvod</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">Bela majica, od</th><td>1 800</td></tr>
+                <tr><th scope="row">Crna majica, od</th><td>2 100</td></tr>
+                <tr><th scope="row">Obostrana štampa</th><td>+500</td></tr>
+                <tr><th scope="row">Jastuk sa štampom</th><td>1 990</td></tr>
+                <tr><th scope="row">Foto ceger</th><td>1 990</td></tr>
+                <tr><th scope="row">Foto kecelja</th><td>1 990</td></tr>
+                <tr><th scope="row">Foto ranac</th><td>1 990</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Majice od S do 4XL, dečje od 2 do 12. Cenu za veličinu potvrđujemo pri porudžbini.</p>
+            </div>
+            <div class="price-panel" id="gppanel-6" role="tabpanel" aria-labelledby="gptab-6" hidden>
+              <table class="ptable">
+                <thead><tr><th scope="col">Proizvod</th><th scope="col">Cena</th></tr></thead>
+                <tbody>
+                <tr><th scope="row">Foto magnet 7,3 × 10,3 cm</th><td>300</td></tr>
+                <tr><th scope="row">Foto privezak 3,5 × 4,5 cm</th><td>300</td></tr>
+                <tr><th scope="row">Pesma uz privezak</th><td>+800</td></tr>
+                <tr><th scope="row">Foto bedž</th><td>300</td></tr>
+                <tr><th scope="row">Podloga za miša</th><td>990</td></tr>
+                <tr><th scope="row">Kugla sa snegom</th><td>1 190</td></tr>
+                <tr><th scope="row">Kugla sa srcima</th><td>1 190</td></tr>
+                <tr><th scope="row">Srce ispunjeno srcima</th><td>1 190</td></tr>
+                <tr><th scope="row">Kocka</th><td>3 990</td></tr>
+                <tr><th scope="row">Kristal</th><td>3 990</td></tr>
+                <tr><th scope="row">Prizma</th><td>3 990</td></tr>
+                <tr><th scope="row">Foto pepeljara</th><td>990</td></tr>
+                <tr><th scope="row">Foto na kamenu</th><td>1 600</td></tr>
+                </tbody>
+              </table>
+              <p class="mono price-note">Magnete i priveske radimo od 3 komada.</p>
+            </div>
+          <div class="price-foot">
+            <span class="mono">Poštarina 399 din · Plaćanje pouzećem</span>
+            <button type="button" class="btn" data-gift="solja">Poruči poklon</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POSTUPAK -->
+    <section class="section paper" data-frame="6">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="mono sec-tag">05 / Postupak<b>Od fotografije do poklona</b></div>
+          <div>
+            <h2>Četiri koraka do poklona</h2>
+            <p><span class="s">Ti biraš poklon i fotografiju. Sve ostalo radimo mi.</span></p>
+          </div>
+        </div>
+        <ol class="steps">
+          <li class="step reveal">
+            <div class="step-no">01</div>
+            <div class="mono step-meta">Izbor</div>
+            <h3>Izabereš poklon</h3>
+            <p>U katalogu ili u pregledu pre štampe. Cenu vidiš pre porudžbine.</p>
+          </li>
+          <li class="step reveal">
+            <div class="step-no">02</div>
+            <div class="mono step-meta">Fotografije</div>
+            <h3>Pošalješ fotografije</h3>
+            <p>Jednu ili do 6 za kolaž. Kolaž slažemo besplatno.</p>
+          </li>
+          <li class="step reveal">
+            <div class="step-no">03</div>
+            <div class="mono step-meta">Izrada</div>
+            <h3>Izrađujemo za 1 do 2 dana</h3>
+            <p>Svaku fotografiju pregledamo i doteramo pre štampe.</p>
+          </li>
+          <li class="step reveal">
+            <div class="step-no">04</div>
+            <div class="mono step-meta">Preuzimanje</div>
+            <h3>U radnji ili kurirom</h3>
+            <p>Na Terazijama ili na Bulevaru. Kurir stiže za 2 do 3 dana.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- PITANJA -->
+    <section class="section" id="pitanja" data-frame="7">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="mono sec-tag">06 / Pitanja<b>Najčešća pitanja</b></div>
+          <div>
+            <h2>Pre nego što poručiš</h2>
+            <p><span class="s">Odgovori na ono što nas najčešće pitaju o izradi i dostavi.</span></p>
+          </div>
+        </div>
+        <div class="faq-grid reveal">
+          <div class="faq">
+            <details><summary><span class="n">01</span><span class="q">Koliko traje izrada?</span><svg class="all-svc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke-linecap="square" /></svg></summary><p>Većina poklona je gotova za 1 do 2 dana. Photo book traje 3 dana. Ako biraš kurira, računaj još 2 do 3 dana.</p></details>
+            <details><summary><span class="n">02</span><span class="q">Koliko košta dostava?</span><svg class="all-svc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke-linecap="square" /></svg></summary><p>Poštarina je 399 din. Plaćaš pouzećem, kad ti paket stigne.</p></details>
+            <details><summary><span class="n">03</span><span class="q">Mogu li da pošaljem više fotografija za jedan poklon?</span><svg class="all-svc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke-linecap="square" /></svg></summary><p>Možeš. Za šolju, puzzle, majicu i jastuk pošalji do 6 fotografija, a mi od njih besplatno slažemo kolaž.</p></details>
+            <details><summary><span class="n">04</span><span class="q">Koja fotografija je dobra za štampu?</span><svg class="all-svc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke-linecap="square" /></svg></summary><p>Original iz galerije telefona, a ne snimak ekrana ili slika poslata kroz aplikaciju za poruke, jer one smanjuju kvalitet. Za kuglu i privezak biraj krupan kadar sa jednim motivom.</p></details>
+          </div>
+          <div class="faq">
+            <details><summary><span class="n">05</span><span class="q">Šta su puzzle i privezak sa pesmom?</span><svg class="all-svc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke-linecap="square" /></svg></summary><p>Uz porudžbinu pošalješ link pesme i minut od kog kreće. Doplata je 800 din.</p></details>
+            <details><summary><span class="n">06</span><span class="q">Da li su moje fotografije sigurne?</span><svg class="all-svc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke-linecap="square" /></svg></summary><p>Fotografije čuvamo dok traje izrada i još nekoliko dana kao rezervnu kopiju. Posle toga ih brišemo.</p></details>
+            <details><summary><span class="n">07</span><span class="q">Kako se plaća?</span><svg class="all-svc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke-linecap="square" /></svg></summary><p>U obe radnje primamo kartice i gotovinu. Za dostavu kurirom plaćaš pouzećem.</p></details>
+            <details><summary><span class="n">08</span><span class="q">Radite li veće količine za firme?</span><svg class="all-svc-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke-linecap="square" /></svg></summary><p>Radimo. Na veće količine odobravamo popust, a puzzle od 48 delova pravimo od 100 komada, za firme, team building i rođendane.</p></details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREUZIMANJE -->
+    <section class="section" id="preuzimanje" data-frame="7" style="background:var(--body-2);">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <div class="mono sec-tag">07 / Preuzimanje<b>Terazije 5 · Bulevar despota Stefana 48</b></div>
+          <div>
+            <h2>Preuzmi u radnji ili kurirom</h2>
+            <p><span class="s">Gotov poklon čeka te u jednoj od dve radnje u centru Beograda.</span> <span class="s">Može i kurirom na tvoju adresu.</span></p>
+          </div>
+        </div>
+        <div class="pick-grid">
+          <div class="pick reveal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <h3>Terazije 5</h3>
+            <p>Prolaz u pasažu, 11000 Beograd</p>
+            <p class="c-links"><a href="tel:+381113223525">(011) 3223-525</a> <span aria-hidden="true">·</span> <a href="tel:+38163594112">(063) 594-112</a><br><a href="mailto:artdigital29@gmail.com">artdigital29@gmail.com</a></p>
+            <dl class="c-hours mono">
+              <dt>Pon–pet</dt><dd>09–19h</dd>
+              <dt>Subota</dt><dd>10–15h</dd>
+              <dt>Nedelja</dt><dd>Ne radimo</dd>
+            </dl>
+          </div>
+          <div class="pick reveal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <h3>Bulevar despota Stefana 48</h3>
+            <p>11000 Beograd</p>
+            <p class="c-links"><a href="tel:+381113222965">(011) 3222-965</a> <span aria-hidden="true">·</span> <a href="tel:+38163594034">(063) 594-034</a><br><a href="mailto:artdigital26@gmail.com">artdigital26@gmail.com</a></p>
+            <dl class="c-hours mono">
+              <dt>Pon–pet</dt><dd>09–20h</dd>
+              <dt>Subota</dt><dd>10–15h</dd>
+              <dt>Nedelja</dt><dd>Ne radimo</dd>
+            </dl>
+          </div>
+          <div class="pick reveal">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 6h12v10H2zM14 9h4l4 4v3h-8z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+            <h3>Kurirom na adresu</h3>
+            <p><span class="s">Stiže za 2 do 3 dana posle izrade.</span> <span class="s">Poštarina je 399 din, plaćaš pouzećem.</span></p>
+          </div>
+        </div>
+        <div class="pick-cta reveal">
+          <button type="button" class="btn has-shutter" data-gift="solja"><span class="shutter" aria-hidden="true"></span>Poruči poklon</button>
+          <a href="index.html#kontakt" class="text-link">Imaš pitanje? Piši nam</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-plate"><img src="assets/logo.png" alt="Logo Foto Studio Art Digital"></span>
+        <span class="brand-name">Art Digital<small>Foto studio · Beograd</small></span>
+      </a>
+      <nav class="footer-links mono" aria-label="Meni u futeru">
+        <a href="index.html#usluge">Usluge</a>
+        <a href="foto-pokloni.html" aria-current="page">Foto pokloni</a>
+        <a href="index.html#poruci">Poruči online</a>
+        <a href="index.html#cenovnik">Cenovnik</a>
+        <a href="index.html#radovi">Radovi</a>
+        <a href="index.html#o-nama">O nama</a>
+        <a href="index.html#kontakt">Kontakt</a>
+      </nav>
+      <div class="footer-info mono">
+        <span>Terazije 5 · <a href="tel:+381113223525">(011) 3223-525</a></span>
+        <span>Bulevar despota Stefana 48 · <a href="tel:+381113222965">(011) 3222-965</a></span>
+        <span>Instagram @fotoartdigital_ · TikTok @fotoartdigital</span>
+      </div>
+      <div class="footer-copy mono">
+        <span>© 2026 Foto Studio Art Digital, Beograd</span>
+        <span>Snimljeno, obrađeno i štampano na jednoj adresi</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PORUČIVANJE POKLONA NA SAJTU -->
+  <div class="promo omodal" id="giftModal" hidden>
+    <div class="promo-backdrop" data-gclose></div>
+    <div class="promo-card ocard" role="dialog" aria-modal="true" aria-labelledby="gTitle">
+      <div class="corners" aria-hidden="true"><i></i></div>
+      <button type="button" class="promo-x" data-gclose aria-label="Zatvori">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <span class="promo-tag mono">Poklon sa fotografijom</span>
+      <h2 id="gTitle">Poruči poklon sa slikom</h2>
+
+      <form class="oform" id="giftForm" action="#" novalidate>
+        <fieldset class="ofs">
+          <legend class="mono">01 · Poklon</legend>
+          <select class="gselect" id="gProduct" aria-label="Izaberi poklon iz liste">
+              <optgroup label="Kuhinja i sto"><option value="solja">Foto šolja</option><option value="kecelja">Foto kecelja</option><option value="pepeljara">Foto pepeljara</option></optgroup>
+              <optgroup label="Igra i uspomene"><option value="puzzle">Foto puzzle</option><option value="kugla">Foto kugla</option><option value="kocka">Foto kocka</option><option value="kamen">Foto na kamenu</option></optgroup>
+              <optgroup label="Sitnice"><option value="magneti">Foto magneti</option><option value="privezak">Foto privezak</option><option value="bedz">Foto bedž</option><option value="podloga">Podloga za miša</option></optgroup>
+              <optgroup label="Tekstil"><option value="majica">Majica sa štampom</option><option value="jastuk">Jastuk sa štampom</option><option value="ceger">Foto ceger</option><option value="ranac">Foto ranac</option></optgroup>
+              <optgroup label="Zid i albumi"><option value="kanvas">Kanvas</option><option value="kalendar">Foto kalendar 2027</option><option value="photobook">Photo book</option></optgroup>
+          </select>
+        </fieldset>
+
+        <fieldset class="ofs">
+          <legend class="mono">02 · Model i količina</legend>
+          <div class="chips" id="gVariants"></div>
+          <div id="gExtrasWrap"><span class="gsub mono">Dodaci</span><div class="chips" id="gExtras"></div></div>
+          <div class="oqty">
+            <label for="gQty">Komada</label>
+            <div class="stepper">
+              <button type="button" data-gstep="-1" aria-label="Manje">−</button>
+              <input type="number" id="gQty" value="1" min="1" max="999" inputmode="numeric">
+              <button type="button" data-gstep="1" aria-label="Više">+</button>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="ofs">
+          <legend class="mono">03 · Fotografije</legend>
+          <label class="drop" for="gFiles">
+            <input type="file" id="gFiles" accept="image/*" multiple>
+            <span class="drop-ico" aria-hidden="true">+</span>
+            <b>Izaberi svoju fotografiju</b>
+            <span class="mono">Iz telefona ili računara</span>
+          </label>
+          <span class="gmax mono" id="gMax"></span>
+          <div class="othumbs" id="gThumbs"></div>
+        </fieldset>
+
+        <fieldset class="ofs">
+          <legend class="mono">04 · Poruka</legend>
+          <textarea id="gMsg" name="poruka" placeholder="Tekst na poklonu, veličina majice, link pesme..." aria-label="Poruka uz porudžbinu"></textarea>
+        </fieldset>
+
+        <fieldset class="ofs">
+          <legend class="mono">05 · Preuzimanje</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="gshop" value="terazije" checked><span>Terazije 5</span></label>
+            <label class="chip"><input type="radio" name="gshop" value="bulevar"><span>Bulevar despota Stefana 48</span></label>
+            <label class="chip"><input type="radio" name="gshop" value="kurir"><span>Kurir, +399 din</span></label>
+          </div>
+          <div class="field" id="gAddrWrap" hidden>
+            <input type="text" id="gAddr" name="adresa" placeholder="Adresa za dostavu: ulica, broj, grad" autocomplete="street-address" aria-label="Adresa za dostavu">
+          </div>
+        </fieldset>
+
+        <fieldset class="ofs">
+          <legend class="mono">06 · Kontakt</legend>
+          <div class="field">
+            <input type="text" id="gName" name="ime" placeholder="Ime i prezime" autocomplete="name" aria-label="Ime i prezime">
+          </div>
+          <div class="field">
+            <input type="text" id="gPhone" name="telefon" placeholder="Telefon" autocomplete="tel" inputmode="tel" aria-label="Telefon">
+          </div>
+        </fieldset>
+
+        <div class="osum">
+          <div class="osum-l">
+            <span class="mono">Ukupno</span>
+            <b id="gTotal">0 din</b>
+            <span class="mono" id="gCalc"></span>
+          </div>
+          <button type="submit" class="btn">Pošalji porudžbinu</button>
+        </div>
+        <span class="promo-err" id="gErr" aria-live="polite"></span>
+      </form>
+
+      <div class="odone" role="status">
+        <b>Porudžbina je poslata!</b>
+        <p>Javljamo se da potvrdimo detalje. Izrada traje 1 do 2 dana.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP: NEWSLETTER -5% (kao na starom sajtu) -->
+  <div class="promo" id="promo" hidden>
+    <div class="promo-backdrop" data-close></div>
+    <div class="promo-card" role="dialog" aria-modal="true" aria-labelledby="promoTitle">
+      <div class="corners" aria-hidden="true"><i></i></div>
+      <button type="button" class="promo-x" data-close aria-label="Zatvori">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <span class="promo-tag mono">Newsletter · Popust</span>
+      <span class="promo-off" aria-hidden="true">-5%</span>
+      <h2 id="promoTitle">Saznaj prvi za popuste</h2>
+      <p><span class="s">Prijavi se na newsletter i ostvari 5% popusta.</span> <span class="s">Akcije i popuste šaljemo pre svih.</span></p>
+
+      <form class="promo-form" id="promoForm" action="#" novalidate>
+        <label for="promoEmail" class="mono">Email</label>
+        <input type="email" id="promoEmail" name="email" placeholder="Tvoja email adresa" autocomplete="email" aria-describedby="promoErr">
+        <span class="promo-err" id="promoErr" aria-live="polite"></span>
+        <button type="submit" class="btn">Prijavi se</button>
+      </form>
+      <button type="button" class="promo-no mono" data-close>Ne, hvala</button>
+
+      <div class="promo-done" role="status">
+        <b>Hvala na prijavi!</b>
+        <p>Popust od 5% i akcije stižu ti na email.</p>
+      </div>
+    </div>
+  </div>
+
+<script>
+  document.documentElement.classList.add('js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Jezici sa starog sajta: srpski, engleski, ruski. Ključ je srpski tekst, vrednost [en, ru].
+  var I18N = {
+"01 / Sezona": [
+"01 / Season",
+"01 / Сезон"
+],
+"01 · Poklon": [
+"01 · Gift",
+"01 · Подарок"
+],
+"02 / Katalog": [
+"02 / Catalogue",
+"02 / Каталог"
+],
+"02 · Model i količina": [
+"02 · Model and quantity",
+"02 · Модель и количество"
+],
+"03 / Pregled": [
+"03 / Preview",
+"03 / Просмотр"
+],
+"03 · Fotografije": [
+"03 · Photos",
+"03 · Фото"
+],
+"04 / Cenovnik": [
+"04 / Prices",
+"04 / Цены"
+],
+"04 · Poruka": [
+"04 · Message",
+"04 · Сообщение"
+],
+"05 / Postupak": [
+"05 / How it works",
+"05 / Порядок"
+],
+"05 · Preuzimanje": [
+"05 · Pickup",
+"05 · Получение"
+],
+"06 / Pitanja": [
+"06 / Questions",
+"06 / Вопросы"
+],
+"06 · Kontakt": [
+"06 · Contact",
+"06 · Контакты"
+],
+"07 / Preuzimanje": [
+"07 / Pickup",
+"07 / Получение"
+],
+"1 do 2 dana": [
+"1 to 2 days",
+"1–2 дня"
+],
+"100 × 150 cm": [
+"100 × 150 cm",
+"100 × 150 см"
+],
+"11 kvadratnih": [
+"11 square",
+"11 квадратных"
+],
+"11000 Beograd": [
+"11000 Belgrade",
+"11000 Белград"
+],
+"15 × 15 cm": [
+"15 × 15 cm",
+"15 × 15 см"
+],
+"15 × 15 do 20 × 30 cm": [
+"15 × 15 to 20 × 30 cm",
+"от 15 × 15 до 20 × 30 см"
+],
+"15 × 20 cm": [
+"15 × 20 cm",
+"15 × 20 см"
+],
+"19 poklona": [
+"19 gifts",
+"19 подарков"
+],
+"20 × 20 cm": [
+"20 × 20 cm",
+"20 × 20 см"
+],
+"20 × 30 cm": [
+"20 × 30 cm",
+"20 × 30 см"
+],
+"3 dana": [
+"3 days",
+"3 дня"
+],
+"3 komada": [
+"3 pieces",
+"3 штуки"
+],
+"3 uspravne i 8 položenih": [
+"3 portrait and 8 landscape",
+"3 вертикальных и 8 горизонтальных"
+],
+"3,5 × 4,5 cm": [
+"3.5 × 4.5 cm",
+"3,5 × 4,5 см"
+],
+"30 × 40 cm": [
+"30 × 40 cm",
+"30 × 40 см"
+],
+"40 × 40 cm": [
+"40 × 40 cm",
+"40 × 40 см"
+],
+"40 × 60 cm": [
+"40 × 60 cm",
+"40 × 60 см"
+],
+"50 strana i 50 fotografija. Izrada traje 3 dana.": [
+"50 pages and 50 photos. Production takes 3 days.",
+"50 страниц и 50 фото. Изготовление занимает 3 дня."
+],
+"50 × 70 cm": [
+"50 × 70 cm",
+"50 × 70 см"
+],
+"50% pamuk, 50% poliester": [
+"50% cotton, 50% polyester",
+"50% хлопок, 50% полиэстер"
+],
+"60 × 90 cm": [
+"60 × 90 cm",
+"60 × 90 см"
+],
+"7,3 × 10,3 cm": [
+"7.3 × 10.3 cm",
+"7,3 × 10,3 см"
+],
+"70 × 100 cm": [
+"70 × 100 cm",
+"70 × 100 см"
+],
+"9 kvadratnih i 6 položenih": [
+"9 square and 6 landscape",
+"9 квадратных и 6 горизонтальных"
+],
+"A3, akcija 3+1": [
+"A3, 3+1 deal",
+"A3, акция 3+1"
+],
+"A3, uspravan": [
+"A3, portrait",
+"A3, вертикальный"
+],
+"A4 puzzle od 120 delova sa tvojom fotografijom.": [
+"An A4 puzzle of 120 pieces with your photo.",
+"Пазл A4 из 120 деталей с вашим фото."
+],
+"A4, A3, 30 × 60, stoni": [
+"A4, A3, 30 × 60, desk",
+"A4, A3, 30 × 60, настольный"
+],
+"A4, akcija 3+1": [
+"A4, 3+1 deal",
+"A4, акция 3+1"
+],
+"A4, položen": [
+"A4, landscape",
+"A4, горизонтальный"
+],
+"A5, A4, srce, A3": [
+"A5, A4, heart, A3",
+"A5, A4, сердце, A3"
+],
+"Adresa za dostavu": [
+"Delivery address",
+"Адрес доставки"
+],
+"Adresa za dostavu: ulica, broj, grad": [
+"Delivery address: street, number, city",
+"Адрес доставки: улица, дом, город"
+],
+"Akcija 3+1 na A4, A3 i premium.": [
+"3+1 deal on A4, A3 and premium.",
+"Акция 3+1 на A4, A3 и премиум."
+],
+"Akcija 3+1: četiri kalendara po ceni tri.": [
+"3+1 deal: four calendars for the price of three.",
+"Акция 3+1: четыре календаря по цене трёх."
+],
+"Akcije i popuste šaljemo pre svih.": [
+"Our deals reach you before anyone else.",
+"Об акциях вы узнаете раньше всех."
+],
+"Bedž sa fotografijom ili porukom.": [
+"A badge with a photo or a message.",
+"Значок с фото или надписью."
+],
+"Bela majica": [
+"White T-shirt",
+"Белая футболка"
+],
+"Bela majica, od": [
+"White T-shirt, from",
+"Белая футболка, от"
+],
+"Bela šolja 3 dcl": [
+"White mug 300 ml",
+"Белая кружка 300 мл"
+],
+"Bela, magična, lonče": [
+"White, magic, large mug",
+"Белая, «волшебная», большая"
+],
+"Boje ostaju i posle mnogo pranja.": [
+"The colours stay after many washes.",
+"Цвета сохраняются после многих стирок."
+],
+"Bulevar despota Stefana 48": [
+"Bulevar despota Stefana 48",
+"Бульвар деспота Стефана 48"
+],
+"Ceger sa fotografijom za šoping i posao.": [
+"A tote bag with a photo for shopping and work.",
+"Шопер с фото для покупок и работы."
+],
+"Cela godina u 50 fotografija.": [
+"A whole year in 50 photos.",
+"Целый год в 50 фотографиях."
+],
+"Cena": [
+"Price",
+"Цена"
+],
+"Cene su po komadu.": [
+"Prices are per piece.",
+"Цены указаны за штуку."
+],
+"Cene u dinarima": [
+"Prices in dinars",
+"Цены в динарах"
+],
+"Cenovnik": [
+"Prices",
+"Цены"
+],
+"Cenovnik poklona": [
+"Gift price list",
+"Цены на подарки"
+],
+"Crna majica": [
+"Black T-shirt",
+"Чёрная футболка"
+],
+"Crna majica, od": [
+"Black T-shirt, from",
+"Чёрная футболка, от"
+],
+"Da li su moje fotografije sigurne?": [
+"Are my photos safe?",
+"В безопасности ли мои фото?"
+],
+"Daska sa štampom": [
+"Printed board",
+"Доска с печатью"
+],
+"Dečja majica, bela": [
+"Kids T-shirt, white",
+"Детская футболка, белая"
+],
+"Do 6 fotografija slažemo u kolaž besplatno.": [
+"We turn up to 6 photos into a collage for free.",
+"До 6 фото собираем в коллаж бесплатно."
+],
+"Do 6 fotografija slažemo u kolaž.": [
+"We turn up to 6 photos into a collage.",
+"До 6 фото собираем в коллаж."
+],
+"Do 6 fotografija u kolažu, besplatno.": [
+"Up to 6 photos in a collage, free of charge.",
+"До 6 фото в коллаже бесплатно."
+],
+"Dodaci": [
+"Extras",
+"Дополнительно"
+],
+"Dodaj bar jednu fotografiju.": [
+"Add at least one photo.",
+"Добавьте хотя бы одно фото."
+],
+"Drveni blind ram": [
+"Wooden stretcher frame",
+"Деревянный подрамник"
+],
+"Email": [
+"Email",
+"Email"
+],
+"Format": [
+"Size",
+"Формат"
+],
+"Formati": [
+"Sizes",
+"Форматы"
+],
+"Formati od 20 × 30 do 100 × 150 cm.": [
+"Sizes from 20 × 30 to 100 × 150 cm.",
+"Форматы от 20 × 30 до 100 × 150 см."
+],
+"Foto Studio Art Digital, početna strana": [
+"Foto Studio Art Digital, home page",
+"Foto Studio Art Digital, главная страница"
+],
+"Foto bedž": [
+"Photo badge",
+"Фотозначок"
+],
+"Foto ceger": [
+"Photo tote bag",
+"Фотошопер"
+],
+"Foto kalendar 2027": [
+"Photo calendar 2027",
+"Фотокалендарь 2027"
+],
+"Foto kecelja": [
+"Photo apron",
+"Фотофартук"
+],
+"Foto knjiga sa 50 strana i 50 fotografija.": [
+"A photo book with 50 pages and 50 photos.",
+"Фотокнига на 50 страниц и 50 фото."
+],
+"Foto kocka": [
+"Photo cube",
+"Фотокуб"
+],
+"Foto kugla": [
+"Photo globe",
+"Фотошар"
+],
+"Foto magnet 7,3 × 10,3 cm": [
+"Photo magnet 7.3 × 10.3 cm",
+"Фотомагнит 7,3 × 10,3 см"
+],
+"Foto magneti": [
+"Photo magnets",
+"Фотомагниты"
+],
+"Foto na kamenu": [
+"Photo on stone",
+"Фото на камне"
+],
+"Foto pepeljara": [
+"Photo ashtray",
+"Фотопепельница"
+],
+"Foto pokloni": [
+"Photo gifts",
+"Фотоподарки"
+],
+"Foto pokloni sa slikom - Foto Studio Art Digital, Beograd": [
+"Photo gifts with your picture - Foto Studio Art Digital, Belgrade",
+"Фотоподарки с вашим снимком - Foto Studio Art Digital, Белград"
+],
+"Foto pokloni · Beograd": [
+"Photo gifts · Belgrade",
+"Фотоподарки · Белград"
+],
+"Foto privezak": [
+"Photo keychain",
+"Фотобрелок"
+],
+"Foto privezak 3,5 × 4,5 cm": [
+"Photo keychain 3.5 × 4.5 cm",
+"Фотобрелок 3,5 × 4,5 см"
+],
+"Foto puzzle": [
+"Photo puzzle",
+"Фотопазл"
+],
+"Foto ranac": [
+"Photo drawstring bag",
+"Фоторюкзак"
+],
+"Foto studio · Beograd": [
+"Photo studio · Belgrade",
+"Фотостудия · Белград"
+],
+"Foto šolja": [
+"Photo mug",
+"Фотокружка"
+],
+"Fotografija": [
+"Your photo",
+"Ваше фото"
+],
+"Fotografija ili poruka": [
+"Photo or message",
+"Фото или надпись"
+],
+"Fotografija koju gledaš ceo radni dan.": [
+"A photo you look at all workday long.",
+"Фото, на которое смотрите весь рабочий день."
+],
+"Fotografija na platnu zategnutom na drveni ram.": [
+"A photo on canvas stretched over a wooden frame.",
+"Фото на холсте, натянутом на деревянный подрамник."
+],
+"Fotografija ostaje na tvom uređaju dok ne poručiš.": [
+"The photo stays on your device until you order.",
+"Фото остаётся на вашем устройстве, пока вы не сделаете заказ."
+],
+"Fotografija poklona": [
+"Photo of a gift",
+"Фото подарка"
+],
+"Fotografija preneta na prirodni kamen.": [
+"A photo transferred onto natural stone.",
+"Фото, перенесённое на натуральный камень."
+],
+"Fotografija, citat ili dizajn na dasci.": [
+"A photo, a quote or a design on a board.",
+"Фото, цитата или рисунок на доске."
+],
+"Fotografija, kolaž ili natpis na majici.": [
+"A photo, collage or slogan on a T-shirt.",
+"Фото, коллаж или надпись на футболке."
+],
+"Fotografija, kolaž, tekst": [
+"Photo, collage, text",
+"Фото, коллаж, текст"
+],
+"Fotografije": [
+"Photos",
+"Фото"
+],
+"Fotografije čuvamo dok traje izrada i još nekoliko dana kao rezervnu kopiju. Posle toga ih brišemo.": [
+"We keep your photos during production and a few more days as a backup. After that we delete them.",
+"Мы храним фото во время изготовления и ещё несколько дней как резервную копию. Потом удаляем их."
+],
+"Glavni meni": [
+"Main menu",
+"Главное меню"
+],
+"Gotov poklon čeka te u jednoj od dve radnje u centru Beograda.": [
+"Your finished gift waits for you in one of our two shops in central Belgrade.",
+"Готовый подарок ждёт вас в одном из двух магазинов в центре Белграда."
+],
+"Grupe poklona": [
+"Gift groups",
+"Группы подарков"
+],
+"Hvala na prijavi!": [
+"Thanks for signing up!",
+"Спасибо за подписку!"
+],
+"Igra i uspomene": [
+"Play and keepsakes",
+"Игры и память"
+],
+"Ima i verzija sa srcima za dvoje.": [
+"There is also a version with hearts, for couples.",
+"Есть и версия с сердечками для двоих."
+],
+"Imaš pitanje? Piši nam": [
+"Have a question? Write to us",
+"Есть вопрос? Напишите нам"
+],
+"Ime i prezime": [
+"Full name",
+"Имя и фамилия"
+],
+"Instagram @fotoartdigital_ · TikTok @fotoartdigital": [
+"Instagram @fotoartdigital_ · TikTok @fotoartdigital",
+"Instagram @fotoartdigital_ · TikTok @fotoartdigital"
+],
+"Iz telefona ili računara": [
+"From your phone or computer",
+"С телефона или компьютера"
+],
+"Izabereš poklon": [
+"You pick a gift",
+"Вы выбираете подарок"
+],
+"Izaberi fotografiju i pogledaj je na šolji, puzzli, kanvasu, magnetu ili jastuku.": [
+"Pick a photo and see it on a mug, a puzzle, a canvas, a magnet or a pillow.",
+"Выберите фото и посмотрите его на кружке, пазле, холсте, магните или подушке."
+],
+"Izaberi grupu da suziš izbor.": [
+"Pick a group to narrow it down.",
+"Выберите группу, чтобы сузить выбор."
+],
+"Izaberi poklon": [
+"Choose a gift",
+"Выбрать подарок"
+],
+"Izaberi poklon iz liste": [
+"Choose a gift from the list",
+"Выберите подарок из списка"
+],
+"Izaberi poklon. Mi štampamo.": [
+"You pick the gift. We print it.",
+"Вы выбираете подарок. Мы печатаем."
+],
+"Izaberi svoju fotografiju": [
+"Choose your photo",
+"Выберите своё фото"
+],
+"Izbor": [
+"Choice",
+"Выбор"
+],
+"Izrada": [
+"Production",
+"Изготовление"
+],
+"Izrada traje 1 do 2 dana, preuzimaš u radnji ili stiže kurirom.": [
+"Made in 1 to 2 days, picked up in our shop or delivered by courier.",
+"Изготовление 1–2 дня, забираете в магазине или получаете курьером."
+],
+"Izrađujemo za 1 do 2 dana": [
+"We make it in 1 to 2 days",
+"Делаем за 1–2 дня"
+],
+"Jastuk": [
+"Pillow",
+"Подушка"
+],
+"Jastuk sa štampom": [
+"Printed pillow",
+"Подушка с печатью"
+],
+"Javljamo se da potvrdimo detalje. Izrada traje 1 do 2 dana.": [
+"We will get in touch to confirm the details. Production takes 1 to 2 days.",
+"Мы свяжемся с вами, чтобы уточнить детали. Изготовление 1–2 дня."
+],
+"Jedna, krupan kadar": [
+"One, close-up",
+"Одно, крупный план"
+],
+"Jednu ili do 6 za kolaž. Kolaž slažemo besplatno.": [
+"One, or up to 6 for a collage. We make the collage for free.",
+"Одно или до 6 для коллажа. Коллаж делаем бесплатно."
+],
+"Jezik": [
+"Language",
+"Язык"
+],
+"Kako se plaća?": [
+"How do I pay?",
+"Как оплатить?"
+],
+"Kalendar za 2027, snežna kugla, šolja i foto knjiga.": [
+"A 2027 calendar, a snow globe, a mug and a photo book.",
+"Календарь на 2027 год, снежный шар, кружка и фотокнига."
+],
+"Kalendar · 2027": [
+"Calendar · 2027",
+"Календарь · 2027"
+],
+"Kalendari": [
+"Calendars",
+"Календари"
+],
+"Kancelariju i kuću": [
+"Office and home",
+"Офиса и дома"
+],
+"Kanvas": [
+"Canvas",
+"Холст"
+],
+"Kategorije cenovnika poklona": [
+"Gift price categories",
+"Категории цен на подарки"
+],
+"Kecelja sa fotografijom, motivom ili porukom.": [
+"An apron with a photo, a design or a message.",
+"Фартук с фото, рисунком или надписью."
+],
+"Knjiga · 50 strana": [
+"Book · 50 pages",
+"Книга · 50 страниц"
+],
+"Kocka": [
+"Cube",
+"Куб"
+],
+"Kocka, kristal ili prizma sa više fotografija.": [
+"A cube, crystal or prism with several photos.",
+"Куб, кристалл или призма с несколькими фото."
+],
+"Koja fotografija je dobra za štampu?": [
+"Which photo works best for printing?",
+"Какое фото подходит для печати?"
+],
+"Koliko košta dostava?": [
+"How much is delivery?",
+"Сколько стоит доставка?"
+],
+"Koliko traje izrada?": [
+"How long does production take?",
+"Сколько длится изготовление?"
+],
+"Komada": [
+"Pieces",
+"Штук"
+],
+"Kontakt": [
+"Contact",
+"Контакты"
+],
+"Kristal": [
+"Crystal",
+"Кристалл"
+],
+"Kugla sa snegom": [
+"Globe with snow",
+"Шар со снегом"
+],
+"Kugla sa srcima": [
+"Globe with hearts",
+"Шар с сердечками"
+],
+"Kugla · Sneg": [
+"Globe · Snow",
+"Шар · Снег"
+],
+"Kuhinja i sto": [
+"Kitchen and table",
+"Кухня и стол"
+],
+"Kurir, +399 din": [
+"Courier, +399 RSD",
+"Курьер, +399 дин."
+],
+"Kurirom na adresu": [
+"Courier to your address",
+"Курьером на адрес"
+],
+"Kvadrat": [
+"Square",
+"Квадрат"
+],
+"Kvadratni jastuk sa fotografijom i tekstom.": [
+"A square pillow with a photo and text.",
+"Квадратная подушка с фото и текстом."
+],
+"Lako se pere i ne boji se kuhinje.": [
+"Easy to wash and not afraid of the kitchen.",
+"Легко стирается и не боится кухни."
+],
+"Lep dodatak uz foto šolju.": [
+"A nice match for a photo mug.",
+"Отличное дополнение к фотокружке."
+],
+"Logo Foto Studio Art Digital": [
+"Foto Studio Art Digital logo",
+"Логотип Foto Studio Art Digital"
+],
+"Logo Foto Studio Art Digital, fotoaparat sa siluetom Beograda u objektivu": [
+"Foto Studio Art Digital logo, a camera with the Belgrade skyline in the lens",
+"Логотип Foto Studio Art Digital, фотоаппарат с силуэтом Белграда в объективе"
+],
+"Lonče": [
+"Large mug",
+"Большая кружка"
+],
+"Magična šolja 3 dcl, crna": [
+"Magic mug 300 ml, black",
+"«Волшебная» кружка 300 мл, чёрная"
+],
+"Magnet": [
+"Magnet",
+"Магнит"
+],
+"Magnet 7,3 × 10,3 cm sa tvojom fotografijom.": [
+"A 7.3 × 10.3 cm magnet with your photo.",
+"Магнит 7,3 × 10,3 см с вашим фото."
+],
+"Magnete i priveske radimo od 3 komada.": [
+"Magnets and keychains come in sets of 3 or more.",
+"Магниты и брелоки делаем от 3 штук."
+],
+"Majica sa štampom": [
+"Printed T-shirt",
+"Футболка с печатью"
+],
+"Majice od S do 4XL, dečje od 2 do 12. Cenu za veličinu potvrđujemo pri porudžbini.": [
+"T-shirts from S to 4XL, kids 2 to 12. We confirm the price for your size when you order.",
+"Футболки от S до 4XL, детские от 2 до 12. Цену для вашего размера подтверждаем при заказе."
+],
+"Manje": [
+"Fewer",
+"Меньше"
+],
+"Materijal": [
+"Fabric",
+"Материал"
+],
+"Meni u futeru": [
+"Footer menu",
+"Меню в подвале"
+],
+"Modeli": [
+"Models",
+"Модели"
+],
+"Mogu li da pošaljem više fotografija za jedan poklon?": [
+"Can I send several photos for one gift?",
+"Можно ли отправить несколько фото для одного подарка?"
+],
+"Može i kurirom na tvoju adresu.": [
+"It can also go by courier to your address.",
+"Можно и курьером на ваш адрес."
+],
+"Može i sa pesmom po tvom izboru.": [
+"It can also come with a song of your choice.",
+"Можно и с песней на ваш выбор."
+],
+"Možeš. Za šolju, puzzle, majicu i jastuk pošalji do 6 fotografija, a mi od njih besplatno slažemo kolaž.": [
+"Yes. For a mug, puzzle, T-shirt or pillow send up to 6 photos and we will make a collage for free.",
+"Да. Для кружки, пазла, футболки и подушки пришлите до 6 фото, и мы бесплатно соберём коллаж."
+],
+"Na A4, A3 i premium važi akcija 3+1.": [
+"The 3+1 deal applies to A4, A3 and premium.",
+"На A4, A3 и премиум действует акция 3+1."
+],
+"Na Terazijama ili na Bulevaru. Kurir stiže za 2 do 3 dana.": [
+"At Terazije or on Bulevar. The courier arrives in 2 to 3 days.",
+"На Теразие или на Бульваре. Курьер доставит за 2–3 дня."
+],
+"Na veće količine odobravamo popust.": [
+"We give a discount on larger quantities.",
+"На крупные заказы даём скидку."
+],
+"Najmanje": [
+"Minimum",
+"Минимум"
+],
+"Najviše": [
+"Up to",
+"До"
+],
+"Najčešća pitanja": [
+"FAQ",
+"Частые вопросы"
+],
+"Ne ostavlja lepak i lako se premešta.": [
+"Leaves no glue and moves around easily.",
+"Не оставляет клея и легко переставляется."
+],
+"Ne radimo": [
+"Closed",
+"Выходной"
+],
+"Ne, hvala": [
+"No, thanks",
+"Нет, спасибо"
+],
+"Nedelja": [
+"Sunday",
+"Воскресенье"
+],
+"Newsletter · Popust": [
+"Newsletter · Discount",
+"Рассылка · Скидка"
+],
+"Nosiš uspomenu svuda sa sobom.": [
+"Take a memory with you everywhere.",
+"Носите воспоминание с собой повсюду."
+],
+"Novogodišnji pokloni": [
+"New Year gifts",
+"Новогодние подарки"
+],
+"Novogodišnji stoni ram, 3 slike": [
+"New Year desk frame, 3 photos",
+"Новогодняя настольная рамка, 3 фото"
+],
+"O nama": [
+"About",
+"О нас"
+],
+"Oblik": [
+"Shape",
+"Форма"
+],
+"Obostrana štampa": [
+"Double-sided print",
+"Двусторонняя печать"
+],
+"Od fotografije do poklona": [
+"From photo to gift",
+"От фото до подарка"
+],
+"Od magneta za frižider do kanvasa za dnevnu sobu.": [
+"From fridge magnets to canvas for the living room.",
+"От магнитов на холодильник до холста для гостиной."
+],
+"Odeću, torbe, promocije": [
+"Clothes, bags, promotions",
+"Одежды, сумок, промо"
+],
+"Odgovori na ono što nas najčešće pitaju o izradi i dostavi.": [
+"Answers to what people ask us most about production and delivery.",
+"Ответы на самые частые вопросы об изготовлении и доставке."
+],
+"Original iz galerije telefona, a ne snimak ekrana ili slika poslata kroz aplikaciju za poruke, jer one smanjuju kvalitet. Za kuglu i privezak biraj krupan kadar sa jednim motivom.": [
+"The original from your phone gallery, not a screenshot or a picture sent through a messaging app, because those reduce quality. For a globe or keychain choose a close-up with one subject.",
+"Оригинал из галереи телефона, а не скриншот или фото из мессенджера, потому что они снижают качество. Для шара и брелока выбирайте крупный план с одним объектом."
+],
+"Otvori meni": [
+"Open menu",
+"Открыть меню"
+],
+"Pesma uz privezak": [
+"Song with the keychain",
+"Песня к брелоку"
+],
+"Pesma uz puzzle": [
+"Song with the puzzle",
+"Песня к пазлу"
+],
+"Photo book": [
+"Photo book",
+"Фотокнига"
+],
+"Piksla sa tvojom fotografijom ili porukom.": [
+"An ashtray with your photo or message.",
+"Пепельница с вашим фото или надписью."
+],
+"Pitaj za dostupnost": [
+"Ask about availability",
+"Узнать о наличии"
+],
+"Po dogovoru": [
+"On request",
+"По договорённости"
+],
+"Podloga": [
+"Base",
+"Основа"
+],
+"Podloga za miša": [
+"Mouse pad",
+"Коврик для мыши"
+],
+"Poklon sa fotografijom": [
+"Gift with a photo",
+"Подарок с фото"
+],
+"Poklon za pregled": [
+"Gift to preview",
+"Подарок для просмотра"
+],
+"Poklon za svakog ko radi za računarom.": [
+"A gift for anyone who works at a computer.",
+"Подарок для всех, кто работает за компьютером."
+],
+"Pokloni sa fotografijama iz Foto Studija Art Digital": [
+"Gifts with photos from Foto Studio Art Digital",
+"Подарки с фотографиями от Foto Studio Art Digital"
+],
+"Pokloni sa slikom za praznike": [
+"Picture gifts for the holidays",
+"Подарки со снимком к праздникам"
+],
+"Pon–pet": [
+"Mon–Fri",
+"Пн–пт"
+],
+"Popust od 5% i akcije stižu ti na email.": [
+"Your 5% discount and our deals are on the way to your inbox.",
+"Скидка 5% и акции придут вам на email."
+],
+"Porudžbina je poslata!": [
+"Your order has been sent!",
+"Заказ отправлен!"
+],
+"Poruka uz porudžbinu": [
+"Message with the order",
+"Сообщение к заказу"
+],
+"Poruči": [
+"Order",
+"Заказать"
+],
+"Poruči na vreme, izrada traje od 1 do 3 dana.": [
+"Order in time, production takes 1 to 3 days.",
+"Заказывайте заранее, изготовление занимает от 1 до 3 дней."
+],
+"Poruči online": [
+"Order online",
+"Заказать онлайн"
+],
+"Poruči ovaj poklon": [
+"Order this gift",
+"Заказать этот подарок"
+],
+"Poruči poklon": [
+"Order a gift",
+"Заказать подарок"
+],
+"Poruči poklon sa slikom": [
+"Order a picture gift",
+"Заказать подарок со снимком"
+],
+"Posebne mere": [
+"Custom sizes",
+"Особые размеры"
+],
+"Pošalješ fotografije": [
+"You send your photos",
+"Вы отправляете фото"
+],
+"Pošalji porudžbinu": [
+"Send order",
+"Отправить заказ"
+],
+"Poštarina 399 din · Plaćanje pouzećem": [
+"Shipping 399 RSD · Cash on delivery",
+"Доставка 399 дин. · Оплата при получении"
+],
+"Poštarina je 399 din, plaćaš pouzećem.": [
+"Shipping is 399 RSD, cash on delivery.",
+"Доставка 399 дин., оплата при получении."
+],
+"Poštarina je 399 din. Plaćaš pouzećem, kad ti paket stigne.": [
+"Shipping is 399 RSD. You pay cash on delivery when the parcel arrives.",
+"Доставка стоит 399 дин. Оплата при получении посылки."
+],
+"Praktičan poklon koji traje.": [
+"A practical gift that lasts.",
+"Практичный подарок надолго."
+],
+"Pre nego što poručiš": [
+"Before you order",
+"Перед заказом"
+],
+"Pregled je približan. Pre štampe svaku fotografiju doteramo.": [
+"The preview is approximate. We fine-tune every photo before printing.",
+"Просмотр приблизительный. Перед печатью мы дорабатываем каждое фото."
+],
+"Pregled poklona sa izabranom fotografijom": [
+"Preview of the gift with the chosen photo",
+"Просмотр подарка с выбранным фото"
+],
+"Pregled pre štampe": [
+"Print preview",
+"Предпросмотр печати"
+],
+"Premium 30 × 60 cm": [
+"Premium 30 × 60 cm",
+"Премиум 30 × 60 см"
+],
+"Premium, akcija 3+1": [
+"Premium, 3+1 deal",
+"Премиум, акция 3+1"
+],
+"Preuzimanje": [
+"Pickup",
+"Получение"
+],
+"Preuzmi u radnji ili kurirom": [
+"Pick up in a shop or by courier",
+"Заберите в магазине или курьером"
+],
+"Prijavi se": [
+"Sign up",
+"Подписаться"
+],
+"Prijavi se na newsletter i ostvari 5% popusta.": [
+"Sign up for our newsletter and get 5% off.",
+"Подпишитесь на рассылку и получите скидку 5%."
+],
+"Primer": [
+"Sample",
+"Пример"
+],
+"Prirodni kamen": [
+"Natural stone",
+"Натуральный камень"
+],
+"Privezak 3,5 × 4,5 cm za ključeve ili torbu.": [
+"A 3.5 × 4.5 cm keychain for keys or a bag.",
+"Брелок 3,5 × 4,5 см для ключей или сумки."
+],
+"Prizma": [
+"Prism",
+"Призма"
+],
+"Probaj pre štampe": [
+"Try before printing",
+"Примерка до печати"
+],
+"Proizvod": [
+"Product",
+"Товар"
+],
+"Prolaz u pasažu, 11000 Beograd": [
+"Passage arcade, 11000 Belgrade",
+"Проход в пассаж, 11000 Белград"
+],
+"Protreseš je i oko fotografije pada sneg.": [
+"Shake it and snow falls around your photo.",
+"Встряхните, и вокруг фото пойдёт снег."
+],
+"Puzzle": [
+"Puzzle",
+"Пазл"
+],
+"Puzzle A3, 300 delova": [
+"Puzzle A3, 300 pieces",
+"Пазл A3, 300 деталей"
+],
+"Puzzle A4, 120 delova": [
+"Puzzle A4, 120 pieces",
+"Пазл A4, 120 деталей"
+],
+"Puzzle A5": [
+"Puzzle A5",
+"Пазл A5"
+],
+"Puzzle od 48 delova radimo samo po narudžbini, od 100 komada.": [
+"48-piece puzzles are made to order only, from 100 pieces.",
+"Пазлы из 48 деталей делаем только на заказ, от 100 штук."
+],
+"Puzzle u obliku srca": [
+"Heart-shaped puzzle",
+"Пазл в форме сердца"
+],
+"Radimo. Na veće količine odobravamo popust, a puzzle od 48 delova pravimo od 100 komada, za firme, team building i rođendane.": [
+"Yes. We give a discount on larger orders, and 48-piece puzzles are made from 100 pieces, for companies, team building and birthdays.",
+"Да. На крупные заказы даём скидку, а пазлы из 48 деталей делаем от 100 штук для компаний, тимбилдингов и дней рождения."
+],
+"Radite li veće količine za firme?": [
+"Do you make larger orders for companies?",
+"Делаете ли вы крупные заказы для компаний?"
+],
+"Radovi": [
+"Portfolio",
+"Работы"
+],
+"Ram": [
+"Frame",
+"Подрамник"
+],
+"Ram ili pesma": [
+"Frame or song",
+"Рамка или песня"
+],
+"Ram je drveni blind ram. Posebne mere radimo po dogovoru.": [
+"The frame is a wooden stretcher frame. Custom sizes on request.",
+"Подрамник деревянный. Нестандартные размеры по договорённости."
+],
+"Ram za puzzle A3": [
+"Frame for A3 puzzle",
+"Рамка для пазла A3"
+],
+"Ram za puzzle A4": [
+"Frame for A4 puzzle",
+"Рамка для пазла A4"
+],
+"Ranac sa slikom za školu i putovanja.": [
+"A bag with your picture for school and travel.",
+"Рюкзак со снимком для школы и поездок."
+],
+"S do 4XL, dečje 2 do 12": [
+"S to 4XL, kids 2 to 12",
+"S–4XL, детские 2–12"
+],
+"Saznaj prvi za popuste": [
+"Be the first to hear about discounts",
+"Узнавайте о скидках первыми"
+],
+"Sitnice": [
+"Small gifts",
+"Мелочи"
+],
+"Sitnice i dekor": [
+"Small gifts and decor",
+"Мелочи и декор"
+],
+"Sneg, srca, srce": [
+"Snow, hearts, heart",
+"Снег, сердечки, сердце"
+],
+"Snežna kugla": [
+"Snow globe",
+"Снежный шар"
+],
+"Snimljeno, obrađeno i štampano na jednoj adresi": [
+"Shot, edited and printed at one address",
+"Снято, обработано и напечатано по одному адресу"
+],
+"Srce ispunjeno srcima": [
+"Heart filled with hearts",
+"Сердце с сердечками"
+],
+"Status": [
+"Status",
+"Статус"
+],
+"Stiže za 2 do 3 dana posle izrade.": [
+"Arrives 2 to 3 days after production.",
+"Доставка через 2–3 дня после изготовления."
+],
+"Stižu u kutiji sa istom slikom na poklopcu.": [
+"It comes in a box with the same picture on the lid.",
+"Поставляется в коробке с тем же снимком на крышке."
+],
+"Subota": [
+"Saturday",
+"Суббота"
+],
+"Svaku fotografiju pregledamo i doteramo pre štampe.": [
+"We check and fine-tune every photo before printing.",
+"Каждое фото проверяем и дорабатываем перед печатью."
+],
+"Svi pokloni": [
+"All gifts",
+"Все подарки"
+],
+"Tekst na poklonu, veličina majice, link pesme...": [
+"Text on the gift, T-shirt size, song link...",
+"Текст на подарке, размер футболки, ссылка на песню..."
+],
+"Tekstil": [
+"Textiles",
+"Текстиль"
+],
+"Telefon": [
+"Phone",
+"Телефон"
+],
+"Terazije 5": [
+"Terazije 5",
+"Теразие 5"
+],
+"Terazije 5 · Bulevar despota Stefana 48": [
+"Terazije 5 · Bulevar despota Stefana 48",
+"Теразие 5 · Бульвар деспота Стефана 48"
+],
+"Ti biraš poklon i fotografiju. Sve ostalo radimo mi.": [
+"You choose the gift and the photo. We do the rest.",
+"Вы выбираете подарок и фото. Всё остальное делаем мы."
+],
+"Trenutno nedostupno": [
+"Currently unavailable",
+"Временно недоступно"
+],
+"Tvoja email adresa": [
+"Your email address",
+"Ваш email"
+],
+"Tvoja fotografija": [
+"Your photo",
+"Ваше фото"
+],
+"Tvoja fotografija uz svaku jutarnju kafu.": [
+"Your photo with every morning coffee.",
+"Ваше фото к каждому утреннему кофе."
+],
+"U katalogu ili u pregledu pre štampe. Cenu vidiš pre porudžbine.": [
+"In the catalogue or in the print preview. You see the price before you order.",
+"В каталоге или в предпросмотре. Цену видите до заказа."
+],
+"U obe radnje primamo kartice i gotovinu. Za dostavu kurirom plaćaš pouzećem.": [
+"Both shops accept cards and cash. For courier delivery you pay cash on delivery.",
+"В обоих магазинах принимаем карты и наличные. При доставке курьером оплата при получении."
+],
+"U radnji ili kurirom": [
+"In the shop or by courier",
+"В магазине или курьером"
+],
+"Ukloni fotografiju": [
+"Remove photo",
+"Удалить фото"
+],
+"Ukras za kuhinju sa ličnim pečatom.": [
+"Kitchen decor with a personal touch.",
+"Украшение кухни с личной ноткой."
+],
+"Ukras za sto koji priča celu priču.": [
+"Desk decor that tells a whole story.",
+"Украшение стола, которое рассказывает целую историю."
+],
+"Ukupno": [
+"Total",
+"Итого"
+],
+"Upiši adresu za dostavu.": [
+"Enter the delivery address.",
+"Введите адрес доставки."
+],
+"Upiši ime i telefon.": [
+"Enter your name and phone number.",
+"Введите имя и телефон."
+],
+"Upiši ispravnu email adresu.": [
+"Please enter a valid email address.",
+"Введите корректный email."
+],
+"Usluge": [
+"Services",
+"Услуги"
+],
+"Uspomena koja bukvalno traje.": [
+"A keepsake that literally lasts.",
+"Память, которая буквально вечна."
+],
+"Uz porudžbinu pošalješ link pesme i minut od kog kreće. Doplata je 800 din.": [
+"With your order you send a link to the song and the minute it should start from. It costs an extra 800 RSD.",
+"К заказу прикладываете ссылку на песню и минуту, с которой она начинается. Доплата 800 дин."
+],
+"Uz to": [
+"Extras",
+"Дополнительно"
+],
+"Veličine": [
+"Sizes",
+"Размеры"
+],
+"Većina poklona je gotova za 1 do 2 dana. Photo book traje 3 dana. Ako biraš kurira, računaj još 2 do 3 dana.": [
+"Most gifts are ready in 1 to 2 days. A photo book takes 3 days. If you choose a courier, add another 2 to 3 days.",
+"Большинство подарков готово за 1–2 дня. Фотокнига делается 3 дня. При доставке курьером добавьте ещё 2–3 дня."
+],
+"Vidi svoju fotografiju na poklonu": [
+"See your photo on the gift",
+"Посмотрите своё фото на подарке"
+],
+"Više": [
+"More",
+"Больше"
+],
+"Za": [
+"For",
+"Для"
+],
+"Za proslave, momačke večeri i firme.": [
+"For parties, stag nights and companies.",
+"Для праздников, мальчишников и компаний."
+],
+"Zakaži termin": [
+"Book a session",
+"Записаться"
+],
+"Zatvori": [
+"Close",
+"Закрыть"
+],
+"Zatvori meni": [
+"Close menu",
+"Закрыть меню"
+],
+"Zid i albumi": [
+"Walls and albums",
+"Стены и альбомы"
+],
+"Zidni ili stoni kalendar sa tvojim fotografijama.": [
+"A wall or desk calendar with your photos.",
+"Настенный или настольный календарь с вашими фото."
+],
+"Zimski stoni kalendar, 1 slika": [
+"Winter desk calendar, 1 photo",
+"Зимний настольный календарь, 1 фото"
+],
+"din": [
+"RSD",
+"дин."
+],
+"kom": [
+"pcs",
+"шт"
+],
+"na poklonu.": [
+"as a gift.",
+"в подарок."
+],
+"od": [
+"from",
+"от"
+],
+"poštarina": [
+"shipping",
+"доставка"
+],
+"© 2026 Foto Studio Art Digital, Beograd": [
+"© 2026 Foto Studio Art Digital, Belgrade",
+"© 2026 Foto Studio Art Digital, Белград"
+],
+"Četiri formata, izrada traje 3 dana.": [
+"Four sizes, made in 3 days.",
+"Четыре формата, изготовление 3 дня."
+],
+"Četiri koraka do poklona": [
+"Four steps to your gift",
+"Четыре шага до подарка"
+],
+"Školu, trening, put": [
+"School, training, travel",
+"Школы, спорта, поездок"
+],
+"Šolja": [
+"Mug",
+"Кружка"
+],
+"Šolja sa obojenom unutrašnjošću": [
+"Mug with coloured inside",
+"Кружка с цветной внутренней частью"
+],
+"Šolja sa tanjirićem": [
+"Mug with saucer",
+"Кружка с блюдцем"
+],
+"Šolja · Kolaž": [
+"Mug · Collage",
+"Кружка · Коллаж"
+],
+"Šolja, puzzle, kanvas, kalendar i još 15 poklona sa tvojom slikom.": [
+"Mugs, puzzles, canvas, calendars and 15 more gifts with your picture.",
+"Кружки, пазлы, холсты, календари и ещё 15 подарков с вашим снимком."
+],
+"Šolje": [
+"Mugs",
+"Кружки"
+],
+"Šta su puzzle i privezak sa pesmom?": [
+"What are puzzles and keychains with a song?",
+"Что такое пазл и брелок с песней?"
+],
+"Štampa": [
+"Print",
+"Печать"
+]
+};
+  var LANGS = ['sr', 'en', 'ru'];
+  var curLang = 'sr';
+  function t(sr){
+    var i = LANGS.indexOf(curLang) - 1;
+    return i >= 0 && I18N[sr] ? I18N[sr][i] : sr;
+  }
+
+  // Fotografije: ako fajl postoji prikaži ga, ako ne ostaje placeholder sa ikonicom
+  document.querySelectorAll('.ph img').forEach(function(img){
+    function ok(){ img.parentNode.classList.add('has-photo'); }
+    function fail(){ img.remove(); }
+    if(img.complete){ img.naturalWidth ? ok() : fail(); }
+    else { img.addEventListener('load', ok); img.addEventListener('error', fail); }
+  });
+
+  // Blic
+  var flash = document.getElementById('flash');
+  function fire(){
+    if(reduce) return;
+    flash.classList.remove('go');
+    void flash.offsetWidth;
+    flash.classList.add('go');
+  }
+  document.getElementById('heroShutter').addEventListener('click', fire);
+
+  // Header: pozadina posle skrola
+  var header = document.getElementById('siteHeader');
+  function onScroll(){ header.classList.toggle('scrolled', window.scrollY > 16); }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // Mobilni meni
+  var burger = document.getElementById('hamburgerBtn');
+  var menu = document.getElementById('mobileMenu');
+  function setMenu(open){
+    menu.classList.toggle('open', open);
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', t(open ? 'Zatvori meni' : 'Otvori meni'));
+    document.body.style.overflow = open ? 'hidden' : '';
+    document.body.classList.toggle('menu-open', open);
+  }
+  burger.addEventListener('click', function(){ setMenu(!menu.classList.contains('open')); });
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+
+  // Tražilo: AF tačke prate kursor, dugme okidača zaključava fokus
+  var field = document.getElementById('afField');
+  var vf = document.getElementById('viewfinder');
+  for(var i = 0; i < 21; i++){ var d = document.createElement('span'); d.className = 'af'; field.appendChild(d); }
+  var afs = field.querySelectorAll('.af');
+  afs[10].classList.add('on');
+  vf.addEventListener('mousemove', function(e){
+    var best = null, bestD = Infinity;
+    afs.forEach(function(a){
+      var r = a.getBoundingClientRect();
+      var dx = r.left + r.width / 2 - e.clientX, dy = r.top + r.height / 2 - e.clientY;
+      var dd = dx * dx + dy * dy;
+      if(dd < bestD){ bestD = dd; best = a; }
+    });
+    afs.forEach(function(a){ a.classList.toggle('on', a === best); });
+  });
+  var shutterBtn = document.getElementById('heroShutter');
+  shutterBtn.addEventListener('mouseenter', function(){ vf.classList.add('locked'); });
+  shutterBtn.addEventListener('mouseleave', function(){ vf.classList.remove('locked'); });
+
+  // Katalog: filter po grupama
+  var fbtns = document.querySelectorAll('[data-filter]');
+  var gcards = document.querySelectorAll('#giftGrid .gift');
+  fbtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var f = b.dataset.filter;
+      fbtns.forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      gcards.forEach(function(c){ c.hidden = f !== 'all' && c.dataset.group !== f; });
+    });
+  });
+
+  // Tabovi (cenovnik poklona i proba pre štampe)
+  function tabs(list, onSelect){
+    function sel(i, focus){
+      i = (i + list.length) % list.length;
+      list.forEach(function(tb, j){
+        var on = j === i;
+        tb.setAttribute('aria-selected', on ? 'true' : 'false');
+        tb.tabIndex = on ? 0 : -1;
+      });
+      onSelect(i);
+      if(focus) list[i].focus();
+    }
+    list.forEach(function(tb, i){
+      tb.addEventListener('click', function(){ sel(i); });
+      tb.addEventListener('keydown', function(e){
+        if(e.key === 'ArrowRight'){ e.preventDefault(); sel(i + 1, true); }
+        if(e.key === 'ArrowLeft'){ e.preventDefault(); sel(i - 1, true); }
+      });
+    });
+  }
+  var gptabs = Array.prototype.slice.call(document.querySelectorAll('#cene [role="tab"]'));
+  tabs(gptabs, function(i){
+    gptabs.forEach(function(tb, j){ document.getElementById(tb.getAttribute('aria-controls')).hidden = j !== i; });
+  });
+
+  // Proba pre štampe: fotografija sa uređaja na šolji, puzzli, kanvasu, magnetu i jastuku
+  var DEMO = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b6b6f"/><stop offset=".62" stop-color="#3fd8dc"/><stop offset="1" stop-color="#f6d6a8"/></linearGradient></defs><rect width="800" height="600" fill="url(#a)"/><circle cx="560" cy="260" r="76" fill="#fff4d6"/><path d="M0 430L110 370 210 410 330 340 460 400 560 360 690 410 800 370V600H0z" fill="#0b4f52"/><path d="M0 500h60v-60h40v-30h30v90h50v-120h20v-40h10v40h20v120h60v-70h50v70h70v-50h40v50h60v-90h30v90h70v-40h50v40h70v100H0z" fill="#033537"/><path d="M0 560h800v40H0z" fill="#021f20"/></svg>');
+  var stage = document.getElementById('tryStage');
+  var tryWhat = document.getElementById('tryWhat');
+  var tryFile = document.getElementById('tryFile');
+  var mocks = stage.querySelectorAll('.mock');
+  var tryTabs = Array.prototype.slice.call(document.querySelectorAll('#proba [role="tab"]'));
+  var tryCur = 'solja', tryPhoto = null;
+  stage.style.setProperty('--img', 'url("' + DEMO + '")');
+  tabs(tryTabs, function(i){
+    tryCur = tryTabs[i].dataset.mock;
+    mocks.forEach(function(m){ m.classList.toggle('on', m.dataset.mock === tryCur); });
+  });
+  tryFile.addEventListener('change', function(){
+    var f = tryFile.files[0];
+    if(!f || !/^image\//.test(f.type)) return;
+    if(tryPhoto) URL.revokeObjectURL(tryPhoto.url);
+    tryPhoto = {file: f, url: URL.createObjectURL(f)};
+    stage.style.setProperty('--img', 'url("' + tryPhoto.url + '")');
+    tryWhat.textContent = t('Tvoja fotografija');
+    tryFile.value = '';
+  });
+  document.getElementById('tryOrder').addEventListener('click', function(){
+    openGift(tryCur, tryPhoto ? [tryPhoto.file] : []);
+  });
+
+  // Linije puzzle: 4 × 3 dela sa ispupčenjima
+  (function(){
+    function edge(x0, y0, x1, y1, s){
+      var dx = x1 - x0, dy = y1 - y0, nx = -dy * s, ny = dx * s;
+      function p(a, b){ return (x0 + dx * a + nx * b).toFixed(1) + ' ' + (y0 + dy * a + ny * b).toFixed(1); }
+      return 'L' + p(0.38, 0) + 'C' + p(0.30, 0.22) + ' ' + p(0.70, 0.22) + ' ' + p(0.62, 0) + 'L' + p(1, 0);
+    }
+    var d = '', i, j;
+    for(i = 1; i < 4; i++){
+      d += 'M' + (i * 100) + ' 0';
+      for(j = 0; j < 3; j++) d += edge(i * 100, j * 100, i * 100, (j + 1) * 100, (i + j) % 2 ? 0.9 : -0.9);
+    }
+    for(j = 1; j < 3; j++){
+      d += 'M0 ' + (j * 100);
+      for(i = 0; i < 4; i++) d += edge(i * 100, j * 100, (i + 1) * 100, j * 100, (i + j) % 2 ? 0.9 : -0.9);
+    }
+    document.getElementById('jigLines').setAttribute('d', d);
+    document.getElementById('jigShadow').setAttribute('d', d);
+  })();
+
+  // Poručivanje poklona na sajtu: poklon, model, dodaci, količina, fotografije, preuzimanje i cena
+  var GIFTS = {"solja": {"n": "Foto šolja", "v": [["Bela šolja 3 dcl", 990], ["Lonče", 990], ["Magična šolja 3 dcl, crna", 1190], ["Šolja sa obojenom unutrašnjošću", 1190], ["Šolja sa tanjirićem", 1490]], "x": [], "ph": 6, "min": 1}, "kecelja": {"n": "Foto kecelja", "v": [["Foto kecelja", 1990]], "x": [], "ph": 6, "min": 1}, "daska": {"n": "Daska sa štampom", "v": [["Daska sa štampom", 990]], "x": [], "ph": 6, "min": 1}, "pepeljara": {"n": "Foto pepeljara", "v": [["Foto pepeljara", 990]], "x": [], "ph": 6, "min": 1}, "puzzle": {"n": "Foto puzzle", "v": [["Puzzle A5", 990], ["Puzzle A4, 120 delova", 1490], ["Puzzle u obliku srca", 1490], ["Puzzle A3, 300 delova", 2490]], "x": [["Ram za puzzle A4", 899], ["Ram za puzzle A3", 1250], ["Pesma uz puzzle", 800]], "ph": 6, "min": 1}, "kugla": {"n": "Foto kugla", "v": [["Kugla sa snegom", 1190], ["Kugla sa srcima", 1190], ["Srce ispunjeno srcima", 1190]], "x": [], "ph": 1, "min": 1}, "kocka": {"n": "Foto kocka", "v": [["Kocka", 3990], ["Kristal", 3990], ["Prizma", 3990]], "x": [], "ph": 15, "min": 1}, "kamen": {"n": "Foto na kamenu", "v": [["Foto na kamenu", 1600]], "x": [], "ph": 1, "min": 1}, "magneti": {"n": "Foto magneti", "v": [["Foto magnet 7,3 × 10,3 cm", 300]], "x": [], "ph": 50, "min": 3}, "privezak": {"n": "Foto privezak", "v": [["Foto privezak 3,5 × 4,5 cm", 300]], "x": [["Pesma uz privezak", 800]], "ph": 50, "min": 3}, "bedz": {"n": "Foto bedž", "v": [["Foto bedž", 300]], "x": [], "ph": 50, "min": 1}, "podloga": {"n": "Podloga za miša", "v": [["Podloga za miša", 990]], "x": [], "ph": 6, "min": 1}, "majica": {"n": "Majica sa štampom", "v": [["Bela majica", 1800], ["Crna majica", 2100], ["Dečja majica, bela", 1800]], "x": [["Obostrana štampa", 500]], "ph": 6, "min": 1}, "jastuk": {"n": "Jastuk sa štampom", "v": [["Jastuk sa štampom", 1990]], "x": [], "ph": 6, "min": 1}, "ceger": {"n": "Foto ceger", "v": [["Foto ceger", 1990]], "x": [], "ph": 6, "min": 1}, "ranac": {"n": "Foto ranac", "v": [["Foto ranac", 1990]], "x": [], "ph": 6, "min": 1}, "kanvas": {"n": "Kanvas", "v": [["20 × 30 cm", 1592], ["30 × 40 cm", 1752], ["40 × 40 cm", 1992], ["40 × 60 cm", 2312], ["50 × 70 cm", 2952], ["60 × 90 cm", 4100], ["70 × 100 cm", 4592], ["100 × 150 cm", 8600]], "x": [], "ph": 1, "min": 1}, "kalendar": {"n": "Foto kalendar 2027", "v": [["A4, položen", 500], ["A4, akcija 3+1", 1500], ["A3, uspravan", 700], ["A3, akcija 3+1", 2100], ["Premium 30 × 60 cm", 990], ["Premium, akcija 3+1", 2970], ["Zimski stoni kalendar, 1 slika", 300], ["Novogodišnji stoni ram, 3 slike", 490]], "x": [], "ph": 5, "min": 1}, "photobook": {"n": "Photo book", "v": [["15 × 15 cm", 990], ["15 × 20 cm", 1490], ["20 × 20 cm", 1990], ["20 × 30 cm", 2490]], "x": [], "ph": 50, "min": 1}};
+  var POST = 399;
+  var giftModal = document.getElementById('giftModal');
+  var giftForm = document.getElementById('giftForm');
+  var gProduct = document.getElementById('gProduct');
+  var gVariants = document.getElementById('gVariants');
+  var gExtras = document.getElementById('gExtras');
+  var gExtrasWrap = document.getElementById('gExtrasWrap');
+  var gQty = document.getElementById('gQty');
+  var gFiles = document.getElementById('gFiles');
+  var gThumbs = document.getElementById('gThumbs');
+  var gErr = document.getElementById('gErr');
+  var gAddrWrap = document.getElementById('gAddrWrap');
+  var gList = [], gLast = null;
+
+  function money(v){ return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  function cur(){ return GIFTS[gProduct.value]; }
+  function qty(){
+    var g = cur();
+    return Math.max(g.min, Math.min(999, parseInt(gQty.value, 10) || g.min));
+  }
+  function renderOptions(keepV, keepX){
+    var g = cur();
+    gVariants.innerHTML = '';
+    g.v.forEach(function(v, i){
+      var l = document.createElement('label');
+      l.className = 'chip';
+      l.innerHTML = '<input type="radio" name="gvar" value="' + i + '"' + (i === keepV ? ' checked' : '') + '><span></span>';
+      l.querySelector('span').textContent = t(v[0]) + ' · ' + money(v[1]) + ' ' + t('din');
+      gVariants.appendChild(l);
+    });
+    gExtras.innerHTML = '';
+    g.x.forEach(function(x, i){
+      var l = document.createElement('label');
+      l.className = 'chip';
+      l.innerHTML = '<input type="checkbox" name="gx" value="' + i + '"' + (keepX.indexOf(i) > -1 ? ' checked' : '') + '><span></span>';
+      l.querySelector('span').textContent = t(x[0]) + ' · +' + money(x[1]) + ' ' + t('din');
+      gExtras.appendChild(l);
+    });
+    gExtrasWrap.hidden = !g.x.length;
+    document.getElementById('gMax').textContent = t('Najviše') + ' ' + g.ph;
+  }
+  function checkedV(){ var r = giftForm.querySelector('input[name="gvar"]:checked'); return r ? +r.value : 0; }
+  function checkedX(){ return Array.prototype.map.call(giftForm.querySelectorAll('input[name="gx"]:checked'), function(c){ return +c.value; }); }
+  function selectGift(id){
+    if(!GIFTS[id]) return;
+    gProduct.value = id;
+    renderOptions(0, []);
+    gQty.min = GIFTS[id].min;
+    gQty.value = GIFTS[id].min;
+    trimFiles();
+    renderGiftThumbs();
+  }
+  function trimFiles(){
+    var max = cur().ph;
+    while(gList.length > max){ URL.revokeObjectURL(gList.pop().url); }
+  }
+  function updateGift(){
+    var g = cur(), v = g.v[checkedV()], n = qty();
+    var each = v[1] + checkedX().reduce(function(s, i){ return s + g.x[i][1]; }, 0);
+    var kurir = giftForm.querySelector('input[name="gshop"]:checked').value === 'kurir';
+    gAddrWrap.hidden = !kurir;
+    document.getElementById('gTotal').textContent = money(n * each + (kurir ? POST : 0)) + ' ' + t('din');
+    document.getElementById('gCalc').textContent = n + ' ' + t('kom') + ' · ' + money(each) + ' ' + t('din') + (kurir ? ' · ' + t('poštarina') + ' ' + POST : '');
+  }
+  function renderGiftThumbs(){
+    gThumbs.innerHTML = '';
+    gList.forEach(function(item, i){
+      var d = document.createElement('div');
+      d.className = 'othumb';
+      d.style.backgroundImage = 'url("' + item.url + '")';
+      var x = document.createElement('button');
+      x.type = 'button';
+      x.setAttribute('aria-label', t('Ukloni fotografiju'));
+      x.textContent = '×';
+      x.addEventListener('click', function(){
+        URL.revokeObjectURL(item.url);
+        gList.splice(i, 1);
+        renderGiftThumbs();
+      });
+      d.appendChild(x);
+      gThumbs.appendChild(d);
+    });
+    updateGift();
+  }
+  function addFiles(files){
+    Array.prototype.forEach.call(files, function(f){
+      if(/^image\//.test(f.type) && gList.length < cur().ph) gList.push({file: f, url: URL.createObjectURL(f)});
+    });
+    gErr.textContent = '';
+    renderGiftThumbs();
+  }
+  gProduct.addEventListener('change', function(){ selectGift(gProduct.value); });
+  gFiles.addEventListener('change', function(){ addFiles(gFiles.files); gFiles.value = ''; });
+  giftForm.addEventListener('change', function(e){ if(e.target.name !== 'gfiles') updateGift(); });
+  gQty.addEventListener('input', updateGift);
+  gQty.addEventListener('blur', function(){ gQty.value = qty(); updateGift(); });
+  giftForm.querySelectorAll('[data-gstep]').forEach(function(b){
+    b.addEventListener('click', function(){
+      gQty.value = Math.max(cur().min, Math.min(999, qty() + parseInt(b.dataset.gstep, 10)));
+      updateGift();
+    });
+  });
+
+  function openGift(id, files){
+    gLast = document.activeElement;
+    if(id && id !== gProduct.value) selectGift(id);
+    if(files && files.length) addFiles(files);
+    giftModal.classList.remove('sent');
+    giftModal.hidden = false;
+    void giftModal.offsetWidth;
+    giftModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    giftModal.querySelector('.promo-x').focus();
+  }
+  function closeGift(){
+    giftModal.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(function(){ giftModal.hidden = true; }, reduce ? 0 : 400);
+    if(gLast && gLast.focus) gLast.focus();
+  }
+  document.querySelectorAll('[data-gift]').forEach(function(b){
+    b.addEventListener('click', function(){ openGift(b.dataset.gift); });
+  });
+  giftModal.querySelectorAll('[data-gclose]').forEach(function(b){ b.addEventListener('click', closeGift); });
+  document.addEventListener('keydown', function(e){
+    if(giftModal.hidden) return;
+    if(e.key === 'Escape'){ closeGift(); return; }
+    if(e.key === 'Tab'){
+      var f = Array.prototype.filter.call(giftModal.querySelectorAll('button, input, select, textarea'), function(el){
+        return el.offsetParent !== null && !/radio|checkbox/.test(el.type) || el.checked;
+      });
+      if(!f.length) return;
+      if(e.shiftKey && document.activeElement === f[0]){ e.preventDefault(); f[f.length - 1].focus(); }
+      else if(!e.shiftKey && document.activeElement === f[f.length - 1]){ e.preventDefault(); f[0].focus(); }
+    }
+  });
+
+  // Forma još nije povezana sa slanjem: proveri polja i prikaži potvrdu
+  giftForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('gName'), phone = document.getElementById('gPhone'), addr = document.getElementById('gAddr');
+    if(!gList.length){ gErr.textContent = t('Dodaj bar jednu fotografiju.'); return; }
+    if(!name.value.trim() || phone.value.replace(/\D/g, '').length < 6){
+      gErr.textContent = t('Upiši ime i telefon.');
+      (name.value.trim() ? phone : name).focus();
+      return;
+    }
+    if(!gAddrWrap.hidden && !addr.value.trim()){ gErr.textContent = t('Upiši adresu za dostavu.'); addr.focus(); return; }
+    gErr.textContent = '';
+    fire();
+    giftModal.classList.add('sent');
+    giftModal.querySelector('.promo-x').focus();
+  });
+  selectGift(gProduct.value);
+
+  // Reveal
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        en.target.classList.add('in-view');
+        io.unobserve(en.target);
+      });
+    }, {threshold:0.2});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+
+  // Svaki tekst i atribut koji ima prevod pamti svoj srpski original
+  var i18nText = [], i18nAttr = [];
+  (function(){
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){ return /^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT; }
+    });
+    var n;
+    while((n = walker.nextNode())){
+      var key = n.nodeValue.replace(/\s+/g, ' ').trim();
+      if(I18N[key]){
+        var m = n.nodeValue.match(/^(\s*)[\s\S]*?(\s*)$/);
+        i18nText.push({node: n, key: key, pre: m[1], post: m[2]});
+      }
+    }
+    document.querySelectorAll('[alt],[placeholder],[aria-label],optgroup[label]').forEach(function(el){
+      if(el === burger) return;
+      ['alt', 'placeholder', 'aria-label', 'label'].forEach(function(a){
+        var v = el.getAttribute(a);
+        if(v && I18N[v.trim()]) i18nAttr.push({el: el, attr: a, key: v.trim()});
+      });
+    });
+  })();
+  var titleKey = document.title;
+  var descMeta = document.querySelector('meta[name="description"]');
+  var descSr = descMeta.content;
+  var DESC = ["Photo gifts with your picture in Belgrade: mugs, puzzles, canvas, 2027 calendars, photo books, T-shirts, magnets and 12 more gifts. Made in 1 to 2 days, pickup at Terazije or Bulevar, or by courier.", "Фотоподарки с вашим снимком в Белграде: кружки, пазлы, холсты, календари 2027, фотокниги, футболки, магниты и ещё 12 подарков. Изготовление 1–2 дня, самовывоз на Теразие или на Бульваре, либо курьером."];
+  var langBtns = document.querySelectorAll('[data-lang]');
+
+  function setLang(lang, save){
+    if(LANGS.indexOf(lang) < 0) lang = 'sr';
+    curLang = lang;
+    document.documentElement.lang = lang;
+    i18nText.forEach(function(x){ x.node.nodeValue = x.pre + t(x.key) + x.post; });
+    i18nAttr.forEach(function(x){ x.el.setAttribute(x.attr, t(x.key)); });
+    document.title = t(titleKey);
+    descMeta.content = lang === 'sr' ? descSr : DESC[LANGS.indexOf(lang) - 1];
+    burger.setAttribute('aria-label', t(menu.classList.contains('open') ? 'Zatvori meni' : 'Otvori meni'));
+    langBtns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'); });
+    tryWhat.textContent = t(tryPhoto ? 'Tvoja fotografija' : 'Primer');
+    renderOptions(checkedV(), checkedX());
+    renderGiftThumbs();
+    if(save){ try{ localStorage.setItem('lang', lang); }catch(e){} }
+  }
+  langBtns.forEach(function(b){
+    b.addEventListener('click', function(){ setLang(b.dataset.lang, true); });
+  });
+  var savedLang = null;
+  try{ savedLang = localStorage.getItem('lang'); }catch(e){}
+  if(savedLang && savedLang !== 'sr') setLang(savedLang);
+
+  // Popup: newsletter sa 5% popusta. Iskače posle 10 s ili na pola strane, najviše jednom u 7 dana.
+  (function(){
+    var promo = document.getElementById('promo');
+    var form = document.getElementById('promoForm');
+    var email = document.getElementById('promoEmail');
+    var err = document.getElementById('promoErr');
+    var card = promo.querySelector('.promo-card');
+    var KEY = 'promoSeen', WEEK = 7 * 24 * 3600 * 1000;
+    var shown = false, lastFocus = null, timer;
+
+    try{
+      var seen = +localStorage.getItem(KEY);
+      if(seen && Date.now() - seen < WEEK) return;
+    }catch(e){}
+
+    function open(){
+      if(shown) return;
+      if(menu.classList.contains('open')){ setTimeout(open, 3000); return; }
+      shown = true;
+      clearTimeout(timer);
+      window.removeEventListener('scroll', onScrollPromo);
+      try{ localStorage.setItem(KEY, Date.now()); }catch(e){}
+      lastFocus = document.activeElement;
+      promo.hidden = false;
+      void promo.offsetWidth;
+      promo.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      promo.querySelector('.promo-x').focus();
+    }
+    function close(){
+      promo.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(function(){ promo.hidden = true; }, reduce ? 0 : 400);
+      if(lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    function onScrollPromo(){
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      if(max > 0 && window.scrollY / max > 0.5) open();
+    }
+
+    timer = setTimeout(open, 10000);
+    window.addEventListener('scroll', onScrollPromo, {passive:true});
+
+    promo.querySelectorAll('[data-close]').forEach(function(b){ b.addEventListener('click', close); });
+    document.addEventListener('keydown', function(e){
+      if(promo.hidden) return;
+      if(e.key === 'Escape'){ close(); return; }
+      if(e.key === 'Tab'){
+        var f = Array.prototype.filter.call(card.querySelectorAll('button, input'), function(el){ return el.offsetParent !== null; });
+        if(!f.length) return;
+        if(e.shiftKey && document.activeElement === f[0]){ e.preventDefault(); f[f.length - 1].focus(); }
+        else if(!e.shiftKey && document.activeElement === f[f.length - 1]){ e.preventDefault(); f[0].focus(); }
+      }
+    });
+
+    // Forma još nije povezana sa newsletter servisom: samo potvrda
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+      email.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      err.textContent = ok ? '' : t('Upiši ispravnu email adresu.');
+      if(!ok){ email.focus(); return; }
+      fire();
+      promo.classList.add('sent');
+      promo.querySelector('.promo-x').focus();
+    });
+  })();
+</script>
+
+</body>
+</html>

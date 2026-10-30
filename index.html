@@ -1436,6 +1436,15 @@
     .nav-links{gap:16px;}
     .brand-name{display:none;}
   }
+  /* sa linkom Foto pokloni meni ima sedam stavki */
+  @media (min-width:992px) and (max-width:1099px){
+    .nav-desktop{display:none;}
+    .hamburger{display:block;}
+  }
+  @media (min-width:1280px){
+    .nav-desktop{gap:24px;}
+    .nav-links{gap:16px;}
+  }
 
   /* ---------- ONLINE PORUČIVANJE: APLIKACIJA ---------- */
   .order-grid{
@@ -1821,6 +1830,107 @@
     .promo-card h2{font-size:24px;}
   }
 
+  /* ---------- PORUČIVANJE NA SAJTU ---------- */
+  .ocard{max-width:640px;text-align:left;}
+  .ocard > .corners{display:none;}
+  .ocard .promo-tag{text-align:left;}
+  .ocard h2{margin-top:16px;font-size:clamp(24px, 3.2vw, 32px);}
+  .oform{margin-top:32px;}
+  .ofs{border:none;padding-top:24px;border-top:1px solid var(--line);margin-bottom:24px;}
+  .ofs legend{float:left;width:100%;color:var(--text-muted);margin-bottom:16px;}
+  .ofs legend + *{clear:both;}
+  .drop{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px;
+    padding-top:24px;
+    padding-bottom:24px;
+    border:1px dashed rgba(63,216,220,0.48);
+    background:var(--signal-soft);
+    text-align:center;
+    cursor:pointer;
+    transition:background 0.2s ease, border-color 0.2s ease;
+  }
+  .drop:hover{border-color:var(--signal);background:rgba(63,216,220,0.2);}
+  .drop input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;}
+  .drop input:focus-visible + .drop-ico{outline:2px solid var(--signal);outline-offset:4px;}
+  .drop-ico{
+    width:40px;
+    height:40px;
+    display:grid;
+    place-items:center;
+    border:1px solid var(--signal);
+    color:var(--signal);
+    font-family:var(--mono);
+    font-size:24px;
+    line-height:1;
+    margin-bottom:8px;
+  }
+  .drop b{font-size:16px;color:var(--text);}
+  .drop .mono{color:var(--text-faint);}
+  .othumbs{display:grid;grid-template-columns:repeat(auto-fill, minmax(72px, 1fr));gap:8px;}
+  .othumbs:not(:empty){margin-top:12px;}
+  .othumb{position:relative;aspect-ratio:1;background:#1b2222 center/cover no-repeat;}
+  .othumb button{
+    position:absolute;
+    top:4px;
+    right:4px;
+    width:24px;
+    height:24px;
+    display:grid;
+    place-items:center;
+    background:rgba(5,8,8,0.8);
+    color:var(--text);
+    font-size:16px;
+    line-height:1;
+  }
+  .othumb button:hover{background:var(--signal);color:var(--accent-dark);}
+  .oqty{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:20px;}
+  .oqty label{font-size:16px;color:var(--text-muted);}
+  .stepper{display:flex;border:1px solid var(--line-strong);}
+  .stepper button{width:40px;height:40px;font-size:20px;color:var(--signal);}
+  .stepper button:hover{background:var(--signal-soft);}
+  .stepper input{
+    width:56px;
+    height:40px;
+    text-align:center;
+    background:transparent;
+    border:none;
+    border-left:1px solid var(--line-strong);
+    border-right:1px solid var(--line-strong);
+    color:var(--text);
+    font-family:var(--mono);
+    font-size:16px;
+    -moz-appearance:textfield;
+  }
+  .stepper input::-webkit-outer-spin-button,
+  .stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .ofs .field{margin-bottom:16px;}
+  .ofs .field:last-child{margin-bottom:0;}
+  .osum{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+    padding:20px;
+    background:var(--lcd);
+    border:1px solid rgba(63,216,220,0.24);
+  }
+  .osum-l{display:flex;flex-direction:column;gap:4px;}
+  .osum-l .mono{color:rgba(63,216,220,0.72);}
+  .osum-l b{font-family:var(--mono);font-size:28px;line-height:1.1;color:var(--signal);text-shadow:0 0 16px var(--signal-glow);}
+  .odone{display:none;margin-top:32px;}
+  .odone b{display:block;color:var(--signal);font-family:var(--display);font-stretch:125%;font-size:20px;text-transform:uppercase;}
+  .odone p{margin-top:8px;}
+  .omodal.sent .oform{display:none;}
+  .omodal.sent .odone{display:block;}
+  @media (max-width:520px){
+    .osum .btn{width:100%;}
+  }
+
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto;}
     *,*::before,*::after{transition:none !important;animation:none !important;}
@@ -1850,6 +1960,7 @@
       <nav class="nav-desktop" aria-label="Glavni meni">
         <ul class="nav-links">
           <li><a href="#usluge">Usluge</a></li>
+          <li><a href="foto-pokloni.html">Foto pokloni</a></li>
           <li><a href="#poruci" class="nav-hot">Poruči online</a></li>
           <li><a href="#cenovnik">Cenovnik</a></li>
           <li><a href="#radovi">Radovi</a></li>
@@ -1873,11 +1984,12 @@
 
   <div class="mobile-menu" id="mobileMenu">
     <a href="#usluge" class="m-link"><span>01</span>Usluge</a>
-    <a href="#poruci" class="m-link"><span>02</span>Poruči online</a>
-    <a href="#cenovnik" class="m-link"><span>03</span>Cenovnik</a>
-    <a href="#radovi" class="m-link"><span>04</span>Radovi</a>
-    <a href="#o-nama" class="m-link"><span>05</span>O nama</a>
-    <a href="#kontakt" class="m-link"><span>06</span>Kontakt</a>
+    <a href="foto-pokloni.html" class="m-link"><span>02</span>Foto pokloni</a>
+    <a href="#poruci" class="m-link"><span>03</span>Poruči online</a>
+    <a href="#cenovnik" class="m-link"><span>04</span>Cenovnik</a>
+    <a href="#radovi" class="m-link"><span>05</span>Radovi</a>
+    <a href="#o-nama" class="m-link"><span>06</span>O nama</a>
+    <a href="#kontakt" class="m-link"><span>07</span>Kontakt</a>
     <a href="#kontakt" class="btn m-link-btn">Zakaži termin</a>
     <div class="lang" role="group" aria-label="Jezik">
       <button type="button" data-lang="sr" aria-pressed="true" lang="sr">SR</button>
@@ -2049,7 +2161,7 @@
                 <li><span>Donosiš</span><span>Telefon, USB ili fajlove</span></li>
                 <li><span>Uz to</span><span>Obrada pre štampe ako treba</span></li>
               </ul>
-              <a href="https://app.fotostudioart.rs/kategorije/izrada-fotografija-online" class="btn">Poruči izradu online</a>
+              <button type="button" class="btn" data-order>Poruči izradu online</button>
             </div>
 
             <div class="panel" id="panel-5" role="tabpanel" aria-labelledby="tab-5">
@@ -2144,7 +2256,7 @@
             </div>
           </div>
 
-          <p class="mono all-svc-note">Fotografije i foto poklone poručuješ i <a href="#poruci">online</a>. Fotografije su spremne za preuzimanje za 24h</p>
+          <p class="mono all-svc-note">Fotografije poručuješ i <a href="#poruci">online</a>. Spremne su za preuzimanje za 24h</p>
         </details>
       </div>
     </section>
@@ -2153,17 +2265,17 @@
     <section class="section" id="poruci" data-frame="3">
       <div class="wrap order-grid">
         <div class="order-copy reveal">
-          <div class="mono sec-tag">02 / Online<b>Aplikacija za poručivanje</b></div>
+          <div class="mono sec-tag">02 / Online<b>Poručivanje na sajtu</b></div>
           <h2>Fotografije iz telefona. Spremne za 24h.</h2>
-          <p>Izradu fotografija i foto poklone poručuješ kroz našu aplikaciju. Gotove fotografije preuzimaš u radnji na Terazijama ili na Bulevaru despota Stefana.</p>
+          <p>Izradu fotografija poručuješ ovde, na sajtu. Gotove fotografije preuzimaš u radnji na Terazijama ili na Bulevaru despota Stefana.</p>
           <ol class="order-steps">
             <li><b class="mono">01</b><span>Otpremiš fotografije iz telefona ili računara</span></li>
-            <li><b class="mono">02</b><span>Izabereš format, papir i količinu</span></li>
+            <li><b class="mono">02</b><span>Izabereš format i količinu, odmah vidiš cenu</span></li>
             <li><b class="mono">03</b><span>Preuzmeš gotove fotografije za 24h</span></li>
           </ol>
           <div class="order-cta">
-            <a href="https://app.fotostudioart.rs/kategorije/izrada-fotografija-online" class="btn">Poruči fotografije online</a>
-            <span class="mono order-url">app.fotostudioart.rs</span>
+            <button type="button" class="btn" data-order>Poruči fotografije online</button>
+            <span class="mono order-url">Bez registracije, za minut</span>
           </div>
         </div>
 
@@ -2263,7 +2375,7 @@
                 <tr><th scope="row">100×150</th><td>8 600</td></tr>
                 </tbody>
               </table>
-              <p class="mono price-note">Kanvas poručuješ i online, kroz aplikaciju.</p>
+              <p class="mono price-note">Format kanvasa biraš u radnji ili nam ga napišeš u poruci.</p>
             </div>
             <div class="price-panel" id="ppanel-4" role="tabpanel" aria-labelledby="ptab-4" hidden>
               <table class="ptable">
@@ -2290,7 +2402,7 @@
             </div>
           <div class="price-foot">
             <span class="mono">Primamo kartice u obe radnje</span>
-            <a href="https://app.fotostudioart.rs/kategorije/izrada-fotografija-online" class="btn">Poruči online</a>
+            <button type="button" class="btn" data-order>Poruči online</button>
           </div>
         </div>
       </div>
@@ -2580,6 +2692,7 @@
       </a>
       <nav class="footer-links mono" aria-label="Meni u futeru">
         <a href="#usluge">Usluge</a>
+        <a href="foto-pokloni.html">Foto pokloni</a>
         <a href="#poruci">Poruči online</a>
         <a href="#cenovnik">Cenovnik</a>
         <a href="#radovi">Radovi</a>
@@ -2597,6 +2710,86 @@
       </div>
     </div>
   </footer>
+
+  <!-- PORUČIVANJE FOTOGRAFIJA NA SAJTU -->
+  <div class="promo omodal" id="orderModal" hidden>
+    <div class="promo-backdrop" data-oclose></div>
+    <div class="promo-card ocard" role="dialog" aria-modal="true" aria-labelledby="oTitle">
+      <div class="corners" aria-hidden="true"><i></i></div>
+      <button type="button" class="promo-x" data-oclose aria-label="Zatvori">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <span class="promo-tag mono">Online poručivanje</span>
+      <h2 id="oTitle">Poruči izradu fotografija</h2>
+
+      <form class="oform" id="orderForm" action="#" novalidate>
+        <fieldset class="ofs">
+          <legend class="mono">01 · Fotografije</legend>
+          <label class="drop" for="oFiles">
+            <input type="file" id="oFiles" accept="image/*" multiple>
+            <span class="drop-ico" aria-hidden="true">+</span>
+            <b>Izaberi fotografije</b>
+            <span class="mono">Iz telefona ili računara</span>
+          </label>
+          <div class="othumbs" id="oThumbs"></div>
+        </fieldset>
+
+        <fieldset class="ofs">
+          <legend class="mono">02 · Format</legend>
+          <div class="chips">
+              <label class="chip"><input type="radio" name="oformat" value="9×13"><span>9×13</span></label>
+              <label class="chip"><input type="radio" name="oformat" value="10×15" checked><span>10×15</span></label>
+              <label class="chip"><input type="radio" name="oformat" value="13×18"><span>13×18</span></label>
+              <label class="chip"><input type="radio" name="oformat" value="15×21"><span>15×21</span></label>
+              <label class="chip"><input type="radio" name="oformat" value="Polaroid"><span>Polaroid</span></label>
+              <label class="chip"><input type="radio" name="oformat" value="20×30"><span>20×30</span></label>
+              <label class="chip"><input type="radio" name="oformat" value="30×40"><span>30×40</span></label>
+          </div>
+          <div class="oqty">
+            <label for="oCopies">Primeraka od svake fotografije</label>
+            <div class="stepper">
+              <button type="button" data-step="-1" aria-label="Manje">−</button>
+              <input type="number" id="oCopies" value="1" min="1" max="99" inputmode="numeric">
+              <button type="button" data-step="1" aria-label="Više">+</button>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="ofs">
+          <legend class="mono">03 · Preuzimanje</legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="oshop" value="terazije" checked><span>Terazije 5</span></label>
+            <label class="chip"><input type="radio" name="oshop" value="bulevar"><span>Bulevar despota Stefana 48</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="ofs">
+          <legend class="mono">04 · Kontakt</legend>
+          <div class="field">
+            <input type="text" id="oName" name="ime" placeholder="Ime i prezime" autocomplete="name" aria-label="Ime i prezime">
+          </div>
+          <div class="field">
+            <input type="text" id="oPhone" name="telefon" placeholder="Telefon" autocomplete="tel" inputmode="tel" aria-label="Telefon">
+          </div>
+        </fieldset>
+
+        <div class="osum">
+          <div class="osum-l">
+            <span class="mono">Ukupno</span>
+            <b id="oTotal">0 din</b>
+            <span class="mono" id="oCalc"></span>
+          </div>
+          <button type="submit" class="btn">Pošalji porudžbinu</button>
+        </div>
+        <span class="promo-err" id="oErr" aria-live="polite"></span>
+      </form>
+
+      <div class="odone" role="status">
+        <b>Porudžbina je poslata!</b>
+        <p>Fotografije su spremne za preuzimanje za 24h. Javljamo se kad budu gotove.</p>
+      </div>
+    </div>
+  </div>
 
   <!-- POPUP: NEWSLETTER -5% (kao na starom sajtu) -->
   <div class="promo" id="promo" hidden>
@@ -2883,6 +3076,112 @@
     });
   });
 
+  // Poručivanje fotografija na sajtu: izbor fotografija, format, količina i cena iz cenovnika
+  var PRICES = {'9×13':[70,35,16], '10×15':[80,40,18.99], '13×18':[90,45,25.99], '15×21':[100,50,30], 'Polaroid':[50,25,20], '20×30':[450,450,450], '30×40':[890,890,890]};
+  var orderModal = document.getElementById('orderModal');
+  var orderForm = document.getElementById('orderForm');
+  var oFiles = document.getElementById('oFiles');
+  var oThumbs = document.getElementById('oThumbs');
+  var oCopies = document.getElementById('oCopies');
+  var oErr = document.getElementById('oErr');
+  var orderList = [], orderLast = null;
+
+  function money(v){
+    var parts = (Math.round(v * 100) / 100).toFixed(v % 1 ? 2 : 0).split('.');
+    var int = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return int + (parts[1] ? (curLang === 'en' ? '.' : ',') + parts[1] : '');
+  }
+  function updateOrder(){
+    var fmt = orderForm.querySelector('input[name="oformat"]:checked').value;
+    var copies = Math.max(1, Math.min(99, parseInt(oCopies.value, 10) || 1));
+    var n = orderList.length * copies;
+    var tier = n >= 100 ? 2 : n >= 50 ? 1 : 0;
+    var each = PRICES[fmt][tier];
+    document.getElementById('oTotal').textContent = money(n * each) + ' ' + t('din');
+    document.getElementById('oCalc').textContent = n + ' ' + t('kom') + ' · ' + t(fmt) + ' · ' + money(each) + ' ' + t('din');
+  }
+  function renderThumbs(){
+    oThumbs.innerHTML = '';
+    orderList.forEach(function(item, i){
+      var d = document.createElement('div');
+      d.className = 'othumb';
+      d.style.backgroundImage = 'url("' + item.url + '")';
+      var x = document.createElement('button');
+      x.type = 'button';
+      x.setAttribute('aria-label', t('Ukloni fotografiju'));
+      x.textContent = '×';
+      x.addEventListener('click', function(){
+        URL.revokeObjectURL(item.url);
+        orderList.splice(i, 1);
+        renderThumbs();
+      });
+      d.appendChild(x);
+      oThumbs.appendChild(d);
+    });
+    updateOrder();
+  }
+  oFiles.addEventListener('change', function(){
+    Array.prototype.forEach.call(oFiles.files, function(f){
+      if(/^image\//.test(f.type)) orderList.push({file: f, url: URL.createObjectURL(f)});
+    });
+    oFiles.value = '';
+    oErr.textContent = '';
+    renderThumbs();
+  });
+  orderForm.querySelectorAll('[data-step]').forEach(function(b){
+    b.addEventListener('click', function(){
+      oCopies.value = Math.max(1, Math.min(99, (parseInt(oCopies.value, 10) || 1) + parseInt(b.dataset.step, 10)));
+      updateOrder();
+    });
+  });
+  oCopies.addEventListener('input', updateOrder);
+  orderForm.querySelectorAll('input[name="oformat"]').forEach(function(r){ r.addEventListener('change', updateOrder); });
+
+  function openOrder(){
+    orderLast = document.activeElement;
+    orderModal.classList.remove('sent');
+    orderModal.hidden = false;
+    void orderModal.offsetWidth;
+    orderModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    orderModal.querySelector('.promo-x').focus();
+  }
+  function closeOrder(){
+    orderModal.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(function(){ orderModal.hidden = true; }, reduce ? 0 : 400);
+    if(orderLast && orderLast.focus) orderLast.focus();
+  }
+  document.querySelectorAll('[data-order]').forEach(function(b){ b.addEventListener('click', openOrder); });
+  orderModal.querySelectorAll('[data-oclose]').forEach(function(b){ b.addEventListener('click', closeOrder); });
+  document.addEventListener('keydown', function(e){
+    if(orderModal.hidden) return;
+    if(e.key === 'Escape'){ closeOrder(); return; }
+    if(e.key === 'Tab'){
+      var f = Array.prototype.filter.call(orderModal.querySelectorAll('button, input'), function(el){ return el.offsetParent !== null && el.type !== 'radio' || el.checked; });
+      if(!f.length) return;
+      if(e.shiftKey && document.activeElement === f[0]){ e.preventDefault(); f[f.length - 1].focus(); }
+      else if(!e.shiftKey && document.activeElement === f[f.length - 1]){ e.preventDefault(); f[0].focus(); }
+    }
+  });
+
+  // Forma još nije povezana sa slanjem: proveri polja i prikaži potvrdu
+  orderForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('oName'), phone = document.getElementById('oPhone');
+    if(!orderList.length){ oErr.textContent = t('Dodaj bar jednu fotografiju.'); return; }
+    if(!name.value.trim() || phone.value.replace(/\D/g, '').length < 6){
+      oErr.textContent = t('Upiši ime i telefon.');
+      (name.value.trim() ? phone : name).focus();
+      return;
+    }
+    oErr.textContent = '';
+    fire();
+    orderModal.classList.add('sent');
+    orderModal.querySelector('.promo-x').focus();
+  });
+  updateOrder();
+
   // Jezici sa starog sajta: srpski, engleski, ruski. Ključ je srpski tekst, vrednost [en, ru].
   var I18N = {
     'Foto Studio Art Digital - Fotografisanje, obrada i štampa u Beogradu': ['Foto Studio Art Digital - Photography, editing and printing in Belgrade', 'Foto Studio Art Digital - Фотосъёмка, обработка и печать в Белграде'],
@@ -2894,6 +3193,7 @@
     'Glavni meni': ['Main menu', 'Главное меню'],
     'Meni u futeru': ['Footer menu', 'Меню в подвале'],
     'Usluge': ['Services', 'Услуги'],
+    'Foto pokloni': ['Photo gifts', 'Фотоподарки'],
     'Radovi': ['Portfolio', 'Работы'],
     'O nama': ['About', 'О нас'],
     'Kontakt': ['Contact', 'Контакты'],
@@ -3138,15 +3438,15 @@
     'Poruči online': ['Order online', 'Заказ онлайн'],
     'Cenovnik': ['Prices', 'Цены'],
     'Poruči izradu online': ['Order prints online', 'Заказать печать онлайн'],
-    'Fotografije i foto poklone poručuješ i': ['Photos and photo gifts can also be ordered', 'Фото и фотосувениры можно заказать и'],
+    'Fotografije poručuješ i': ['Photos can also be ordered', 'Фото можно заказать и'],
     'online': ['online', 'онлайн'],
-    '. Fotografije su spremne za preuzimanje za 24h': ['. Photos are ready for pickup in 24h', '. Фото готовы к получению за 24 ч'],
+    '. Spremne su za preuzimanje za 24h': ['. They are ready for pickup in 24h', '. Они готовы к получению за 24 ч'],
     '02 / Online': ['02 / Online', '02 / Онлайн'],
-    'Aplikacija za poručivanje': ['Ordering app', 'Приложение для заказа'],
+    'Poručivanje na sajtu': ['Order right here', 'Заказ на сайте'],
     'Fotografije iz telefona. Spremne za 24h.': ['Photos from your phone. Ready in 24h.', 'Фото с телефона. Готовы за 24 ч.'],
-    'Izradu fotografija i foto poklone poručuješ kroz našu aplikaciju. Gotove fotografije preuzimaš u radnji na Terazijama ili na Bulevaru despota Stefana.': ['Order photo prints and photo gifts through our app. Pick up your finished photos at our shop on Terazije or on Bulevar despota Stefana.', 'Заказывайте печать фото и фотосувениры через наше приложение. Готовые фото забирайте в магазине на Теразие или на бульваре Деспота Стефана.'],
+    'Izradu fotografija poručuješ ovde, na sajtu. Gotove fotografije preuzimaš u radnji na Terazijama ili na Bulevaru despota Stefana.': ['Order your photo prints right here on the site. Pick up the finished photos at our shop on Terazije or on Bulevar despota Stefana.', 'Заказывайте печать фото прямо здесь, на сайте. Готовые фото забирайте в магазине на Теразие или на бульваре Деспота Стефана.'],
     'Otpremiš fotografije iz telefona ili računara': ['Upload photos from your phone or computer', 'Загрузите фото с телефона или компьютера'],
-    'Izabereš format, papir i količinu': ['Choose size, paper and quantity', 'Выберите формат, бумагу и количество'],
+    'Izabereš format i količinu, odmah vidiš cenu': ['Choose size and quantity, see the price right away', 'Выберите формат и количество, цена видна сразу'],
     'Preuzmeš gotove fotografije za 24h': ['Pick up your finished photos in 24h', 'Заберите готовые фото через 24 ч'],
     'Poruči fotografije online': ['Order photos online', 'Заказать фото онлайн'],
     'Korpa · 9': ['Cart · 9', 'Корзина · 9'],
@@ -3190,7 +3490,7 @@
     'Količinski popust računa se po formatu. Za cenu 100+ treba ti 100 fotografija istog formata.': ['Quantity discounts are counted per size. The 100+ price needs 100 photos of the same size.', 'Скидка за количество считается по формату. Цена 100+ действует при 100 фото одного формата.'],
     'Fotografija za dokumenta je gotova isti dan, bez zakazivanja.': ['ID photos are ready the same day, no appointment needed.', 'Фото на документы готовы в тот же день, без записи.'],
     'Za preko 10 komada cena je po dogovoru.': ['For more than 10 pieces, price on request.', 'Для заказа от 10 штук цена по договорённости.'],
-    'Kanvas poručuješ i online, kroz aplikaciju.': ['Canvas prints can also be ordered online in the app.', 'Холст можно заказать и онлайн, через приложение.'],
+    'Format kanvasa biraš u radnji ili nam ga napišeš u poruci.': ['Choose your canvas size in the shop or tell us in a message.', 'Формат холста можно выбрать в магазине или написать нам в сообщении.'],
     'Za 6 i više VHS kaseta cena je po dogovoru.': ['For 6 or more VHS tapes, price on request.', 'Для 6 и более VHS-кассет цена по договорённости.'],
     'Instax filmove i aparat kupuješ u radnji.': ['Instax film and cameras are sold in the shop.', 'Плёнку и фотоаппараты Instax можно купить в магазине.'],
     'Primamo kartice u obe radnje': ['Cards accepted in both shops', 'Принимаем карты в обоих магазинах'],
@@ -3215,6 +3515,30 @@
     '06 / O nama': ['06 / About', '06 / О нас'],
     '07 / Kontakt': ['07 / Contact', '07 / Контакты'],
 
+    'Bez registracije, za minut': ['No sign-up, takes a minute', 'Без регистрации, за минуту'],
+    'Online poručivanje': ['Online ordering', 'Онлайн-заказ'],
+    'Poruči izradu fotografija': ['Order photo prints', 'Заказать печать фото'],
+    '01 · Fotografije': ['01 · Photos', '01 · Фото'],
+    'Izaberi fotografije': ['Choose photos', 'Выберите фото'],
+    'Iz telefona ili računara': ['From your phone or computer', 'С телефона или компьютера'],
+    '02 · Format': ['02 · Size', '02 · Формат'],
+    'Primeraka od svake fotografije': ['Copies of each photo', 'Копий каждого фото'],
+    'Manje': ['Fewer', 'Меньше'],
+    'Više': ['More', 'Больше'],
+    '03 · Preuzimanje': ['03 · Pickup', '03 · Получение'],
+    '04 · Kontakt': ['04 · Contact', '04 · Контакты'],
+    'Ime i prezime': ['Full name', 'Имя и фамилия'],
+    'Telefon': ['Phone', 'Телефон'],
+    'Ukupno': ['Total', 'Итого'],
+    'Pošalji porudžbinu': ['Send order', 'Отправить заказ'],
+    'Porudžbina je poslata!': ['Your order has been sent!', 'Заказ отправлен!'],
+    'Fotografije su spremne za preuzimanje za 24h. Javljamo se kad budu gotove.': ['Your photos will be ready for pickup in 24h. We will let you know when they are done.', 'Фото будут готовы к получению через 24 ч. Мы сообщим, когда они будут готовы.'],
+    'Dodaj bar jednu fotografiju.': ['Add at least one photo.', 'Добавьте хотя бы одно фото.'],
+    'Upiši ime i telefon.': ['Enter your name and phone number.', 'Введите имя и телефон.'],
+    'Ukloni fotografiju': ['Remove photo', 'Удалить фото'],
+    'kom': ['pcs', 'шт'],
+    'din': ['RSD', 'дин.'],
+
     'Newsletter · Popust': ['Newsletter · Discount', 'Рассылка · Скидка'],
     'Saznaj prvi za popuste': ['Be the first to hear about discounts', 'Узнавайте о скидках первыми'],
     'Prijavi se na newsletter i ostvari 5% popusta.': ['Sign up for our newsletter and get 5% off.', 'Подпишитесь на рассылку и получите скидку 5%.'],
@@ -3230,7 +3554,7 @@
   var LANGS = ['sr', 'en', 'ru'];
   var curLang = 'sr';
   function t(sr){
-    var i = LANGS.indexOf(curLang) - 1;
+    var i = LANGS ? LANGS.indexOf(curLang) - 1 : -1;
     return i >= 0 && I18N[sr] ? I18N[sr][i] : sr;
   }
 
@@ -3276,6 +3600,8 @@
     burger.setAttribute('aria-label', t(menu.classList.contains('open') ? 'Zatvori meni' : 'Otvori meni'));
     langBtns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'); });
     show(pcur);
+    updateOrder();
+    renderThumbs();
     if(save){ try{ localStorage.setItem('lang', lang); }catch(e){} }
   }
   langBtns.forEach(function(b){
